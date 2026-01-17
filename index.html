@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>shopwill</title>
+    <script type="module" src="/src/main.js" defer></script>
+  </head>
+  <body>
+    <header class="fixed top-0 left-0 w-full z-50">
+      <div
+        class="text-[0.6rem] uppercase w-full h-4 text-center bg-black text-white flex items-center justify-center font-[montserrat] font-semibold"
+      >
+        make purchase @ shopwill
+      </div>
+      <div class="h-16 flex justify-between items-center px-4 text-xl bg-white">
+        <div class="flex items-center gap-4">
+          <button><i class="fas fa-bars"></i></button>
+
+          <div class="bg-logo bg-cover bg-center h-10 w-20"></div>
+        </div>
+        <div class="flex items-center gap-6">
+          <i class="fa-solid fa-search"></i>
+          <i class="fa-regular fa-user"></i>
+          <i class="fa-solid fa-cart-arrow-down"></i>
+        </div>
+      </div>
+    </header>
+    <main class="mt-20">
+      <div class="m-w-full">
+        <video
+          loop
+          muted
+          autoplay
+          playsinline
+          poster="./src/assets/WhatsApp Image 2026-01-16 at 4.02.33 PM.jpeg"
+          src="./src/assets/group skate.mp4"
+          class="w-full h-[calc(100vh-5rem)] object-cover"
+        ></video>
+      </div>
+      <!-- HERO TEXT -->
+      <div
+        class="absolute w-full h-[calc(100vh-5rem)] top-20 left-0 bg-black/70 z-10 flex font-[playfair] flex-col px-4"
+      >
+        <div class="text-white text-5xl uppercase mt-20 font-bold">
+          <h2 class="font-light text-[0.8rem] mb-4 font-[playfair]">
+            EST. 2018
+          </h2>
+          <h1>drip like you mean it,</h1>
+          <h1>wear your attitude.</h1>
+        </div>
+        <div class="text-white w-85 mt-10 font-[outfit]">
+          <h3 class="text-sm font-light">
+            Where street meets style, you are the trend. Shop the hottest picks
+            now & make a statement.
+          </h3>
+          <button
+            class="bg-white w-full text-black px-6 py-2 rounded-full mt-4 font-[montserrat] font-extrabold hover:bg-black hover:text-white transition-all duration-500 cursor-pointer"
+          >
+            Shop Now
+          </button>
+        </div>
+      </div>
+    </main>
+    <section class="px-4">
+      <div class="mt-10">
+        <h2 class="text-xl font-bold font-[montserrat] capitalize mb-3">
+          products that match your style
+        </h2>
+        <p class="font-[quicksand] text-sm font-semibold text-gray-800 mb-10">
+          Shop the latest trends and elevate your look with our curated
+          collection.
+        </p>
+      </div>
+      <button
+        class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600"
+        id="add-product"
+      >
+        Add Product
+      </button>
+      <div
+        id="product-lists"
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4"
+      ></div>
+    </section>
+  </body>
+</html>
