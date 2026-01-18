@@ -1,9 +1,9 @@
 import "./style.css";
-
+import productImage from "./assets/sample.jpeg";
 const product = {
   name: "Sample Product",
   price: 29.99,
-  productImage: "/src/assets/sample.jpeg",
+  productImg: productImage,
   productId: "001",
 };
 
@@ -14,7 +14,7 @@ function addProductToDOM() {
   productCard.className =
     "bg-white shadow-md  border border-gray-200 rounded-lg p-4  lg:h-100";
   productCard.innerHTML = `
-<img src="${product.productImage}" alt="${
+<img src="${productImage}" alt="${
     product.name
   }" class="w-full h-50 object-cover mb-2 lg:h-60 md:h-60"/>
 <h2 class="text-sm font-semibold mb-2">${product.name}</h2>
