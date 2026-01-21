@@ -66,13 +66,13 @@ export async function renderProduct() {
 
     const prodcard = document.createElement("div");
     prodcard.innerHTML = `<div
-        class="bg-white shadow-md shadow-gray-300 rounded-xl py-4 px-4 capitalize relative h-80 grid grid-rows-2 sm:h-100 md:h-120 "
+        class="bg-white  rounded-xl py-4 px-4 capitalize relative h-80 grid grid-rows-2 sm:h-100 md:h-120 "
       >
 <div class=" items-center justify-center text-sm font-[outfit] text-white bg-red-600 mt-3 absolute top-0 left-0  h-5 w-15 text-center z-10 sold" 
       >sold</div>
-       <div class=" flex items-center justify-center overflow-hidden row-span-3 "> <img src="${prodImage}" class=" hover:scale-101 transition h-full w-full duration-300 overflow-hidden" /></div>
+       <div class=" flex items-center justify-center overflow-hidden row-span-3 "> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></div>
 
-        <div class="flex-col items-center justify-center "> <div class="flex justify-between items-center "><h2 class="font-bold font-[outfit] text-sm mb-2 mt-2">${card.product_name}</h2><div
+        <div class="flex-col items-center justify-center "> <div class="flex justify-between items-center "><h2 class="font-bold font-[playfair] text-sm mb-2 mt-2">${card.product_name}</h2><div
       class="size-6 bg-purple-600 flex justify-center items-center rounded-full hover:bg-purple-700 cursor-pointer"
     >  <i class="fa-solid fa-bag-shopping text-sm text-white font-light"></i></div></div>
         

@@ -14,7 +14,7 @@
 
     @apply font-[playfair];
 
-    @apply bg-red-300 sm:pt-20 sm:pl-10 lg:grid grid-cols-12  lg:items-center-safe  lg:gap-8;
+    @apply sm:pt-20 sm:pl-10 lg:grid grid-cols-12  lg:items-center-safe  lg:gap-8;
   }
 
   .hero-text {
