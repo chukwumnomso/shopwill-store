@@ -7,3 +7,24 @@
 @theme {
   --background-image-logo: url("/src/assets/shop log.png");
 }
+
+@layer components {
+  .hero-custom {
+    @apply absolute w-full h-[calc(100vh-5rem)] top-20 left-0 bg-black/50 z-10 px-4;
+
+    @apply font-[playfair];
+
+    @apply bg-red-300 sm:pt-20 sm:pl-10 lg:grid grid-cols-12  lg:items-center-safe  lg:gap-8;
+  }
+
+  .hero-text {
+    @apply text-white text-5xl uppercase mt-20  font-bold;
+    @apply sm:text-[3rem] md:text-[4rem] lg:col-span-7 lg:text-[3.5rem] lg:gap-4;
+  }
+  .hero-btn {
+    @apply bg-white w-full px-6 py-2 mt-4;
+    @apply text-black font-[montserrat] font-extrabold;
+    @apply hover:bg-black hover:text-white transition-all duration-500 cursor-pointer;
+    @apply lg:mt-10;
+  }
+}

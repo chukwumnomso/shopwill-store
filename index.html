@@ -48,34 +48,26 @@
         ></video>
       </div>
       <!-- HERO TEXT -->
-      <div
-        class="absolute w-full h-[calc(100vh-5rem)] top-20 left-0 bg-black/70 z-10 flex font-[playfair] flex-col px-4"
-      >
-        <div class="text-white text-5xl uppercase mt-20 font-bold">
-          <h2 class="font-light text-[0.8rem] mb-4 font-[playfair]">
+      <div class="hero-custom">
+        <div class="hero-text">
+          <h2 class="font-light text-[0.8rem] mb-4 font-[playfair] lg:text-lg">
             EST. 2018
           </h2>
           <h1>drip like you mean it,</h1>
           <h1>wear your attitude.</h1>
         </div>
-        <div class="text-white w-85 mt-10 font-[outfit]">
-          <h3 class="text-sm font-light">
+        <div class="text-white w-85 mt-10 font-[outfit] lg:col-span-5">
+          <h3
+            class="text-sm font-light sm:text-[1rem] md:text-[1rem] lg:text-lg"
+          >
             Where street meets style, you are the trend. Shop the hottest picks
             now & make a statement.
           </h3>
-          <button
-            class="bg-white w-full text-black px-6 py-2 rounded-full mt-4 font-[montserrat] font-extrabold hover:bg-black hover:text-white transition-all duration-500 cursor-pointer"
-          >
-            Shop Now
-          </button>
+          <button class="hero-btn">Shop Now</button>
         </div>
       </div>
     </main>
     <section class="px-4">
-      <!-- <button type="submit" id="skip" class="bg-red-500 rounded-xl">
-        submit
-      </button> -->
-      <!-- <button class="bg-red-500 rounded-xl" id="admin">admin</button> -->
       <div class="mt-10">
         <h2 class="text-xl font-extrabold font-[quicksand] capitalize mb-3">
           products that match your style
@@ -88,7 +80,7 @@
 
       <div
         id="product-lists"
-        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
       ></div>
       <div
         id="admin"
