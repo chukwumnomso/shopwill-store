@@ -6,6 +6,7 @@
     <title>shopwill</title>
     <link rel="stylesheet" href="/src/style.css" />
     <script type="module" src="/src/main.js" defer></script>
+    <script type="module" src="/src/prodUpload.js" defer></script>
   </head>
   <body>
     <header class="fixed top-0 left-0 w-full z-50">
@@ -16,14 +17,21 @@
       </div>
       <div class="h-16 flex justify-between items-center px-4 text-xl bg-white">
         <div class="flex items-center gap-4">
-          <button><i class="fas fa-bars"></i></button>
+          <button id="navbar"><i class="fas fa-bars"></i></button>
 
           <div class="bg-logo bg-cover bg-center h-10 w-20"></div>
         </div>
         <div class="flex items-center gap-6">
           <i class="fa-solid fa-search"></i>
           <i class="fa-regular fa-user"></i>
-          <i class="fa-solid fa-cart-arrow-down"></i>
+          <div class="relative size-10 flex justify-center items-center">
+            <i class="fa-solid fa-bag-shopping text-2xl"></i>
+            <div
+              class="absolute top-0 text-white text-[0.5rem] font-bold right-0 bg-black size-4 flex items-center justify-center rounded-full"
+            >
+              0
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -64,8 +72,12 @@
       </div>
     </main>
     <section class="px-4">
+      <!-- <button type="submit" id="skip" class="bg-red-500 rounded-xl">
+        submit
+      </button> -->
+      <!-- <button class="bg-red-500 rounded-xl" id="admin">admin</button> -->
       <div class="mt-10">
-        <h2 class="text-xl font-bold font-[montserrat] capitalize mb-3">
+        <h2 class="text-xl font-extrabold font-[quicksand] capitalize mb-3">
           products that match your style
         </h2>
         <p class="font-[quicksand] text-sm font-semibold text-gray-800 mb-10">
@@ -73,16 +85,38 @@
           collection.
         </p>
       </div>
-      <button
-        class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600"
-        id="add-product"
-      >
-        Add Product
-      </button>
+
       <div
         id="product-lists"
         class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4"
       ></div>
+      <div
+        id="admin"
+        class="fixed h-full w-full top-0 right-0 bg-white z-50 text-center place-content-center overflow-hidden hidden"
+      >
+        <input
+          id="productname"
+          type="text"
+          class="border border-amber-500 mb-4"
+        /><br />
+        <input
+          id="price"
+          type="text"
+          class="border border-amber-500 mb-4"
+        /><br />
+        <input
+          id="prodId"
+          type="text"
+          class="border border-amber-500 mb-4"
+        /><br />
+        <input
+          id="product-img"
+          type="file"
+          accept="*/image"
+          class="border border-amber-500 mb-4"
+        /><br />
+        <button id="close" class="bg-red-700">close</button>
+      </div>
     </section>
   </body>
 </html>

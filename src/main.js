@@ -1,37 +1,50 @@
 import "./style.css";
-import productImage from "./assets/sample.jpeg";
-const product = {
-  name: "Sample Product",
-  price: 29.99,
-  productImg: productImage,
-  productId: "001",
-};
 
-function addProductToDOM() {
-  const productContainer = document.getElementById("product-lists");
+import { uploadproduct } from "./prodUpload";
 
-  const productCard = document.createElement("div");
-  productCard.className =
-    "bg-white shadow-md  border border-gray-200 rounded-lg p-4  lg:h-100";
-  productCard.innerHTML = `
-<img src="${productImage}" alt="${
-    product.name
-  }" class="w-full h-50 object-cover mb-2 lg:h-60 md:h-60"/>
-<h2 class="text-sm font-semibold mb-2">${product.name}</h2>
-  <p class="text-sm font-semibold text-blue-600">$${product.price.toFixed(
-    2,
-  )}</p>
-  <button class="mt-4 bg-black text-white text-xs px-4 py-2 rounded w-full hover:bg-white hover:text-black">Add to Cart</button>
-  <button class="mt-2 bg-green-500 text-white text-xs px-4 py-2 rounded w-full hover:bg-green-600">Delete</button>
-`;
-  return productContainer.appendChild(productCard);
+import { renderProduct } from "./prodUpload";
+
+const closeBtn = document.getElementById("close");
+
+if (closeBtn) {
+  closeBtn.addEventListener("click", () => {
+    const admin = document.getElementById("admin");
+    renderProduct();
+    admin.style.display = "none";
+  });
 }
 
-const addBtn = document.getElementById("add-product");
+// const skip = document.getElementById("skip");
+// if (skip) {
+//   skip.addEventListener("click", () => {
+//     const admin = document.getElementById("admin");
 
-addBtn.addEventListener("click", () => {
-  addProductToDOM();
-});
+//     admin.style.display = "block";
+//   });
+// }
 
-const shopImg = document.getElementById("shop");
-shopImg.src = product.productImage;
+const nav = document.getElementById("navbar");
+if (nav) {
+  nav.addEventListener("click", () => {
+    const admin = document.getElementById("admin");
+    admin.style.display = "block";
+  });
+}
+
+export function price() {
+  const price = document.getElementById("price").value;
+
+  return price;
+}
+
+export function prodName() {
+  const prodName = document.getElementById("productname").value;
+  return prodName;
+}
+// console.log(prodName());
+export function prodId() {
+  const prodId = document.getElementById("prodId").value;
+  return prodId;
+}
+
+export const productImg = document.getElementById("product-img");
