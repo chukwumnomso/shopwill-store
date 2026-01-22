@@ -35,63 +35,81 @@
         </div>
       </div>
     </header>
+    <!-- END OF HEADER -->
     <main class="mt-20">
-      <div class="w-full overflow-hidden h-[calc(100vh-5rem)]" id="slider">
-        <div class="slider-wrapper flex" id="slider-wrapper">
-          <img
-            src="src/assets/charlesdeluvio-_4K7BwaHUGc-unsplash.jpg"
-            alt="Photo 1"
-            class="slide hero-img-slide -top-40 md:-top-70 lg:-top-200"
-          />
-
-          <img
-            src="src/assets/wesley-tingey-ODG3C3udpsc-unsplash.jpg"
-            alt="Photo 2"
-            class="slide hero-img-slide -top-20 lg:-top-50"
-          />
-          <img
-            src="src/assets/clark-street-mercantile-P3pI6xzovu0-unsplash.jpg"
-            alt="Photo 3"
-            class="slide hero-img-slide shrink-0 relative lg:-top-30"
-          />
-          <img
-            src="src/assets/sami-sadeghi-mNTLzTY7LJk-unsplash.jpg"
-            alt="Photo 4"
-            class="slide hero-img-slide shrink-0 lg:-top-20"
-          />
-          <img
-            src="src/assets/markus-winkler-PQmXUxmfR44-unsplash.jpg"
-            alt="Photo 5"
-            class="slide w-full h-auto shrink-0 relative lg:-top-90"
-          />
-        </div>
-      </div>
-      <!-- HERO TEXT -->
-      <div class="hero-custom">
-        <div class="hero-text">
-          <h2 class="font-light text-[0.8rem] mb-4 font-[playfair] lg:text-lg">
-            EST. 2018
-          </h2>
-          <h1>drip like you mean it,</h1>
-          <h1>wear your attitude.</h1>
-        </div>
-        <div class="text-white w-85 mt-10 font-[outfit] lg:col-span-5">
-          <h3
-            class="text-sm font-light sm:text-[1rem] md:text-[1rem] lg:text-lg"
+      <div
+        class="flex gap-8 order-last lg:px-5 lg:items-center lg:justify-center"
+      >
+        <div class="overflow-hidden relative lg:rounded-2xl lg:h-120 lg:w-120">
+          <div
+            class="h-[calc(100vh-5rem)] w-full bg-amber-700 flex"
+            id="slider-wrapper"
           >
-            Where street meets style, you are the trend. Shop the hottest picks
-            now & make a statement.
-          </h3>
-          <button class="hero-btn">Shop Now</button>
+            <img
+              src="src/assets/charlesdeluvio-_4K7BwaHUGc-unsplash.jpg"
+              alt="photo 1"
+              class="slide img-slide"
+            />
+            <img
+              src="src/assets/clark-street-mercantile-P3pI6xzovu0-unsplash.jpg"
+              alt=""
+              class="slide img-slide"
+            />
+            <img
+              src="src/assets/fujiphilm-ojZ4wJNUM5w-unsplash.jpg"
+              alt=""
+              class="slide img-slide"
+            />
+            <img
+              src="src/assets/markus-winkler-PQmXUxmfR44-unsplash.jpg"
+              alt=""
+              class="slide img-slide"
+            />
+            <img
+              src="src/assets/wesley-tingey-ODG3C3udpsc-unsplash.jpg"
+              alt=""
+              class="slide img-slide"
+            />
+          </div>
+          <div class="hero-custom"></div>
+        </div>
+
+        <!-- HERO TEXT -->
+        <div
+          class="hero-text lg:static lg:top-auto lg:left-auto lg:text-black lg:w-[50%] order-first"
+        >
+          <div>
+            <h2
+              class="font-light text-[0.8rem] mb-4 font-[playfair] md:text-lg lg:text-lg"
+            >
+              EST. 2018
+            </h2>
+            <h1>drip like you mean it,</h1>
+            <h1>wear your attitude.</h1>
+          </div>
+          <div class="text-white w-85 mt-10 font-[outfit] lg:col-span-5">
+            <h3
+              class="text-sm font-light sm:text-[1rem] md:text-[1rem] lg:text-lg lg:text-black lg:font-[quicksand] lg:font-semibold"
+            >
+              Where street meets style, you are the trend. Shop the hottest
+              picks now & make a statement.
+            </h3>
+            <button class="hero-btn">Shop Now</button>
+          </div>
         </div>
       </div>
+      <!-- MAIN CONTENT -->
     </main>
-    <section class="px-4">
-      <div class="mt-10">
-        <h2 class="text-xl font-extrabold font-[quicksand] capitalize mb-3">
+    <section class="px-4 pt-20">
+      <div>
+        <h2
+          class="text-xl font-extrabold font-[quicksand] capitalize mb-3 md:text-2xl"
+        >
           products that match your style
         </h2>
-        <p class="font-[quicksand] text-sm font-semibold text-gray-800 mb-10">
+        <p
+          class="font-[quicksand] text-sm font-semibold text-gray-800 mb-10 md:text-xl"
+        >
           Shop the latest trends and elevate your look with our curated
           collection.
         </p>
@@ -99,8 +117,10 @@
 
       <div
         id="product-lists"
-        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       ></div>
+
+      <!-- ADMIN -->
       <div
         id="admin"
         class="fixed h-full w-full top-0 right-0 bg-white z-50 text-center place-content-center overflow-hidden hidden"

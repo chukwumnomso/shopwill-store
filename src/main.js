@@ -44,8 +44,8 @@ export const productImg = document.getElementById("product-img");
 
 const wrapper = document.getElementById("slider-wrapper");
 let slides = document.querySelectorAll(".slide");
-const nextBtn = document.getElementById("nextBtn");
-const prevBtn = document.getElementById("prevBtn");
+
+console.log(slides);
 
 // 1. Clone first and last slides
 const firstClone = slides[0].cloneNode(true);

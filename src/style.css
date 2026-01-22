@@ -6,28 +6,28 @@
 
 @theme {
   --background-image-logo: url("/src/assets/shop log.png");
+  --color-sec: rgb(239, 239, 239);
 }
 
 @layer components {
   .hero-custom {
-    @apply absolute w-full h-[calc(100vh-5rem)] top-20 left-0 bg-black/50 z-10 px-4;
-
-    @apply font-[playfair];
+    @apply absolute w-full h-[calc(100vh-5rem)] top-0 left-0 bg-black/50 z-10 px-4 lg:bg-black/30;
 
     @apply sm:pt-20 sm:pl-10 lg:grid grid-cols-12  lg:items-center-safe  lg:gap-8;
   }
 
   .hero-text {
-    @apply text-white text-5xl uppercase mt-20  font-bold;
-    @apply sm:text-[3rem] md:text-[4rem] lg:col-span-7 lg:text-[3.5rem] lg:gap-4;
+    @apply text-white text-5xl pl-5 pt-20 font-[playfair] uppercase absolute w-full h-[calc(100vh-5rem)]  top-20 left-0 z-10;
+    @apply md:pl-15 md:text-6xl lg:text-6xl lg:pt-5 lg:font-bold;
   }
   .hero-btn {
-    @apply bg-white w-full px-6 py-2 mt-4;
-    @apply text-black font-[montserrat] font-extrabold;
+    @apply bg-white w-full h-10 px-6 py-2 mt-4;
+    @apply text-black font-[montserrat] font-extrabold text-lg;
     @apply hover:bg-black hover:text-white transition-all duration-500 cursor-pointer;
-    @apply lg:mt-10;
+    @apply lg:mt-10 lg:bg-black lg:text-white;
+    @apply hover:text-pink-600 transition-all duration-300;
   }
-  .hero-img-slide {
-    @apply w-full  shrink-0 relative;
+  .img-slide {
+    @apply w-full  h-full shrink-0;
   }
 }
