@@ -27,4 +27,7 @@
     @apply hover:bg-black hover:text-white transition-all duration-500 cursor-pointer;
     @apply lg:mt-10;
   }
+  .hero-img-slide {
+    @apply w-full  shrink-0 relative;
+  }
 }

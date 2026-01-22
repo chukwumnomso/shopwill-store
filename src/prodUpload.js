@@ -87,14 +87,14 @@ export async function renderProduct() {
   });
 }
 
-renderProduct()
-  .then((get) => {
-    const solds = document.querySelectorAll(".sold");
-    solds.forEach((sold) => {
-      sold.classList.add("hidden");
-    });
-  })
-  .catch((error) => console.error(error));
+// renderProduct()
+//   .then((get) => {
+//     const solds = document.querySelectorAll(".sold");
+//     solds.forEach((sold) => {
+//       sold.classList.add("hidden");
+//     });
+//   })
+//   .catch((error) => console.error(error));
 
 // const prodcard = document.createElement("div");
 // prodcard.innerHTML = `<div
