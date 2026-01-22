@@ -51,12 +51,27 @@ export async function uploadproduct(file) {
   } catch {}
 }
 
-const prodList = document.getElementById("product-lists");
+let currentPage = 0; // 0-based index for Supabase range
+const pageSize = 6; // Items per page
 
-export async function renderProduct() {
+export async function renderProduct(page) {
+  const prodList = document.getElementById("product-lists");
+  const controls = document.getElementById("pagination-controls");
   prodList.innerHTML = "";
-  const { data: cards } = await supabase.from("products").select("*");
-
+  // Calculate start and end indices
+  const from = page * pageSize;
+  const to = from + pageSize - 1;
+  // Fetch data + total row count
+  const {
+    data: cards,
+    count,
+    error,
+  } = await supabase
+    .from("products")
+    .select("*", { count: "exact" })
+    // 'exact' returns total rows matching filter
+    .range(from, to)
+    .order("id", { ascending: true }); // Ordering prevents unexpected range behavior
   cards.forEach((card) => {
     const { data: urlData } = supabase.storage
       .from("productImage")
@@ -65,28 +80,49 @@ export async function renderProduct() {
 
     const prodcard = document.createElement("div");
     prodcard.innerHTML = `<div
-        class="rounded-xl py-4 px-4 capitalize relative h-80 grid grid-rows-2 sm:h-100 md:h-120 "
+        class="rounded-xl  capitalize relative h-80 grid grid-rows-2 sm:h-100 md:h-120 "
       >
-<div class=" items-center justify-center text-sm font-[outfit] text-white bg-red-600 mt-3 absolute top-0 left-0  h-5 w-15 text-center z-10 sold" 
+<div class=" items-center justify-center text-sm font-[outfit] text-white bg-red-600 mt-3 absolute top-0 left-0  h-5 w-15 text-center z-10 sold hidden" 
       >sold</div>
        <div class=" flex items-center justify-center overflow-hidden row-span-3 "> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></div>
 
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center "><h2 class="font-bold font-[playfair] text-sm mb-2 mt-2">${card.product_name}</h2><div
-      class="size-6 bg-purple-600 flex justify-center items-center rounded-full hover:bg-purple-700 cursor-pointer"
+      class="size-6 bg-purple-600 flex justify-center items-center rounded-full hover:bg-purple-700 cursor-pointer mr-4"
     >  <i class="fa-solid fa-bag-shopping text-sm text-white font-light"></i></div></div>
         
         <p class="text-[0.8rem] text-black font-semibold">₦${card.product_price}</p>
          <p class="text-[0.7rem] text-pink-500 hidden">${card.id}</p>
-         <button class="w-full h-8 bg-black text-white font-semibold flex items-center justify-center mt-2 hover:text-pink-600 transition-all duration-300 cursor-pointer">view</button>
+        
       </div></div>
         `;
 
     prodList.appendChild(prodcard);
     return prodcard;
   });
+
+  // 2. Display Pagination Buttons
+  const totalPages = Math.ceil(count / pageSize);
+  controls.innerHTML = "";
+
+  for (let i = 0; i < totalPages; i++) {
+    const btn = document.createElement("button");
+    btn.innerText = i + 1;
+
+    const baseStyles = "px-4 py-2 border rounded-md transition-colors ";
+    const activeStyles = "bg-indigo-600 text-white border-indigo-600";
+    const inactiveStyles =
+      "bg-white text-gray-700 hover:bg-gray-100 border-gray-300";
+    btn.className = baseStyles + (i === page ? activeStyles : inactiveStyles);
+    btn.onclick = () => {
+      currentPage = i;
+      console.log(currentPage);
+      renderProduct(currentPage);
+    };
+    controls.appendChild(btn);
+  }
 }
 
-renderProduct()
+renderProduct(currentPage)
   .then((get) => {
     const solds = document.querySelectorAll(".sold");
     solds.forEach((sold) => {
