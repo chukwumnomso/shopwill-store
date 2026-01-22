@@ -17,7 +17,7 @@
   }
 
   .hero-text {
-    @apply text-white text-5xl pl-5 pt-20 font-[playfair] uppercase absolute w-full h-[calc(100vh-5rem)]  top-20 left-0 z-10;
+    @apply text-white text-5xl pl-5 pt-40 font-[playfair] uppercase absolute w-full h-[calc(100vh-5rem)]  top-20 left-0 z-10;
     @apply md:pl-15 md:text-6xl lg:text-6xl lg:pt-5 lg:font-bold;
   }
   .hero-btn {
