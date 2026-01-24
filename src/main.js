@@ -3,6 +3,9 @@ import { uploadproduct } from "./prodUpload";
 import { renderProduct } from "./prodUpload";
 import { currentPage } from "./prodUpload";
 
+const admin = document.getElementById("admin");
+console.log(admin);
+
 const closeBtn = document.getElementById("close");
 
 if (closeBtn) {
@@ -20,6 +23,7 @@ if (nav) {
     admin.style.display = "block";
   });
 }
+console.log(nav);
 
 export function price() {
   const price = document.getElementById("price").value;

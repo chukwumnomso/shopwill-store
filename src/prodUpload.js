@@ -142,3 +142,17 @@ renderProduct(currentPage)
     });
   })
   .catch((error) => console.error(error));
+
+// COLLECTION IMAGES
+
+const collectionImg = document.getElementById("product-img");
+
+collectionImg.addEventListener("change", (e) => {
+  if (e.target.files.length === 0) {
+    console.log("No file selected!");
+  }
+
+  const file = e.target.files[0];
+  uploadproduct(file);
+  console.log(file);
+});
