@@ -1,15 +1,14 @@
 import "./style.css";
-
 import { uploadproduct } from "./prodUpload";
-
 import { renderProduct } from "./prodUpload";
+import { currentPage } from "./prodUpload";
 
 const closeBtn = document.getElementById("close");
 
 if (closeBtn) {
   closeBtn.addEventListener("click", () => {
     const admin = document.getElementById("admin");
-    renderProduct();
+    renderProduct(currentPage);
     admin.style.display = "none";
   });
 }
@@ -40,7 +39,7 @@ export function prodId() {
 
 export const productImg = document.getElementById("product-img");
 
-// HERO IMAGE SLIDE
+// HERO IMAGE SLIDE LOGIC //
 
 const wrapper = document.getElementById("slider-wrapper");
 let slides = document.querySelectorAll(".slide");
@@ -88,3 +87,5 @@ wrapper.addEventListener("transitionend", () => {
 const slide = setInterval(() => {
   moveSlide(1);
 }, 5000);
+
+// REVIEW SLIDE //

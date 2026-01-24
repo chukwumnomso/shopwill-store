@@ -6,7 +6,16 @@
 
 @theme {
   --background-image-logo: url("/src/assets/shop log.png");
-  --color-sec: rgb(239, 239, 239);
+  --animate-infinite-scroll: infinite-scroll 30s linear infinite;
+
+  @keyframes infinite-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
 }
 
 @layer components {
@@ -39,5 +48,8 @@
   }
   .inactive-styles {
     @apply bg-white text-gray-700 hover:bg-gray-100 border-gray-300;
+  }
+  .our-collections {
+    @apply w-full h-50 mt-4 bg-center bg-cover bg-black/60 bg-blend-overlay hover:scale-101 transition-all duration-300 flex items-center justify-center font-bold text-3xl font-[oplayfair] text-white uppercase md:h-60;
   }
 }
