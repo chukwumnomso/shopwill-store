@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Pacifico&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Sacramento&display=swap");
 
 @import "tailwindcss";
 
@@ -39,6 +39,9 @@
   .img-slide {
     @apply w-full  h-full shrink-0;
   }
+  .img-slides {
+    @apply w-40 h-20;
+  }
 
   .baseStyles {
     @apply px-4 py-2 border rounded-md transition-colors;
@@ -50,6 +53,16 @@
     @apply bg-white text-gray-700 hover:bg-gray-100 border-gray-300;
   }
   .our-collections {
-    @apply w-full h-50 mt-4 bg-center bg-cover bg-black/60 bg-blend-overlay hover:scale-101 transition-all duration-300 flex items-center justify-center font-bold text-3xl font-[oplayfair] text-white uppercase md:h-60;
+    @apply h-full bg-center bg-cover bg-black/60 bg-blend-overlay hover:scale-105 transition-all duration-300 flex items-center justify-center font-bold text-3xl font-[oplayfair] text-white uppercase md:h-60;
+  }
+
+  .socials {
+    @apply text-white hover:text-pink-600 transition-colors duration-300 cursor-pointer;
+  }
+  .socials-div {
+    @apply w-8 h-8 rounded-full bg-black flex justify-center items-center;
+  }
+  .footer-hover {
+    @apply md:text-[1rem] hover:text-pink-600 transition-colors duration-300 text-black font-[playfair] text-[0.9rem];
   }
 }

@@ -16,16 +16,17 @@ import { prodId } from "./main";
 // PRODUCT RENDERING
 
 const productImg = document.getElementById("product-img");
+if (productImg) {
+  productImg.addEventListener("change", (e) => {
+    if (e.target.files.length === 0) {
+      console.log("No file selected!");
+    }
 
-productImg.addEventListener("change", (e) => {
-  if (e.target.files.length === 0) {
-    console.log("No file selected!");
-  }
-
-  const file = e.target.files[0];
-  uploadproduct(file);
-  console.log(file);
-});
+    const file = e.target.files[0];
+    uploadproduct(file);
+    console.log(file);
+  });
+}
 
 export async function uploadproduct(file) {
   const avatar = "avatar";
@@ -52,7 +53,7 @@ export async function uploadproduct(file) {
 }
 
 export let currentPage = 0; // 0-based index for Supabase range
-const pageSize = 6; // Items per page
+const pageSize = 8; // Items per page
 
 export async function renderProduct(page) {
   const prodList = document.getElementById("product-lists");
@@ -79,18 +80,19 @@ export async function renderProduct(page) {
     const prodImage = urlData.publicUrl;
 
     const prodcard = document.createElement("div");
+    prodcard.classList = "h-70 sm:h-80";
     prodcard.innerHTML = `<div
-        class="rounded-xl  capitalize relative h-80 grid grid-rows-2 sm:h-100  "
+        class="rounded-xl  capitalize relative h-full grid grid-rows-2   "
       >
 <div class=" items-center justify-center text-sm font-[outfit] text-white bg-red-600 mt-3 absolute top-0 left-0  h-5 w-15 text-center z-10 sold " 
       >sold</div>
        <div class=" flex items-center justify-center overflow-hidden row-span-3 "> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></div>
 
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${card.product_name}</h2><div
-      class="size-6 bg-purple-600 flex justify-center items-center rounded-full hover:bg-purple-700 cursor-pointer"
+      class="size-6 bg-pink-600 flex justify-center items-center rounded-full hover:bg-pink-800 cursor-pointer"
     >  <i class="fa-solid fa-bag-shopping text-sm text-white font-light"></i></div></div>
         
-    <div class= "w-full text-center border "><p class="text-[0.8rem] text-black font-semibold">₦${card.product_price}</p></div>    
+    <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${card.product_price}</p></div>    
          <p class="text-[0.7rem] text-pink-500  font-bold hidden">${card.id}</p>
         
       </div></div>
@@ -118,7 +120,8 @@ export async function renderProduct(page) {
       currentPage = i;
       prodList.scrollIntoView({
         behavior: "smooth",
-        block: "start",
+        top: 0,
+        left: 0,
       });
       console.log(currentPage);
       renderProduct(currentPage)
@@ -137,22 +140,25 @@ export async function renderProduct(page) {
 renderProduct(currentPage)
   .then((get) => {
     const solds = document.querySelectorAll(".sold");
-    solds.forEach((sold) => {
-      sold.classList.add("hidden");
-    });
+    if (solds) {
+      solds.forEach((sold) => {
+        sold.classList.add("hidden");
+      });
+    } else {
+    }
   })
   .catch((error) => console.error(error));
 
 // COLLECTION IMAGES
 
-const collectionImg = document.getElementById("product-img");
+// const collectionImg = document.getElementById("product-img");
 
-collectionImg.addEventListener("change", (e) => {
-  if (e.target.files.length === 0) {
-    console.log("No file selected!");
-  }
+// collectionImg.addEventListener("change", (e) => {
+//   if (e.target.files.length === 0) {
+//     console.log("No file selected!");
+//   }
 
-  const file = e.target.files[0];
-  uploadproduct(file);
-  console.log(file);
-});
+//   const file = e.target.files[0];
+//   uploadproduct(file);
+//   console.log(file);
+// });

@@ -38,3 +38,11 @@
 
 //
 // // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// const pants = document.getElementById("pants");
+// const shirt = document.getElementById("shirt");
+// const hoodie = document.getElementById("hoodie");
+
+// console.log(hoodie);
+//     <button id="hoodie">hoddie</button> <button id="shirt">shirt</button>
+//     <button id="pants">pants</button>
+//     <button><a href="index.html">home</a></button>

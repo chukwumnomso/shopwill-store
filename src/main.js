@@ -2,16 +2,25 @@ import "./style.css";
 import { uploadproduct } from "./prodUpload";
 import { renderProduct } from "./prodUpload";
 import { currentPage } from "./prodUpload";
+import axios from "axios";
+
+// ///////////////////////////////////////////////////////////
 
 const admin = document.getElementById("admin");
-console.log(admin);
 
 const closeBtn = document.getElementById("close");
 
 if (closeBtn) {
   closeBtn.addEventListener("click", () => {
     const admin = document.getElementById("admin");
-    renderProduct(currentPage);
+    renderProduct(currentPage)
+      .then((get) => {
+        const solds = document.querySelectorAll(".sold");
+        solds.forEach((sold) => {
+          sold.classList.add("hidden");
+        });
+      })
+      .catch((error) => console.error(error));
     admin.style.display = "none";
   });
 }
@@ -23,7 +32,8 @@ if (nav) {
     admin.style.display = "block";
   });
 }
-console.log(nav);
+
+// /////////////////////////////////////////////////////
 
 export function price() {
   const price = document.getElementById("price").value;
@@ -48,15 +58,14 @@ export const productImg = document.getElementById("product-img");
 const wrapper = document.getElementById("slider-wrapper");
 let slides = document.querySelectorAll(".slide");
 
-console.log(slides);
-
 // 1. Clone first and last slides
 const firstClone = slides[0].cloneNode(true);
 const lastClone = slides[slides.length - 1].cloneNode(true);
 
-// 2. Add clones to the DOM
 wrapper.appendChild(firstClone);
 wrapper.insertBefore(lastClone, slides[0]);
+
+// 2. Add clones to the DOM
 
 // 3. Variables for tracking
 let index = 1; // Start at 1 because slide 0 is now the clone of the last image
@@ -92,4 +101,9 @@ const slide = setInterval(() => {
   moveSlide(1);
 }, 5000);
 
-// REVIEW SLIDE //
+// FOOTER DATE//
+
+const date = new Date();
+const year = date.getFullYear();
+const footerDate = document.querySelector(".footer-date");
+footerDate.textContent = year;

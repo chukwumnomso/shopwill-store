@@ -89,10 +89,7 @@
         class="flex gap-8 order-last lg:px-5 lg:items-center lg:justify-center"
       >
         <div class="overflow-hidden relative lg:rounded-2xl lg:h-120 lg:w-120">
-          <div
-            class="h-[calc(100vh-5rem)] w-full bg-amber-700 flex"
-            id="slider-wrapper"
-          >
+          <div class="h-[calc(100vh-5rem)] w-full flex" id="slider-wrapper">
             <img
               src="src/assets/charlesdeluvio-_4K7BwaHUGc-unsplash.jpg"
               alt="photo-1"
@@ -471,42 +468,301 @@
         </div>
       </div>
     </section>
-    <section class="px-4">
+    <!-- END OF OUR STORY -->
+
+    <!-- OUR COLLECTIONS -->
+    <section class="px-4 mt-20">
       <div
-        class="text-4xl w-full text-center mt-10 mb-10 font-[outfit] uppercase font-bold"
+        class="text-4xl w-full text-center mb-10 font-[outfit] uppercase font-bold"
       >
         <h1>our collections</h1>
       </div>
-      <div class="grid grid-cols-2 gap-x-4 md:px-10 cursor-pointer">
-        <div class="our-collections bg-[url('/src/assets/hoodie.jpg')]">
-          hoodies
+      <div class="md:grid md:grid-cols-2 gap-x-4 md:px-10 cursor-pointer">
+        <div class="w-full h-50 mt-4 overflow-hidden">
+          <div class="our-collections bg-[url('/src/assets/hoodie.jpg')]">
+            hoodies
+          </div>
         </div>
-        <div
-          class="our-collections bg-[url('/src/assets/eye-speak-Ba8JB_A7www-unsplash.jpg')]"
-        >
-          t-shirts
+        <div class="w-full h-50 mt-4 overflow-hidden">
+          <div
+            class="our-collections bg-[url('/src/assets/eye-speak-Ba8JB_A7www-unsplash.jpg')]"
+          >
+            t-shirts
+          </div>
         </div>
-        <div
-          class="our-collections bg-[url('/src/assets/cgxl-media-92_tCTr9rtw-unsplash.jpg')]"
-        >
-          jackets
+        <div class="w-full h-50 mt-4 overflow-hidden">
+          <div
+            class="our-collections bg-[url('/src/assets/cgxl-media-92_tCTr9rtw-unsplash.jpg')]"
+          >
+            jackets
+          </div>
         </div>
-        <div
-          class="our-collections bg-[url('/src/assets/bbiddac-M7m40TYfx1o-unsplash.jpg')]"
-        >
-          pants
+        <div class="w-full h-50 mt-4 overflow-hidden">
+          <div
+            class="our-collections bg-[url('/src/assets/bbiddac-M7m40TYfx1o-unsplash.jpg')]"
+          >
+            pants
+          </div>
         </div>
-        <div
-          class="our-collections bg-[url('/src/assets/taylor-smith-aDZ5YIuedQg-unsplash.jpg')]"
-        >
-          sneakers
+
+        <div class="w-full h-50 mt-4 overflow-hidden">
+          <div
+            class="our-collections bg-[url('/src/assets/taylor-smith-aDZ5YIuedQg-unsplash.jpg')]"
+          >
+            sneakers
+          </div>
         </div>
-        <div
-          class="our-collections bg-[url('/src/assets/markus-winkler-PQmXUxmfR44-unsplash.jpg')]"
-        >
-          more
+        <div class="w-full h-50 mt-4 overflow-hidden">
+          <div
+            class="our-collections bg-[url('/src/assets/markus-winkler-PQmXUxmfR44-unsplash.jpg')]"
+          >
+            more
+          </div>
         </div>
       </div>
     </section>
+    <!-- END OF OUR COLLECTIONS -->
+
+    <!-- OUR BRAND SECTION -->
+    <section class="lg:px-20 mt-20">
+      <div class="text-center">
+        <h1 class="text-3xl font-[playfair] uppercase md:text-4xl">
+          our brands
+        </h1>
+      </div>
+      <!-- Main viewport container -->
+      <div
+        class="w-full inline-flex flex-nowrap overflow-hidden mask-[linear-gradient(to_right,transparent_0,black_128px,black_calc(100%-128px),transparent_100%)] mt-15"
+      >
+        <!-- First set of 5 divs -->
+        <ul
+          class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll"
+        >
+          <li>
+            <div class="w-70 overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/high fashion.png"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+          <li>
+            <div class="w-70 overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/gucci logo.png"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+          <li>
+            <div class="w-70overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/iyo0 cartel.jfif"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+          <li>
+            <div class="w-70 overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/puma logo.png"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+          <li>
+            <div class="w-70 overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/lewis logo.png"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+        </ul>
+
+        <!-- Second set (Duplicated for seamless loop) -->
+        <ul
+          class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll"
+        >
+          <li>
+            <div class="w-70 overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/high fashion.png"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+          <li>
+            <div class="w-70 overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/gucci logo.png"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+          <li>
+            <div class="w-70 overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/iyo0 cartel.jfif"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+          <li>
+            <div class="w-70 overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/puma logo.png"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+          <li>
+            <div class="w-70 overflow-hidden flex justify-center items-center">
+              <img
+                src="/src/assets/lewis logo.png"
+                alt="photo-3"
+                class="slides img-slides"
+              />
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- OUR BRAND SECTION -->
+
+    <!-- FOOTER -->
+
+    <footer class="mt-20 px-4">
+      <div class="w-[80%] text text-center mx-auto">
+        <h2 class="text-black font-[playfair] font-bold text-xl">
+          Let's get in touch
+        </h2>
+        <p class="font-bold">
+          Subscribe to get special
+          <span class="text-xl text-pink-600 font-[playfair]">OFFERS</span>,
+          free giveaways, and once-in-a-lifetime
+          <span class="text-xl font-[playfair] text-pink-600">DEALS</span>.
+        </p>
+      </div>
+
+      <div class="mt-4 text-center">
+        <div class="grid grid-cols-3 w-[80%] gap-2 mx-auto md:w-[60%]">
+          <input
+            type="text"
+            class="col-span-2 bg-gray-300 px-3 text-center outline-none text-black"
+            placeholder="Enter your active email address"
+          /><button
+            class="bg-black text-white h-10 col-span-1 hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+          >
+            Subscribe
+          </button>
+        </div>
+      </div>
+
+      <!-- /////// -->
+
+      <div
+        class="text-black font-[playfair] mt-10 w-[80%] md:w-[60%] lg:w-[50%]"
+      >
+        <img src="./src/assets/shop log.png" alt="" class="size-30" />
+        <p class="font-bold">
+          Elevate your style with
+          <span class="text-pink-600 uppercase font-bold">shopwill</span>! 💼✨
+          Cutting-edge designs, premium fabrics, and vibes that match your
+          unique flair. From streetwear to luxe, we've got you covered.
+        </p>
+        <div class="flex gap-4 text-xl mt-6">
+          <div class="socials-div">
+            <i class="fa-brands fa-instagram socials"></i>
+          </div>
+          <div class="socials-div">
+            <i class="fa-brands fa-x-twitter socials"></i>
+          </div>
+          <div class="socials-div">
+            <i class="fa-brands fa-linkedin-in socials"></i>
+          </div>
+          <div class="socials-div">
+            <i class="fa-brands fa-tiktok socials"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- /////// -->
+
+      <div class="sm:grid grid-cols-2 md:grid-cols-3">
+        <div>
+          <ul>
+            <li class="font-bold uppercase text-black mt-8 mb-4">shop</li>
+            <li class="capitalize text-sm pb-2">
+              <a href="products.html" class="footer-hover">all products</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">hoodies</a>
+            </li>
+            <li class="capitalize text-sm pb-2 footer-hover">
+              <a href="" class="footer-hover">t-shirt</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">jackets</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">sneakers</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li class="font-bold uppercase text-black mt-8 mb-4">company</li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">our story</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">blog</a>
+            </li>
+            <li class="capitalize text-sm pb-2 footer-hover">
+              <a href="" class="footer-hover">contact</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover uppercase">faq</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li class="font-bold uppercase text-black mt-8 mb-4">profile</li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">login</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">sign up</a>
+            </li>
+            <li class="capitalize text-sm pb-2 footer-hover">
+              <a href="" class="footer-hover">privacy policy</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover uppercase">t&c</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /////////// -->
+      <div
+        class="w-full text-[0.9rem] font-[playfair] border-t h-10 flex items-center justify-center text-black md:text-lg"
+      >
+        <p>
+          &copy; <span class="footer-date text-pink-600"></span> Shopwill
+          clothing All rights reserved
+        </p>
+      </div>
+    </footer>
   </body>
 </html>
