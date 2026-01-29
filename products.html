@@ -7,12 +7,262 @@
     <script src="./src/products.js" type="module" defer></script>
   </head>
   <body>
-    <button id="all" class="w-20 h-6 border">all</button>
-    <button id="hoodie" class="w-20 h-6 border">hoddie</button>
-    <button id="shirt" class="w-20 h-6 border">shirt</button>
-    <button id="pants" class="w-20 h-6 border">pants</button>
-    <button class="w-20 h-6 border"><a href="./index.html">home</a></button>
+    <!-- HEADER START -->
+    <header class="fixed top-0 left-0 w-full z-50">
+      <div
+        class="h-16 flex justify-between items-center px-4 text-xl bg-white md:h-20"
+      >
+        <div class="flex items-center gap-4">
+          <button id="navbar" class="md:hidden">
+            <i
+              class="fas fa-bars cursor-pointer hover:text-pink-600 transition-colors duration-300"
+            ></i>
+          </button>
 
-    <div id="container"></div>
+          <div class="bg-logo bg-cover bg-center h-10 w-20"></div>
+        </div>
+
+        <div
+          class="text-[0.8rem] capitalize font-semibold hidden md:block lg:text-[15px]"
+        >
+          <ul class="flex gap-8 lg:gap-15">
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              <a href="./index.html">home</a>
+            </li>
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              <a href="./products.html">shop</a>
+            </li>
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              our story
+            </li>
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              blog
+            </li>
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              contact
+            </li>
+          </ul>
+        </div>
+
+        <div class="flex items-center gap-6 cursor-pointer">
+          <i
+            class="fa-regular fa-user hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+          ></i>
+          <div class="relative size-10 flex justify-center items-center">
+            <i
+              class="fa-solid fa-bag-shopping text-2xl hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            ></i>
+            <div
+              class="absolute top-0 text-white text-[0.5rem] font-bold right-0 bg-black size-4 flex items-center justify-center rounded-full"
+            >
+              0
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- END OF HEADER -->
+    <!-- NAVIGATION -->
+    <!-- MOBILE NAV -->
+    <nav
+      class="bg-white/50 h-screen w-[80%] fixed z-50 top-0 left-0 pt-10 px-4 overflow-hidden -translate-x-full backdrop-blur-sm"
+      id="side-bar"
+    >
+      <li class="mb-10 text-2xl text-red-800 cursor-pointer" id="close-nav">
+        <i class="fa-solid fa-x"></i>
+      </li>
+      <ul class="flex flex-col">
+        <li
+          class="text-lg font-[playfair] uppercase font-bold flex items-center justify-center h-10 border-b nav-hover"
+        >
+          <a href="./index.html" class="w-full h-full flex items-center"
+            >home</a
+          >
+        </li>
+        <li
+          class="text-lg font-[playfair] uppercase font-bold h-10 nav-hover flex items-center cursor-pointer"
+          id="shop"
+        >
+          <div class="flex justify-between items-center w-full">
+            <p>shop</p>
+            <i class="fa-solid fa-angle-down"></i>
+          </div>
+        </li>
+        <div
+          class="overflow-hidden font-[outfit] h-0 transition-all duration-700"
+          id="nav-category"
+        >
+          <ul class="capitalize flex flex-col">
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html" class="flex items-center h-full w-full"
+                >t-shirt</a
+              >
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">hoodies</a>
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">jackets</a>
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">pants</a>
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">footwears</a>
+            </li>
+          </ul>
+        </div>
+        <li
+          class="text-lg font-[playfair] uppercase font-bold flex items-center justify-center h-10 border-t border-b nav-hover"
+        >
+          <a href="" class="w-full h-full flex items-center">contact</a>
+        </li>
+        <li
+          class="text-lg font-[playfair] uppercase font-bold flex items-center justify-center h-10 nav-hover"
+        >
+          <a href="" class="w-full h-full flex items-center">blogs</a>
+        </li>
+      </ul>
+
+      <div class="mt-10 absolute bottom-20 left-0 w-full px-4">
+        <button
+          class="bg-black text-white w-full h-10 uppercase hover:text-pink-600 transition-colors duration-300"
+        >
+          <a href=""> sign in</a>
+        </button>
+      </div>
+    </nav>
+    <!-- END OF MOBILE NAVS -->
+
+    <!-- PRODUCT HERO -->
+    <div
+      class="bg-[url('/src/assets/mike-von-bWUOx0SaSAk-unsplash.jpg')] h-[70vh] w-full bg-cover bg-center bg-black/50 bg-blend-overlay mt-20 lg:bg-position-[center_-10rem] flex items-center justify-center text-white font-bold font-[outfit] text-4xl uppercase"
+    >
+      <div class="text-center">
+        <h1>made just for you</h1>
+        <p class="text-[1rem] capitalize mt-4">
+          level up your style with our premuim wears
+        </p>
+      </div>
+    </div>
+    <!-- END OF PRODUCT HERO -->
+
+    <!-- PRODUCT TYPES -->
+    <section class="pt-5 px-4">
+      <div class="lg:flex lg:mt-0">
+        <div class="flex gap-3 flex-wrap w-full btns mb-5">
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              all
+            </button>
+          </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              t-shirts
+            </button>
+          </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              joggers
+            </button>
+          </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              hoodies
+            </button>
+          </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              pants
+            </button>
+          </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              caps
+            </button>
+          </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              jacket
+            </button>
+          </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              sweat-shirts
+            </button>
+          </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              shirts
+            </button>
+          </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              footwears
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between mt-4 gap-3">
+          <select name="" id="sortDropdown" class="border rounded-2xl">
+            <option value="id:asc" selected>Sort By</option>
+            <option value="product_name:asc">Name: A-Z</option>
+            <option value="product_name:desc">Name: Z-A</option>
+            <option value="product_price:asc">Price: L-H</option>
+            <option value="product_price:desc">Price: H-L</option>
+          </select>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="search"
+            class="border rounded-2xl text-center w-25"
+          />
+        </div>
+      </div>
+
+      <!-- ///////////////// -->
+
+      <div
+        id="all-products"
+        class="grid grid-cols-2 gap-5 ssm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4 mt-10"
+      ></div>
+      <div
+        id="paginationed-controls"
+        class="flex flex-wrap items-center justify-center mt-10"
+      ></div>
+      <div
+        class="w-full h-50 text-center items-center justify-center text-lg font-bold font-[monteseerat] text-gray-500 md:text-xl lg:text-2xl hidden"
+        id="no-products"
+      ></div>
+    </section>
   </body>
 </html>

@@ -6,7 +6,6 @@
     <title>shopwill</title>
     <link rel="stylesheet" href="/src/style.css" />
     <script type="module" src="/src/main.js" defer></script>
-    <script type="module" src="/src/prodUpload.js" defer></script>
   </head>
   <body>
     <!-- HEADER START -->
@@ -29,19 +28,22 @@
           <div class="bg-logo bg-cover bg-center h-10 w-20"></div>
         </div>
 
-        <div
+        <!-- NAVIGATIONS -->
+
+        <!-- DESKTOP NAVS -->
+        <nav
           class="text-[0.8rem] capitalize font-semibold hidden md:block lg:text-[15px]"
         >
           <ul class="flex gap-8 lg:gap-15">
             <li
               class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
             >
-              home
+              <a href="./index.html">home</a>
             </li>
             <li
               class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
             >
-              shop
+              <a href="./products.html">shop</a>
             </li>
             <li
               class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
@@ -59,12 +61,9 @@
               contact
             </li>
           </ul>
-        </div>
-
+        </nav>
+        <!-- END OF NAVIGATIONS -->
         <div class="flex items-center gap-6 cursor-pointer">
-          <i
-            class="fa-solid fa-search hover:text-pink-600 transition-colors duration-300 cursor-pointer"
-          ></i>
           <i
             class="fa-regular fa-user hover:text-pink-600 transition-colors duration-300 cursor-pointer"
           ></i>
@@ -82,6 +81,78 @@
       </div>
     </header>
     <!-- END OF HEADER -->
+
+    <!-- NAVIGATION -->
+    <!-- MOBILE NAV -->
+    <nav
+      class="bg-white/50 h-screen w-[80%] fixed z-50 top-0 left-0 pt-10 px-4 overflow-hidden -translate-x-full backdrop-blur-sm"
+      id="side-bar"
+    >
+      <li class="mb-10 text-2xl text-red-800 cursor-pointer" id="close-nav">
+        <i class="fa-solid fa-x"></i>
+      </li>
+      <ul class="flex flex-col">
+        <li
+          class="text-lg font-[playfair] uppercase font-bold flex items-center justify-center h-10 border-b nav-hover"
+        >
+          <a href="./index.html" class="w-full h-full flex items-center"
+            >home</a
+          >
+        </li>
+        <li
+          class="text-lg font-[playfair] uppercase font-bold h-10 nav-hover flex items-center justify-between"
+          id="shop"
+        >
+          <div class="flex justify-between items-center w-full">
+            <p>shop</p>
+            <i class="fa-solid fa-angle-down"></i>
+          </div>
+        </li>
+        <div
+          class="overflow-hidden font-[outfit] h-0 transition-all duration-700"
+          id="nav-category"
+        >
+          <ul class="capitalize flex flex-col">
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html" class="flex items-center h-full w-full"
+                >t-shirt</a
+              >
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">hoodies</a>
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">jackets</a>
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">pants</a>
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">footwears</a>
+            </li>
+          </ul>
+        </div>
+        <li
+          class="text-lg font-[playfair] uppercase font-bold flex items-center justify-center h-10 border-t border-b nav-hover"
+        >
+          <a href="" class="w-full h-full flex items-center">contact</a>
+        </li>
+        <li
+          class="text-lg font-[playfair] uppercase font-bold flex items-center justify-center h-10 nav-hover"
+        >
+          <a href="" class="w-full h-full flex items-center">blogs</a>
+        </li>
+      </ul>
+
+      <div class="mt-10 absolute bottom-20 left-0 w-full px-4">
+        <button
+          class="bg-black text-white w-full h-10 uppercase hover:text-pink-600 transition-colors duration-300"
+        >
+          <a href=""> sign in</a>
+        </button>
+      </div>
+    </nav>
+    <!-- END OF MOBILE NAVS -->
 
     <!-- HERO  -->
     <main class="mt-20">
@@ -480,28 +551,28 @@
       <div class="md:grid md:grid-cols-2 gap-x-4 md:px-10 cursor-pointer">
         <div class="w-full h-50 mt-4 overflow-hidden">
           <div class="our-collections bg-[url('/src/assets/hoodie.jpg')]">
-            hoodies
+            <a href="./products.html">hoodies</a>
           </div>
         </div>
         <div class="w-full h-50 mt-4 overflow-hidden">
           <div
             class="our-collections bg-[url('/src/assets/eye-speak-Ba8JB_A7www-unsplash.jpg')]"
           >
-            t-shirts
+            <a href="./products.html"> t-shirts</a>
           </div>
         </div>
         <div class="w-full h-50 mt-4 overflow-hidden">
           <div
             class="our-collections bg-[url('/src/assets/cgxl-media-92_tCTr9rtw-unsplash.jpg')]"
           >
-            jackets
+            <a href="./products.html"> jackets</a>
           </div>
         </div>
         <div class="w-full h-50 mt-4 overflow-hidden">
           <div
             class="our-collections bg-[url('/src/assets/bbiddac-M7m40TYfx1o-unsplash.jpg')]"
           >
-            pants
+            <a href="./products.html">pants</a>
           </div>
         </div>
 
@@ -509,14 +580,14 @@
           <div
             class="our-collections bg-[url('/src/assets/taylor-smith-aDZ5YIuedQg-unsplash.jpg')]"
           >
-            sneakers
+            <a href="./products.html"> sneakers</a>
           </div>
         </div>
         <div class="w-full h-50 mt-4 overflow-hidden">
           <div
             class="our-collections bg-[url('/src/assets/markus-winkler-PQmXUxmfR44-unsplash.jpg')]"
           >
-            more
+            <a href="./products.html"> more</a>
           </div>
         </div>
       </div>
@@ -658,6 +729,7 @@
         <div class="grid grid-cols-3 w-[80%] gap-2 mx-auto md:w-[60%]">
           <input
             type="text"
+            id="sub-email"
             class="col-span-2 bg-gray-300 px-3 text-center outline-none text-black"
             placeholder="Enter your active email address"
           /><button

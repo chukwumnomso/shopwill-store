@@ -1,56 +1,22 @@
 import "./style.css";
-import { uploadproduct } from "./prodUpload";
-import { renderProduct } from "./prodUpload";
-import { currentPage } from "./prodUpload";
 import axios from "axios";
-
+import "./prodUpload";
 // ///////////////////////////////////////////////////////////
-
-const admin = document.getElementById("admin");
-
-const closeBtn = document.getElementById("close");
-
-if (closeBtn) {
-  closeBtn.addEventListener("click", () => {
-    const admin = document.getElementById("admin");
-    renderProduct(currentPage)
-      .then((get) => {
-        const solds = document.querySelectorAll(".sold");
-        solds.forEach((sold) => {
-          sold.classList.add("hidden");
-        });
-      })
-      .catch((error) => console.error(error));
-    admin.style.display = "none";
-  });
-}
-
-const nav = document.getElementById("navbar");
-if (nav) {
-  nav.addEventListener("click", () => {
-    const admin = document.getElementById("admin");
-    admin.style.display = "block";
-  });
-}
 
 // /////////////////////////////////////////////////////
 
 export function price() {
   const price = document.getElementById("price").value;
-
   return price;
 }
-
 export function prodName() {
   const prodName = document.getElementById("productname").value;
   return prodName;
 }
-// console.log(prodName());
 export function prodId() {
   const prodId = document.getElementById("prodId").value;
   return prodId;
 }
-
 export const productImg = document.getElementById("product-img");
 
 // HERO IMAGE SLIDE LOGIC //
@@ -58,44 +24,43 @@ export const productImg = document.getElementById("product-img");
 const wrapper = document.getElementById("slider-wrapper");
 let slides = document.querySelectorAll(".slide");
 
-// 1. Clone first and last slides
-const firstClone = slides[0].cloneNode(true);
-const lastClone = slides[slides.length - 1].cloneNode(true);
+if (slides === true) {
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
+} else {
+}
+if (wrapper === true) {
+  wrapper.appendChild(firstClone);
+  wrapper.insertBefore(lastClone, slides[0]);
+}
 
-wrapper.appendChild(firstClone);
-wrapper.insertBefore(lastClone, slides[0]);
-
-// 2. Add clones to the DOM
-
-// 3. Variables for tracking
-let index = 1; // Start at 1 because slide 0 is now the clone of the last image
-const transitionTime = 500; // Match this to your CSS transition speed
-
-// Initialize position to show the real first slide (index 1)
-wrapper.style.transform = `translateX(${-index * 100}%)`;
-
-function moveSlide(step) {
-  index += step;
-  wrapper.style.transition = `transform ${transitionTime}ms ease-in-out`;
+let index = 1;
+const transitionTime = 500;
+if (wrapper) {
   wrapper.style.transform = `translateX(${-index * 100}%)`;
 }
 
-// 4. The "Seamless" Jump Logic
-wrapper.addEventListener("transitionend", () => {
-  // If we just slid into the "First Image Clone" at the very end
-  if (index >= wrapper.children.length - 1) {
-    wrapper.style.transition = "none"; // Turn off animation
-    index = 1; // Teleport back to real first slide
+function moveSlide(step) {
+  index += step;
+  if (wrapper) {
+    wrapper.style.transition = `transform ${transitionTime}ms ease-in-out`;
     wrapper.style.transform = `translateX(${-index * 100}%)`;
   }
-
-  // If we just slid into the "Last Image Clone" at the very beginning
-  if (index <= 0) {
-    wrapper.style.transition = "none";
-    index = wrapper.children.length - 2; // Teleport to real last slide
-    wrapper.style.transform = `translateX(${-index * 100}%)`;
-  }
-});
+}
+if (wrapper) {
+  wrapper.addEventListener("transitionend", () => {
+    if (index >= wrapper.children.length - 1) {
+      wrapper.style.transition = "none";
+      index = 1;
+      wrapper.style.transform = `translateX(${-index * 100}%)`;
+    }
+    if (index <= 0) {
+      wrapper.style.transition = "none";
+      index = wrapper.children.length - 2;
+      wrapper.style.transform = `translateX(${-index * 100}%)`;
+    }
+  });
+}
 
 const slide = setInterval(() => {
   moveSlide(1);
@@ -106,4 +71,39 @@ const slide = setInterval(() => {
 const date = new Date();
 const year = date.getFullYear();
 const footerDate = document.querySelector(".footer-date");
-footerDate.textContent = year;
+if (footerDate) {
+  footerDate.textContent = year;
+}
+
+// SIDEBAR LOGIC
+
+export function sideBar() {
+  const navBar = document.getElementById("navbar");
+  const sideBar = document.getElementById("side-bar");
+  const closeNavBar = document.getElementById("close-nav");
+  const transition = "transition-transform duration-700 ease-in-out";
+  if (navBar) {
+    navBar.addEventListener("click", () => {
+      sideBar.classList.remove("-translate-x-full");
+      sideBar.classList.add(...transition.split(" "));
+    });
+    closeNavBar.addEventListener("click", () => {
+      sideBar.classList.add("-translate-x-full");
+    });
+  }
+}
+
+sideBar();
+export function navShop() {
+  const navCategory = document.getElementById("nav-category");
+  const shop = document.getElementById("shop");
+
+  shop.addEventListener("click", (e) => {
+    e.stopImmediatePropagation();
+    navCategory.classList.toggle("h-0");
+    navCategory.classList.toggle("mb-4");
+    console.log(navCategory);
+  });
+}
+
+navShop();

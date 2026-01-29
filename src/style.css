@@ -65,4 +65,7 @@
   .footer-hover {
     @apply md:text-[1rem] hover:text-pink-600 transition-colors duration-300 text-black font-[playfair] text-[0.9rem];
   }
+  .nav-hover {
+    @apply hover:pl-4 transition-all duration-300;
+  }
 }

@@ -1,7 +1,4 @@
-import {
-  AuthInvalidCredentialsError,
-  createClient,
-} from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = "https://jyftjplwefbyzhaoprgb.supabase.co";
 const supabaseKey = "sb_publishable_UBJCM7-3VAcTquVoWS3bog_c2uqtM2H";
 export const supabase = createClient(supabaseUrl, supabaseKey);
@@ -21,10 +18,8 @@ if (productImg) {
     if (e.target.files.length === 0) {
       console.log("No file selected!");
     }
-
     const file = e.target.files[0];
     uploadproduct(file);
-    console.log(file);
   });
 }
 
@@ -84,8 +79,6 @@ export async function renderProduct(page) {
     prodcard.innerHTML = `<div
         class="rounded-xl  capitalize relative h-full grid grid-rows-2   "
       >
-<div class=" items-center justify-center text-sm font-[outfit] text-white bg-red-600 mt-3 absolute top-0 left-0  h-5 w-15 text-center z-10 sold " 
-      >sold</div>
        <div class=" flex items-center justify-center overflow-hidden row-span-3 "> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></div>
 
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${card.product_name}</h2><div
@@ -140,25 +133,11 @@ export async function renderProduct(page) {
 renderProduct(currentPage)
   .then((get) => {
     const solds = document.querySelectorAll(".sold");
-    if (solds) {
+    if (solds === true) {
       solds.forEach((sold) => {
         sold.classList.add("hidden");
       });
     } else {
     }
   })
-  .catch((error) => console.error(error));
-
-// COLLECTION IMAGES
-
-// const collectionImg = document.getElementById("product-img");
-
-// collectionImg.addEventListener("change", (e) => {
-//   if (e.target.files.length === 0) {
-//     console.log("No file selected!");
-//   }
-
-//   const file = e.target.files[0];
-//   uploadproduct(file);
-//   console.log(file);
-// });
+  .catch((error) => {});
