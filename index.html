@@ -64,19 +64,22 @@
         </nav>
         <!-- END OF NAVIGATIONS -->
         <div class="flex items-center gap-6 cursor-pointer">
-          <i
-            class="fa-regular fa-user hover:text-pink-600 transition-colors duration-300 cursor-pointer"
-          ></i>
-          <div class="relative size-10 flex justify-center items-center">
+          <button>
             <i
-              class="fa-solid fa-bag-shopping text-2xl hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+              class="fa-regular fa-user hover:text-pink-600 transition-colors duration-300 cursor-pointer"
             ></i>
-            <div
-              class="absolute top-0 text-white text-[0.5rem] font-bold right-0 bg-black size-4 flex items-center justify-center rounded-full"
-            >
-              0
+          </button>
+          <button>
+            <div class="relative size-10 flex justify-center items-center">
+              <img src="src/assets/cartbag-1.jpg" alt="" id="cart-bag" />
+              <div
+                class="absolute top-0 text-white text-[0.5rem] font-bold right-0 bg-black size-4 flex items-center justify-center rounded-full"
+                id="cartCount"
+              >
+                0
+              </div>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </header>
@@ -708,6 +711,18 @@
         </ul>
       </div>
     </section>
+    <div
+      class="w-full h-screen z-50 bg-black/40 hidden fixed top-0 left-0"
+      id="modal"
+    ></div>
+    <div
+      id="cartcontainer"
+      class="h-full fixed w-[80%] top-0 right-0 z-50 translate-x-full transition-transform duration-500 ease-in-out overflow-scroll bg-white px-4 pt-5 text-center"
+    >
+      <p class="font-bold uppercase mb-15">shopping cart</p>
+
+      <div class="grid grid-cols-2 gap-4" id="sideCart"></div>
+    </div>
     <!-- OUR BRAND SECTION -->
 
     <!-- FOOTER -->
@@ -754,16 +769,16 @@
         </p>
         <div class="flex gap-4 text-xl mt-6">
           <div class="socials-div">
-            <i class="fa-brands fa-instagram socials"></i>
+            <a href=""><i class="fa-brands fa-instagram socials"></i></a>
           </div>
           <div class="socials-div">
-            <i class="fa-brands fa-x-twitter socials"></i>
+            <a href=""> <i class="fa-brands fa-x-twitter socials"></i></a>
           </div>
           <div class="socials-div">
-            <i class="fa-brands fa-linkedin-in socials"></i>
+            <a href=""><i class="fa-brands fa-linkedin-in socials"></i></a>
           </div>
           <div class="socials-div">
-            <i class="fa-brands fa-tiktok socials"></i>
+            <a href=""> <i class="fa-brands fa-tiktok socials"></i></a>
           </div>
         </div>
       </div>

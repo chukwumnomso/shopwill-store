@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="module" src="./src/cart.js" defer></script>
+    <!-- <script type="module" src="./src/prodUpload.js" defer></script> -->
+  </head>
+  <body>
+    <!-- HEADER START -->
+    <header class="fixed top-0 left-0 w-full z-50">
+      <div
+        class="h-16 flex justify-between items-center px-4 text-xl bg-white md:h-20"
+      >
+        <div class="flex items-center gap-4">
+          <button id="navbar" class="md:hidden">
+            <i
+              class="fas fa-bars cursor-pointer hover:text-pink-600 transition-colors duration-300"
+            ></i>
+          </button>
+
+          <div class="bg-logo bg-cover bg-center h-10 w-20"></div>
+        </div>
+
+        <!-- NAVIGATIONS -->
+
+        <!-- DESKTOP NAVS -->
+        <nav
+          class="text-[0.8rem] capitalize font-semibold hidden md:block lg:text-[15px]"
+        >
+          <ul class="flex gap-8 lg:gap-15">
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              <a href="./index.html">home</a>
+            </li>
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              <a href="./products.html">shop</a>
+            </li>
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              our story
+            </li>
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              blog
+            </li>
+            <li
+              class="hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            >
+              contact
+            </li>
+          </ul>
+        </nav>
+        <!-- END OF NAVIGATIONS -->
+        <div class="flex items-center gap-6 cursor-pointer">
+          <button>
+            <i
+              class="fa-regular fa-user hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+            ></i>
+          </button>
+          <button>
+            <div class="relative size-10 flex justify-center items-center">
+              <img src="src/assets/cartbag-1.jpg" alt="" id="cart-bag" />
+              <div
+                class="absolute top-0 text-white text-[0.5rem] font-bold right-0 bg-black size-4 flex items-center justify-center rounded-full"
+                id="cartCount"
+              >
+                0
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </header>
+    <!-- END OF HEADER -->
+
+    <!-- NAVIGATION -->
+    <!-- MOBILE NAV -->
+    <nav
+      class="bg-white/50 h-screen w-[80%] fixed z-50 top-0 left-0 pt-10 px-4 overflow-hidden -translate-x-full backdrop-blur-sm"
+      id="side-bar"
+    >
+      <li class="mb-10 text-2xl text-red-800 cursor-pointer" id="close-nav">
+        <i class="fa-solid fa-x"></i>
+      </li>
+      <ul class="flex flex-col">
+        <li
+          class="text-lg font-[playfair] uppercase font-bold flex items-center justify-center h-10 border-b nav-hover"
+        >
+          <a href="./index.html" class="w-full h-full flex items-center"
+            >home</a
+          >
+        </li>
+        <li
+          class="text-lg font-[playfair] uppercase font-bold h-10 nav-hover flex items-center justify-between"
+          id="shop"
+        >
+          <div class="flex justify-between items-center w-full">
+            <p>shop</p>
+            <i class="fa-solid fa-angle-down"></i>
+          </div>
+        </li>
+        <div
+          class="overflow-hidden font-[outfit] h-0 transition-all duration-700"
+          id="nav-category"
+        >
+          <ul class="capitalize flex flex-col">
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html" class="flex items-center h-full w-full"
+                >t-shirt</a
+              >
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">hoodies</a>
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">jackets</a>
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">pants</a>
+            </li>
+            <li class="flex items-center h-8 nav-hover">
+              <a href="./products.html">footwears</a>
+            </li>
+          </ul>
+        </div>
+        <li
+          class="text-lg font-[playfair] uppercase font-bold flex items-center justify-center h-10 border-t border-b nav-hover"
+        >
+          <a href="" class="w-full h-full flex items-center">contact</a>
+        </li>
+        <li
+          class="text-lg font-[playfair] uppercase font-bold flex items-center justify-center h-10 nav-hover"
+        >
+          <a href="" class="w-full h-full flex items-center">blogs</a>
+        </li>
+      </ul>
+
+      <div class="mt-10 absolute bottom-20 left-0 w-full px-4">
+        <button
+          class="bg-black text-white w-full h-10 uppercase hover:text-pink-600 transition-colors duration-300"
+        >
+          <a href=""> sign in</a>
+        </button>
+      </div>
+    </nav>
+    <!-- END OF MOBILE NAVS -->
+
+    <!-- DISPLAY ITEM -->
+    <h2 class="mb-4 ml-4 font-[outfit] mt-25 uppercase">
+      home / <span id="prodName"></span>
+    </h2>
+    <div id="item-show" class="px-4 md:grid grid-cols-2 gap-8"></div>
+    <div
+      class="w-full h-screen z-50 bg-black/40 hidden fixed top-0 left-0"
+      id="modal"
+    ></div>
+    <div
+      id="cartcontainer"
+      class="h-full fixed w-[80%] top-0 right-0 z-50 translate-x-full transition-transform duration-500 ease-in-out overflow-scroll bg-white px-4 pt-5 text-center"
+    >
+      <p class="font-bold uppercase mb-15">shopping cart</p>
+
+      <div class="grid grid-cols-2 gap-4" id="sideCart"></div>
+    </div>
+  </body>
+</html>

@@ -55,19 +55,23 @@
         </div>
 
         <div class="flex items-center gap-6 cursor-pointer">
-          <i
-            class="fa-regular fa-user hover:text-pink-600 transition-colors duration-300 cursor-pointer"
-          ></i>
-          <div class="relative size-10 flex justify-center items-center">
+          <button>
             <i
-              class="fa-solid fa-bag-shopping text-2xl hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+              class="fa-regular fa-user hover:text-pink-600 transition-colors duration-300 cursor-pointer"
             ></i>
-            <div
-              class="absolute top-0 text-white text-[0.5rem] font-bold right-0 bg-black size-4 flex items-center justify-center rounded-full"
-            >
-              0
+          </button>
+          <button>
+            <div class="relative size-10 flex justify-center items-center">
+              <i
+                class="fa-solid fa-bag-shopping text-2xl hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+              ></i>
+              <div
+                class="absolute top-0 text-white text-[0.5rem] font-bold right-0 bg-black size-4 flex items-center justify-center rounded-full"
+              >
+                0
+              </div>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </header>
@@ -231,6 +235,13 @@
               footwears
             </button>
           </div>
+          <div
+            class="min-w-15 border rounded-2xl flex items-center justify-center py-0.5 px-0.5"
+          >
+            <button class="w-full rounded-2xl uppercase text-sm px-2">
+              <a href="./cart.html"> Cart</a>
+            </button>
+          </div>
         </div>
         <div class="flex items-center justify-between mt-4 gap-3">
           <select name="" id="sortDropdown" class="border rounded-2xl">
@@ -264,5 +275,132 @@
         id="no-products"
       ></div>
     </section>
+    <!-- FOOTER -->
+    <!-- FOOTER -->
+
+    <footer class="mt-20 px-4">
+      <div class="w-[80%] text text-center mx-auto">
+        <h2 class="text-black font-[playfair] font-bold text-xl">
+          Let's get in touch
+        </h2>
+        <p class="font-bold">
+          Subscribe to get special
+          <span class="text-xl text-pink-600 font-[playfair]">OFFERS</span>,
+          free giveaways, and once-in-a-lifetime
+          <span class="text-xl font-[playfair] text-pink-600">DEALS</span>.
+        </p>
+      </div>
+
+      <div class="mt-4 text-center">
+        <div class="grid grid-cols-3 w-[80%] gap-2 mx-auto md:w-[60%]">
+          <input
+            type="text"
+            id="sub-email"
+            class="col-span-2 bg-gray-300 px-3 text-center outline-none text-black"
+            placeholder="Enter your active email address"
+          /><button
+            class="bg-black text-white h-10 col-span-1 hover:text-pink-600 transition-colors duration-300 cursor-pointer"
+          >
+            Subscribe
+          </button>
+        </div>
+      </div>
+
+      <!-- /////// -->
+
+      <div
+        class="text-black font-[playfair] mt-10 w-[80%] md:w-[60%] lg:w-[50%]"
+      >
+        <img src="./src/assets/shop log.png" alt="" class="size-30" />
+        <p class="font-bold">
+          Elevate your style with
+          <span class="text-pink-600 uppercase font-bold">shopwill</span>! 💼✨
+          Cutting-edge designs, premium fabrics, and vibes that match your
+          unique flair. From streetwear to luxe, we've got you covered.
+        </p>
+        <div class="flex gap-4 text-xl mt-6">
+          <div class="socials-div">
+            <a href=""><i class="fa-brands fa-instagram socials"></i></a>
+          </div>
+          <div class="socials-div">
+            <a href=""> <i class="fa-brands fa-x-twitter socials"></i></a>
+          </div>
+          <div class="socials-div">
+            <a href=""><i class="fa-brands fa-linkedin-in socials"></i></a>
+          </div>
+          <div class="socials-div">
+            <a href=""> <i class="fa-brands fa-tiktok socials"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- /////// -->
+
+      <div class="sm:grid grid-cols-2 md:grid-cols-3">
+        <div>
+          <ul>
+            <li class="font-bold uppercase text-black mt-8 mb-4">shop</li>
+            <li class="capitalize text-sm pb-2">
+              <a href="./products.html" class="footer-hover">all products</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">hoodies</a>
+            </li>
+            <li class="capitalize text-sm pb-2 footer-hover">
+              <a href="" class="footer-hover">t-shirt</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">jackets</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">sneakers</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li class="font-bold uppercase text-black mt-8 mb-4">company</li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">our story</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">blog</a>
+            </li>
+            <li class="capitalize text-sm pb-2 footer-hover">
+              <a href="" class="footer-hover">contact</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover uppercase">faq</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li class="font-bold uppercase text-black mt-8 mb-4">profile</li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">login</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover">sign up</a>
+            </li>
+            <li class="capitalize text-sm pb-2 footer-hover">
+              <a href="" class="footer-hover">privacy policy</a>
+            </li>
+            <li class="capitalize text-sm pb-2">
+              <a href="" class="footer-hover uppercase">t&c</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /////////// -->
+      <div
+        class="w-full text-[0.9rem] font-[playfair] border-t h-10 flex items-center justify-center text-black md:text-lg"
+      >
+        <p>
+          &copy; <span class="footer-date text-pink-600"></span> Shopwill
+          clothing All rights reserved
+        </p>
+      </div>
+    </footer>
   </body>
 </html>
