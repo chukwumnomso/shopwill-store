@@ -47,7 +47,7 @@ export async function getItems(page, ...items) {
        <div class=" flex items-center justify-center overflow-hidden row-span-3 "><a href="/shopwill-store/cart.html?id=${d.id}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
 
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${d.product_name}</h2><button
-    > <img src="src/assets/cartbag-1.jpg" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
+    > <img src="/src/assets/cartbag-1.jpg" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
     <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${d.product_price}</p></div>
          <p class="text-[0.7rem] text-pink-500  font-bold hidden">${d.id}</p>
       </div></div>
@@ -167,7 +167,7 @@ async function allProduct(page) {
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${d.product_name}</h2>
      
    <button
-    > <img src="src/assets/cartbag-1.jpg" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
+    > <img src="/src/assets/cartbag-1.jpg" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
 
     <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${d.product_price}</p></div>
          <p class="text-[0.7rem] text-pink-500  font-bold hidden">${d.id}</p>
@@ -255,7 +255,7 @@ async function fetchProducts(sortBy = "name", direction = "asc", page) {
        <div class=" flex items-center justify-center overflow-hidden row-span-3 "><a href="/shopwill-store/cart.html?id=${item.id}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
 
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${item.product_name}</h2><button
-    > <img src="src/assets/cartbag-1.jpg" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
+    > <img src="/src/assets/cartbag-1.jpg" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
 
     <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${item.product_price}</p></div>
          <p class="text-[0.7rem] text-pink-500  font-bold hidden">${item.id}</p>
