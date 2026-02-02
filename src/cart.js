@@ -1,14 +1,16 @@
 import { supabase } from "./prodUpload";
 
+import { cartIcon } from "./prodUpload";
+
 // 1. Get the ID from the URL (e.g., product.html?id=5)
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 const showItem = document.getElementById("item-show");
+
 window.updateCart = updateCart;
 
 async function loadProductDetails() {
   if (!productId) return;
-
   // 2. Fetch only the item that matches the ID
   const { data: item, error } = await supabase
     .from("products")
@@ -46,7 +48,7 @@ async function loadProductDetails() {
     <option value="">2XL</option>
   </select>
 </div>
-<button class="bg-black text-white font-bold w-full h-12 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="/assets/cartbag-1.jpg" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
+<button class="bg-black text-white font-bold w-full h-12 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
 
   showItem.appendChild(productImage);
   showItem.appendChild(productDetails);
@@ -54,32 +56,41 @@ async function loadProductDetails() {
 loadProductDetails();
 
 // /////////////////////////////////////////////////
-
-const cartContainer = document.getElementById("cartcontainer");
-const sideCart = document.getElementById("sideCart");
-const modal = document.getElementById("modal");
-const cartBag = document.getElementById("cart-bag");
-if (cartBag) {
-  cartBag.addEventListener("click", () => {
-    addToSideCart();
-  });
+export function cartbag() {
+  const cartBag = document.getElementById("cart-bag");
+  if (cartBag) {
+    cartBag.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      addToSideCart();
+    });
+  }
 }
+cartbag();
 
-if (modal) {
-  modal.addEventListener("click", () => {
-    cartContainer.classList.toggle("translate-x-full");
-    modal.classList.toggle("hidden");
-    cartCount();
-  });
+export function modal() {
+  const cartContainer = document.getElementById("cartcontainer");
+  const modal = document.getElementById("modal");
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      cartContainer.classList.toggle("translate-x-full");
+      modal.classList.toggle("hidden");
+      cartCount();
+    });
+  }
 }
+modal();
 
-async function addToSideCart() {
+export async function addToSideCart() {
+  const cartBag = document.getElementById("cart-bag");
+  const cartContainer = document.getElementById("cartcontainer");
+  const sideCart = document.getElementById("sideCart");
+  const modal = document.getElementById("modal");
   modal.classList.toggle("hidden");
   sideCart.innerHTML = "";
   cartContainer.classList.toggle("translate-x-full");
 
   const { data: items } = await supabase.from("cart_items").select("*");
-  console.log(items);
   cartBag.textContent = items.length;
 
   items.forEach((item) => {
@@ -101,7 +112,7 @@ async function addToSideCart() {
     <option value="">2XL</option>
   </select>
 </div>
-<button class="bg-black text-white text-[0.6rem] font-bold w-full h-6 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="addToCart()"> <img src="/assets/cartbag.jpg" alt="" class="rounded-full size-3 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
+<button class="bg-black text-white text-[0.6rem] font-bold w-full h-6 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="addToCart()"> <img src="${cartIcon}" alt="" class="rounded-full size-3 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
     if (sideCart) {
       cartContainer.appendChild(sideCart);
       sideCart.append(itemImage, productDetails);
@@ -109,7 +120,7 @@ async function addToSideCart() {
   });
 }
 
-async function updateCart() {
+export async function updateCart() {
   if (!productId) return;
 
   const { data: cartItem, error } = await supabase
@@ -135,10 +146,9 @@ async function updateCart() {
   addToSideCart();
 }
 
-async function cartCount() {
+export async function cartCount() {
   const cartCount = document.getElementById("cartCount");
   const { data: items } = await supabase.from("cart_items").select("*");
-  console.log(items.length);
   if (cartCount) {
     cartCount.textContent = items.length;
   }
