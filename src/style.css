@@ -5,7 +5,7 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
 @theme {
-  --background-image-logo: url("/src/assets/shop log.png");
+  --background-image-logo: url("/assets/shop log.png");
   --animate-infinite-scroll: infinite-scroll 30s linear infinite;
 
   @keyframes infinite-scroll {

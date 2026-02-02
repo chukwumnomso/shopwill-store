@@ -113,8 +113,8 @@ navShop();
 // ////////////////////////////////////////////////////////////////////////
 
 async function cartCount() {
-  const cartCount = document.getElementById("cartCount");
   const { data: items } = await supabase.from("cart_items").select("*");
+  const cartCount = document.getElementById("cartCount");
 
   if (cartCount) {
     cartCount.textContent = items.length;
