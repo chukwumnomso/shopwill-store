@@ -176,7 +176,7 @@ async function addToSideCart() {
     <option value="">2XL</option>
   </select>
 </div>
-<button class="bg-black text-white text-[0.6rem] font-bold w-full h-6 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="addToCart()"> <img src="./src/assets/cartbag-1.jpg" alt="" class="rounded-full size-3 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
+<button class="bg-black text-white text-[0.6rem] font-bold w-full h-6 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="addToCart()"> <img src="/src/assets/cartbag.jpg" alt="" class="rounded-full size-3 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
     if (sideCart) {
       cartContainer.appendChild(sideCart);
       sideCart.append(itemImage, productDetails);
