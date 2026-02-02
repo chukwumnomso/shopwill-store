@@ -4,6 +4,11 @@ import { all } from "axios";
 import { navShop } from "./main";
 import { sideBar } from "./main";
 import { cartIcon } from "./prodUpload";
+import { cartbag } from "./cart";
+import { modal } from "./cart";
+import { addToSideCart } from "./cart";
+import { updateCart } from "./cart";
+import { cartCount } from "./cart";
 
 // const allbtn = document.getElementById("all");
 
@@ -217,6 +222,7 @@ document.addEventListener(
   "DOMContentLoaded",
   allProduct(currentProductPage),
   allBtnInitialStyle(),
+  cartCount(),
 );
 
 // SORTING LOGIC

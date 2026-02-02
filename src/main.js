@@ -5,7 +5,7 @@ import { supabase } from "./prodUpload";
 import { cartbag } from "./cart";
 import { modal } from "./cart";
 import { addToSideCart } from "./cart";
-import { updateCart } from "./cart";
+// import { updateCart } from "./cart";
 import { cartCount } from "./cart";
 // ///////////////////////////////////////////////////////////
 
@@ -115,4 +115,5 @@ export function navShop() {
 
 navShop();
 
+cartCount();
 // ////////////////////////////////////////////////////////////////////////

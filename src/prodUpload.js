@@ -7,8 +7,16 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 import { prodName } from "./main";
 import { price } from "./main";
 import { prodId } from "./main";
+import { cartbag } from "./cart";
+import { modal } from "./cart";
+import { addToSideCart } from "./cart";
+import { updateCart } from "./cart";
+import { cartCount } from "./cart";
+import { sizes } from "./cart";
 
 // END OF IMPORTS
+
+window.updateCart = updateCart;
 
 export const base = import.meta.env.BASE_URL;
 export const cartIcon = `${base}assets/cartbag.jpg`;
@@ -79,13 +87,13 @@ export async function renderProduct(page) {
         .getPublicUrl(card.product_image);
       const prodImage = urlData.publicUrl;
       const prodcard = document.createElement("div");
-      prodcard.classList = "h-70 sm:h-80";
+      prodcard.classList = "h-70 sm:h-80 prodcard";
       prodcard.innerHTML = `<div
-        class="rounded-xl  capitalize relative h-full grid grid-rows-2   "
+        class="rounded-xl  capitalize relative h-full grid grid-rows-2"
       >
        <div class=" flex items-center justify-center overflow-hidden row-span-3 cursor-pointer"><a href="/shopwill-store/cart.html?id=${card.id}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
 
-        <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${card.product_name}</h2><button"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
+        <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${card.product_name}</h2><button class="cart-btn" data-id="${card.id}" data-name="${card.product_name}" data-price="${card.product_price}" data-image=${prodImage}> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"></button></div>
         
     <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${card.product_price}</p></div>    
          <p class="text-[0.7rem] text-pink-500  font-bold hidden">${card.id}</p>
@@ -119,17 +127,129 @@ export async function renderProduct(page) {
         });
         console.log(currentPage);
         renderProduct(currentPage)
-          .then((get) => {
-            const solds = document.querySelectorAll(".sold");
-            solds.forEach((sold) => {
-              sold.classList.add("hidden");
-            });
+          .then((ok) => {
+            async function card() {
+              const bottomCart = document.getElementById("bottom-cart");
+              const productCard = document.querySelectorAll(".prodcard");
+              productCard.forEach((prod) => {
+                prod.addEventListener("click", async (e) => {
+                  bottomCart.innerHTML = "";
+                  bottomCart.classList.toggle("translate-y-full");
+                  const modal = document.getElementById("bottom-modal");
+                  modal.classList.toggle("hidden");
+
+                  const btn = e.target.closest(".cart-btn");
+                  console.log(btn);
+                  if (btn) {
+                    const { data: item, error } = await supabase
+                      .from("products")
+                      .select("*")
+                      .eq("id", btn.dataset.id);
+                    console.log(item);
+                    const { data: urlData } = supabase.storage
+                      .from("productImage")
+                      .getPublicUrl(item[0].product_image);
+                    const prodImage = urlData.publicUrl;
+                    console.log(prodImage);
+                    const productImage = document.createElement("div");
+                    productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+                    const productDetails = document.createElement("div");
+                    productDetails.classList =
+                      "md:items-center md:h-full w-full md:flex";
+                    productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+  <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+
+<p class="text-green-600 mb-3 ">In Stock</p>
+  <div class="flex mb-4 gap-2 items-center">
+  <p class="text-sm font-semibold mb-3">size:</p>
+  <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+    <option value="S">S</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+    <option value="2XL ">2XL</option>
+  </select>
+</div>
+<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+                    bottomCart.append(productImage, productDetails);
+                  }
+                });
+              });
+            }
+            card();
           })
-          .catch((error) => console.error(error));
+          .catch((err) => console.error(err));
       };
       controls.appendChild(btn);
     }
   }
 }
 
-renderProduct(currentPage);
+renderProduct(currentPage)
+  .then((ok) => {
+    async function card() {
+      const bottomCart = document.getElementById("bottom-cart");
+      const productCard = document.querySelectorAll(".prodcard");
+      productCard.forEach((prod) => {
+        prod.addEventListener("click", async (e) => {
+          bottomCart.innerHTML = "";
+          bottomCart.classList.toggle("translate-y-full");
+          const modal = document.getElementById("bottom-modal");
+          modal.classList.toggle("hidden");
+
+          const btn = e.target.closest(".cart-btn");
+          console.log(btn);
+          if (btn) {
+            const { data: item, error } = await supabase
+              .from("products")
+              .select("*")
+              .eq("id", btn.dataset.id);
+            console.log(item);
+            const { data: urlData } = supabase.storage
+              .from("productImage")
+              .getPublicUrl(item[0].product_image);
+            const prodImage = urlData.publicUrl;
+            console.log(prodImage);
+            const productImage = document.createElement("div");
+            productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+            const productDetails = document.createElement("div");
+            productDetails.classList =
+              "md:items-center md:h-full w-full md:flex";
+            productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+  <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+
+<p class="text-green-600 mb-3 ">In Stock</p>
+  <div class="flex mb-4 gap-2 items-center">
+  <p class="text-sm font-semibold mb-3">size:</p>
+  <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+    <option value="S">S</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+    <option value="2XL ">2XL</option>
+  </select>
+</div>
+<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+            bottomCart.append(productImage, productDetails);
+          }
+        });
+      });
+    }
+    card();
+  })
+  .catch((err) => console.error(err));
+
+function bottomModal() {
+  const modal = document.getElementById("bottom-modal");
+  const cart = document.getElementById("bottom-cart");
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      e.stopImmediatePropagation;
+      modal.classList.toggle("hidden");
+      cart.classList.toggle("translate-y-full");
+    });
+  }
+}
+bottomModal();
