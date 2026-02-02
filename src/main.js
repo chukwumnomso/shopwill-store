@@ -112,15 +112,15 @@ navShop();
 
 // ////////////////////////////////////////////////////////////////////////
 
-// async function cartCount() {
-//   const cartCount = document.getElementById("cartCount");
-//   const { data: items } = await supabase.from("cart_items").select("*");
+async function cartCount() {
+  const cartCount = document.getElementById("cartCount");
+  const { data: items } = await supabase.from("cart_items").select("*");
 
-//   if (cartCount) {
-//     cartCount.textContent = items.length;
-//   }
-//   console.log(cartCount);
-// }
+  if (cartCount) {
+    cartCount.textContent = items.length;
+  }
+  console.log(cartCount);
+}
 
 cartCount();
 
