@@ -1,5 +1,5 @@
 import "./style.css";
-import { supabase } from "./prodUpload";
+import { getSupabase } from "./supabaseClient";
 import { all } from "axios";
 import { navShop } from "./main";
 import { sideBar } from "./main";
@@ -10,6 +10,7 @@ import { addToSideCart } from "./cart";
 import { updateCart } from "./cart";
 import { cartCount } from "./cart";
 
+const supabase = getSupabase();
 // const allbtn = document.getElementById("all");
 
 // ///////////////////FETCH CATEGORY LOGIC///////////////////////////////////
