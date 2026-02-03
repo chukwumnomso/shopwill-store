@@ -1,7 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = "https://jyftjplwefbyzhaoprgb.supabase.co";
-const supabaseKey = "sb_publishable_UBJCM7-3VAcTquVoWS3bog_c2uqtM2H";
-export const supabase = createClient(supabaseUrl, supabaseKey);
+import { getSupabase } from "./supabaseClient";
+const supabase = getSupabase();
 // END OF SUPABASE INITILIZATION
 
 import { prodName } from "./main";
@@ -16,7 +14,7 @@ import { sizes } from "./cart";
 
 // END OF IMPORTS
 
-window.updateCart = updateCart;
+window.updateCartd = updateCart;
 
 export const base = import.meta.env.BASE_URL;
 export const cartIcon = `${base}assets/cartbag.jpg`;
@@ -230,7 +228,7 @@ renderProduct(currentPage)
     <option value="2XL ">2XL</option>
   </select>
 </div>
-<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCartd();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
 
             bottomCart.append(productImage, productDetails);
           }
@@ -253,3 +251,35 @@ function bottomModal() {
   }
 }
 bottomModal();
+
+// async function updateCartd() {
+//   const sized = await sizes;
+
+//   if (!productId) return;
+
+//   const { data: cartItem, error } = await supabase
+//     .from("products")
+//     .select("*")
+//     .eq("id", productId)
+//     .single();
+//   console.log(cartItem);
+//   const { data: urlData } = supabase.storage
+//     .from("productImage")
+//     .getPublicUrl(cartItem.product_image);
+//   const prodImage = urlData.publicUrl;
+
+//   const { data: carted } = await supabase.from("cart_items").upsert(
+//     {
+//       product_id: cartItem.id,
+//       product_name: cartItem.product_name,
+//       product_price: cartItem.product_price,
+//       image_url: prodImage,
+//       size: sized.value,
+//     },
+//     { onConflict: "product_id" },
+//   );
+//   console.log("yes");
+//   addToSideCart();
+// }
+
+cartCount();

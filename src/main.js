@@ -1,7 +1,7 @@
 import "./style.css";
 import axios from "axios";
 import "./prodUpload";
-import { supabase } from "./prodUpload";
+import { getSupabase } from "./supabaseClient";
 import { cartbag } from "./cart";
 import { modal } from "./cart";
 import { addToSideCart } from "./cart";

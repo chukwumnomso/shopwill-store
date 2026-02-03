@@ -1,4 +1,5 @@
-import { supabase } from "./prodUpload";
+import { getSupabase } from "./supabaseClient";
+const supabase = getSupabase();
 
 import { cartIcon } from "./prodUpload";
 
@@ -152,7 +153,7 @@ export async function updateCart() {
 export async function cartCount() {
   const cartCount = document.getElementById("cartCount");
   const { data: items } = await supabase.from("cart_items").select("*");
-  if (cartCount) {
+  if (items.length > 0) {
     cartCount.textContent = items.length;
   }
 }
