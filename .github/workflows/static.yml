@@ -18,8 +18,14 @@ jobs:
           node-version: 20
       - name: Install
         run: npm install
+      
       - name: Build
+        # This is where we inject your Supabase variables
         run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
       - name: Upload
         uses: actions/upload-pages-artifact@v3
         with:
