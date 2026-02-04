@@ -108,7 +108,6 @@ export function navShop() {
       e.stopImmediatePropagation();
       navCategory.classList.toggle("h-0");
       navCategory.classList.toggle("mb-4");
-      console.log(navCategory);
     });
   }
 }

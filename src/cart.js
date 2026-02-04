@@ -1,9 +1,7 @@
 import { getSupabase } from "./supabaseClient";
 const supabase = getSupabase();
-
 import { cartIcon } from "./prodUpload";
-// import { bottomModal } from "./prodUpload";
-// bottomModal();
+
 // 1. Get the ID from the URL (e.g., product.html?id=5)
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
@@ -143,7 +141,6 @@ export async function updateCart() {
     .select("*")
     .eq("id", productId)
     .single();
-  console.log(cartItem);
   const { data: urlData } = supabase.storage
     .from("productImage")
     .getPublicUrl(cartItem.product_image);

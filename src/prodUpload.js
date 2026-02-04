@@ -13,6 +13,7 @@ import { cartCount } from "./cart";
 import { click } from "./cart";
 import { openSideCart } from "./cart";
 import { removeFromCart } from "./cart";
+import { sideCartClose } from "./products";
 // import { sizes } from "./cart";
 
 // END OF IMPORTS

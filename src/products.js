@@ -47,14 +47,14 @@ export async function getItems(page, ...items) {
       const prodImage = urlData.publicUrl;
       const productCard = document.createElement("div");
       productCard.innerHTML = "";
-      productCard.classList = "h-70  sm:h-80";
+      productCard.classList = "h-70  sm:h-80 prodcard";
       productCard.innerHTML = `<div
         class="rounded-xl  capitalize relative h-full grid grid-rows-2   "
       >
 
        <div class=" flex items-center justify-center overflow-hidden row-span-3 "><a href="/shopwill-store/cart.html?id=${d.id}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
 
-        <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${d.product_name}</h2><button
+        <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${d.product_name}</h2><button class="cart-btn" data-id="${d.id}"
     > <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
     <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${d.product_price}</p></div>
          <p class="text-[0.7rem] text-pink-500  font-bold hidden">${d.id}</p>
@@ -85,7 +85,77 @@ export async function getItems(page, ...items) {
           left: 0,
         });
         console.log(currentProductPage);
-        getItems(currentProductPage, ...items);
+        getItems(currentProductPage, ...items)
+          .then((ok) => {
+            async function card() {
+              const bottomCart = document.getElementById("bottom-cart");
+              const productCard = document.querySelectorAll(".prodcard");
+              productCard.forEach((prod) => {
+                prod.addEventListener("click", async (e) => {
+                  bottomCart.innerHTML = "";
+                  bottomCart.classList.toggle("translate-y-full");
+                  const modal = document.getElementById("bottom-modal");
+                  modal.classList.toggle("hidden");
+
+                  const btn = e.target.closest(".cart-btn");
+                  if (btn) {
+                    const { data: item, error } = await supabase
+                      .from("products")
+                      .select("*")
+                      .eq("id", btn.dataset.id);
+                    const { data: urlData } = supabase.storage
+                      .from("productImage")
+                      .getPublicUrl(item[0].product_image);
+                    const prodImage = urlData.publicUrl;
+                    const productImage = document.createElement("div");
+                    productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+                    const productDetails = document.createElement("div");
+                    productDetails.classList =
+                      "md:items-center md:h-full w-full md:flex";
+                    productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+    <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+  
+  <p class="text-green-600 mb-3 ">In Stock</p>
+    <div class="flex mb-4 gap-2 items-center">
+    <p class="text-sm font-semibold mb-3">size:</p>
+    <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+      <option value="2XL ">2XL</option>
+    </select>
+  </div>
+  <button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+                    bottomCart.append(productImage, productDetails);
+                    const addToCartBtn =
+                      productDetails.querySelector(".add-to-cart-btn");
+                    addToCartBtn.addEventListener("click", async (e) => {
+                      const size = document.getElementById("sizes");
+                      const products = {
+                        product_id: btn.dataset.id,
+                        product_name: item[0].product_name,
+                        product_price: item[0].product_price,
+                        image_url: prodImage,
+                        size: size.value,
+                      };
+                      const { data: cards } = await supabase
+                        .from("cart_items")
+                        .upsert(products, { onConflict: "product_id" })
+                        .select();
+                      addToSideCart();
+                      openSideCart();
+                      modal.classList.toggle("hidden");
+                      bottomCart.classList.toggle("translate-y-full");
+                    });
+                  }
+                });
+              });
+            }
+            card();
+          })
+          .catch((err) => console.error(err));
       };
       pageControls.appendChild(btn);
     }
@@ -111,7 +181,8 @@ const allBtn = btnNodesArray.slice(0, 1);
 function categoryBtnsHandler() {
   if (productBtns) {
     slicedProdBtn.forEach((b) => {
-      b.addEventListener("click", function () {
+      b.addEventListener("click", function (e) {
+        e.stopImmediatePropagation();
         allBtn[0].classList.remove(...activeBtn.split(" "));
         productBtns.forEach((btn) =>
           btn.classList.remove(...activeBtn.split(" ")),
@@ -120,19 +191,163 @@ function categoryBtnsHandler() {
         const item = this.textContent.trim();
         productBtnsDiv.forEach((div) => div.classList.remove(activeBtndiv));
         this.parentElement.classList.add(activeBtndiv);
-        console.log();
-        getItems(currentProductPage, item);
+        getItems(currentProductPage, item)
+          .then((ok) => {
+            async function card() {
+              const bottomCart = document.getElementById("bottom-cart");
+              const productCard = document.querySelectorAll(".prodcard");
+
+              productCard.forEach((prod) => {
+                prod.addEventListener("click", async (e) => {
+                  e.stopImmediatePropagation();
+                  bottomCart.innerHTML = "";
+                  bottomCart.classList.toggle("translate-y-full");
+                  const modal = document.getElementById("bottom-modal");
+                  modal.classList.toggle("hidden");
+
+                  const btn = e.target.closest(".cart-btn");
+                  if (btn) {
+                    const { data: item, error } = await supabase
+                      .from("products")
+                      .select("*")
+                      .eq("id", btn.dataset.id);
+                    const { data: urlData } = supabase.storage
+                      .from("productImage")
+                      .getPublicUrl(item[0].product_image);
+                    const prodImage = urlData.publicUrl;
+                    const productImage = document.createElement("div");
+                    productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+                    const productDetails = document.createElement("div");
+                    productDetails.classList =
+                      "md:items-center md:h-full w-full md:flex";
+                    productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+    <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+  
+  <p class="text-green-600 mb-3 ">In Stock</p>
+    <div class="flex mb-4 gap-2 items-center">
+    <p class="text-sm font-semibold mb-3">size:</p>
+    <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+      <option value="2XL ">2XL</option>
+    </select>
+  </div>
+  <button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+                    bottomCart.append(productImage, productDetails);
+                    const addToCartBtn =
+                      productDetails.querySelector(".add-to-cart-btn");
+                    addToCartBtn.addEventListener("click", async (e) => {
+                      const size = document.getElementById("sizes");
+                      const products = {
+                        product_id: btn.dataset.id,
+                        product_name: item[0].product_name,
+                        product_price: item[0].product_price,
+                        image_url: prodImage,
+                        size: size.value,
+                      };
+                      const { data: cards } = await supabase
+                        .from("cart_items")
+                        .upsert(products, { onConflict: "product_id" })
+                        .select();
+                      addToSideCart();
+                      openSideCart();
+                      modal.classList.toggle("hidden");
+                      bottomCart.classList.toggle("translate-y-full");
+                    });
+                  }
+                });
+              });
+            }
+            card();
+          })
+          .catch((err) => console.error(err));
       });
     });
-    allBtn[0].addEventListener("click", function () {
-      allProduct(currentProductPage);
-      this.classList.add(...activeBtn.split(" "));
-      this.parentElement.classList.add(activeBtndiv);
-      slicedProdBtn.forEach((btn) => {
-        btn.classList.remove(...activeBtn.split(" "));
-        btn.parentElement.classList.remove(activeBtndiv);
+    if (allBtn[0]) {
+      allBtn[0].addEventListener("click", function (e) {
+        e.stopImmediatePropagation();
+        allProduct(currentProductPage)
+          .then((ok) => {
+            async function card() {
+              const bottomCart = document.getElementById("bottom-cart");
+              const productCard = document.querySelectorAll(".prodcard");
+              productCard.forEach((prod) => {
+                prod.addEventListener("click", async (e) => {
+                  bottomCart.innerHTML = "";
+                  bottomCart.classList.toggle("translate-y-full");
+                  const modal = document.getElementById("bottom-modal");
+                  modal.classList.toggle("hidden");
+
+                  const btn = e.target.closest(".cart-btn");
+                  if (btn) {
+                    const { data: item, error } = await supabase
+                      .from("products")
+                      .select("*")
+                      .eq("id", btn.dataset.id);
+                    const { data: urlData } = supabase.storage
+                      .from("productImage")
+                      .getPublicUrl(item[0].product_image);
+                    const prodImage = urlData.publicUrl;
+                    const productImage = document.createElement("div");
+                    productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+                    const productDetails = document.createElement("div");
+                    productDetails.classList =
+                      "md:items-center md:h-full w-full md:flex";
+                    productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+    <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+  
+  <p class="text-green-600 mb-3 ">In Stock</p>
+    <div class="flex mb-4 gap-2 items-center">
+    <p class="text-sm font-semibold mb-3">size:</p>
+    <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+      <option value="2XL ">2XL</option>
+    </select>
+  </div>
+  <button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+                    bottomCart.append(productImage, productDetails);
+                    const addToCartBtn =
+                      productDetails.querySelector(".add-to-cart-btn");
+                    addToCartBtn.addEventListener("click", async (e) => {
+                      const size = document.getElementById("sizes");
+                      const products = {
+                        product_id: btn.dataset.id,
+                        product_name: item[0].product_name,
+                        product_price: item[0].product_price,
+                        image_url: prodImage,
+                        size: size.value,
+                      };
+                      const { data: cards } = await supabase
+                        .from("cart_items")
+                        .upsert(products, { onConflict: "product_id" })
+                        .select();
+                      addToSideCart();
+                      openSideCart();
+                      modal.classList.toggle("hidden");
+                      bottomCart.classList.toggle("translate-y-full");
+                    });
+                  }
+                });
+              });
+            }
+            card();
+          })
+          .catch((err) => console.error(err));
+        this.classList.add(...activeBtn.split(" "));
+        this.parentElement.classList.add(activeBtndiv);
+        slicedProdBtn.forEach((btn) => {
+          btn.classList.remove(...activeBtn.split(" "));
+          btn.parentElement.classList.remove(activeBtndiv);
+        });
       });
-    });
+    }
   }
   return allBtn;
 }
@@ -207,7 +422,6 @@ async function allProduct(page) {
           top: 0,
           left: 0,
         });
-        console.log(currentProductPage);
         allProduct(currentProductPage)
           .then((ok) => {
             async function card() {
@@ -215,6 +429,7 @@ async function allProduct(page) {
               const productCard = document.querySelectorAll(".prodcard");
               productCard.forEach((prod) => {
                 prod.addEventListener("click", async (e) => {
+                  e.stopImmediatePropagation();
                   bottomCart.innerHTML = "";
                   bottomCart.classList.toggle("translate-y-full");
                   const modal = document.getElementById("bottom-modal");
@@ -291,6 +506,7 @@ allProduct(currentProductPage)
       const productCard = document.querySelectorAll(".prodcard");
       productCard.forEach((prod) => {
         prod.addEventListener("click", async (e) => {
+          e.stopImmediatePropagation();
           bottomCart.innerHTML = "";
           bottomCart.classList.toggle("translate-y-full");
           const modal = document.getElementById("bottom-modal");
@@ -357,8 +573,10 @@ allProduct(currentProductPage)
   .catch((err) => console.error(err));
 
 function allBtnInitialStyle() {
-  allBtn[0].classList.add(...activeBtn.split(" "));
-  allBtn[0].parentElement.classList.add(activeBtndiv);
+  if (allBtn[0]) {
+    allBtn[0].classList.add(...activeBtn.split(" "));
+    allBtn[0].parentElement.classList.add(activeBtndiv);
+  }
 }
 
 document.addEventListener(
@@ -398,12 +616,13 @@ async function fetchProducts(sortBy = "name", direction = "asc", page) {
 
     const prodImage = urlData.publicUrl;
     const productCard = document.createElement("div");
+    productCard.classList = "prodcard";
     productCard.innerHTML = `<div
         class="rounded-xl  capitalize relative h-full grid grid-rows-2   "
       >
        <div class=" flex items-center justify-center overflow-hidden row-span-3 "><a href="/shopwill-store/cart.html?id=${item.id}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
 
-        <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${item.product_name}</h2><button
+        <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${item.product_name}</h2><button class="cart-btn" data-id="${item.id}"
     > <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
 
     <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${item.product_price}</p></div>
@@ -438,29 +657,257 @@ async function fetchProducts(sortBy = "name", direction = "asc", page) {
         left: 0,
       });
       console.log(currentProductPage);
-      fetchProducts(column, order, currentProductPage);
+      fetchProducts(column, order, currentProductPage)
+        .then((ok) => {
+          async function card() {
+            const bottomCart = document.getElementById("bottom-cart");
+            const productCard = document.querySelectorAll(".prodcard");
+            productCard.forEach((prod) => {
+              prod.addEventListener("click", async (e) => {
+                bottomCart.innerHTML = "";
+                bottomCart.classList.toggle("translate-y-full");
+                const modal = document.getElementById("bottom-modal");
+                modal.classList.toggle("hidden");
+
+                const btn = e.target.closest(".cart-btn");
+                if (btn) {
+                  const { data: item, error } = await supabase
+                    .from("products")
+                    .select("*")
+                    .eq("id", btn.dataset.id);
+                  const { data: urlData } = supabase.storage
+                    .from("productImage")
+                    .getPublicUrl(item[0].product_image);
+                  const prodImage = urlData.publicUrl;
+                  const productImage = document.createElement("div");
+                  productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+                  const productDetails = document.createElement("div");
+                  productDetails.classList =
+                    "md:items-center md:h-full w-full md:flex";
+                  productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+    <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+  
+  <p class="text-green-600 mb-3 ">In Stock</p>
+    <div class="flex mb-4 gap-2 items-center">
+    <p class="text-sm font-semibold mb-3">size:</p>
+    <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+      <option value="2XL ">2XL</option>
+    </select>
+  </div>
+  <button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+                  bottomCart.append(productImage, productDetails);
+                  const addToCartBtn =
+                    productDetails.querySelector(".add-to-cart-btn");
+                  addToCartBtn.addEventListener("click", async (e) => {
+                    const size = document.getElementById("sizes");
+                    const products = {
+                      product_id: btn.dataset.id,
+                      product_name: item[0].product_name,
+                      product_price: item[0].product_price,
+                      image_url: prodImage,
+                      size: size.value,
+                    };
+                    const { data: cards } = await supabase
+                      .from("cart_items")
+                      .upsert(products, { onConflict: "product_id" })
+                      .select();
+                    addToSideCart();
+                    openSideCart();
+                    modal.classList.toggle("hidden");
+                    bottomCart.classList.toggle("translate-y-full");
+                  });
+                }
+              });
+            });
+          }
+          card();
+        })
+        .catch((err) => console.error(err));
     };
     pageControls.appendChild(btn);
   }
 }
 
 // SEARCH INPUT LISTENER
-document.getElementById("searchInput").addEventListener("input", (e) => {
-  currentSearch = e.target.value;
-  currentProductPage = 0;
-  const [column, order] = document
-    .getElementById("sortDropdown")
-    .value.split(":");
-  fetchProducts(column, order, currentProductPage);
-});
+const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+  searchInput.addEventListener("input", (e) => {
+    currentSearch = e.target.value;
+    currentProductPage = 0;
+    const [column, order] = document
+      .getElementById("sortDropdown")
+      .value.split(":");
+    fetchProducts(column, order, currentProductPage)
+      .then((ok) => {
+        async function card() {
+          const bottomCart = document.getElementById("bottom-cart");
+          const productCard = document.querySelectorAll(".prodcard");
+          productCard.forEach((prod) => {
+            prod.addEventListener("click", async (e) => {
+              bottomCart.innerHTML = "";
+              bottomCart.classList.toggle("translate-y-full");
+              const modal = document.getElementById("bottom-modal");
+              modal.classList.toggle("hidden");
+
+              const btn = e.target.closest(".cart-btn");
+              if (btn) {
+                const { data: item, error } = await supabase
+                  .from("products")
+                  .select("*")
+                  .eq("id", btn.dataset.id);
+                const { data: urlData } = supabase.storage
+                  .from("productImage")
+                  .getPublicUrl(item[0].product_image);
+                const prodImage = urlData.publicUrl;
+                const productImage = document.createElement("div");
+                productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+                const productDetails = document.createElement("div");
+                productDetails.classList =
+                  "md:items-center md:h-full w-full md:flex";
+                productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+    <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+  
+  <p class="text-green-600 mb-3 ">In Stock</p>
+    <div class="flex mb-4 gap-2 items-center">
+    <p class="text-sm font-semibold mb-3">size:</p>
+    <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+      <option value="2XL ">2XL</option>
+    </select>
+  </div>
+  <button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+                bottomCart.append(productImage, productDetails);
+                const addToCartBtn =
+                  productDetails.querySelector(".add-to-cart-btn");
+                addToCartBtn.addEventListener("click", async (e) => {
+                  const size = document.getElementById("sizes");
+                  const products = {
+                    product_id: btn.dataset.id,
+                    product_name: item[0].product_name,
+                    product_price: item[0].product_price,
+                    image_url: prodImage,
+                    size: size.value,
+                  };
+                  const { data: cards } = await supabase
+                    .from("cart_items")
+                    .upsert(products, { onConflict: "product_id" })
+                    .select();
+                  addToSideCart();
+                  openSideCart();
+                  modal.classList.toggle("hidden");
+                  bottomCart.classList.toggle("translate-y-full");
+                });
+              }
+            });
+          });
+        }
+        card();
+      })
+      .catch((err) => console.error(err));
+  });
+}
 
 // DROPDOWN LISTENER
-document.getElementById("sortDropdown").addEventListener("change", (e) => {
-  const [column, order] = e.target.value.split(":");
-  currentProductPage = 0;
-  fetchProducts(column, order, currentProductPage);
-});
+const sortDropdown = document.getElementById("sortDropdown");
 
-// const modals = document.getElementById("bottom-modal");
-// const cart = document.getElementById("bottom-cart");
-// console.log(bottomModal);
+if (sortDropdown) {
+  sortDropdown.addEventListener("change", (e) => {
+    const [column, order] = e.target.value.split(":");
+    currentProductPage = 0;
+    fetchProducts(column, order, currentProductPage)
+      .then((ok) => {
+        async function card() {
+          const bottomCart = document.getElementById("bottom-cart");
+          const productCard = document.querySelectorAll(".prodcard");
+          productCard.forEach((prod) => {
+            prod.addEventListener("click", async (e) => {
+              bottomCart.innerHTML = "";
+              bottomCart.classList.toggle("translate-y-full");
+              const modal = document.getElementById("bottom-modal");
+              modal.classList.toggle("hidden");
+
+              const btn = e.target.closest(".cart-btn");
+              if (btn) {
+                const { data: item, error } = await supabase
+                  .from("products")
+                  .select("*")
+                  .eq("id", btn.dataset.id);
+                const { data: urlData } = supabase.storage
+                  .from("productImage")
+                  .getPublicUrl(item[0].product_image);
+                const prodImage = urlData.publicUrl;
+                const productImage = document.createElement("div");
+                productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+                const productDetails = document.createElement("div");
+                productDetails.classList =
+                  "md:items-center md:h-full w-full md:flex";
+                productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+    <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+  
+  <p class="text-green-600 mb-3 ">In Stock</p>
+    <div class="flex mb-4 gap-2 items-center">
+    <p class="text-sm font-semibold mb-3">size:</p>
+    <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+      <option value="2XL ">2XL</option>
+    </select>
+  </div>
+  <button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+                bottomCart.append(productImage, productDetails);
+                const addToCartBtn =
+                  productDetails.querySelector(".add-to-cart-btn");
+                addToCartBtn.addEventListener("click", async (e) => {
+                  const size = document.getElementById("sizes");
+                  const products = {
+                    product_id: btn.dataset.id,
+                    product_name: item[0].product_name,
+                    product_price: item[0].product_price,
+                    image_url: prodImage,
+                    size: size.value,
+                  };
+                  const { data: cards } = await supabase
+                    .from("cart_items")
+                    .upsert(products, { onConflict: "product_id" })
+                    .select();
+                  addToSideCart();
+                  openSideCart();
+                  modal.classList.toggle("hidden");
+                  bottomCart.classList.toggle("translate-y-full");
+                });
+              }
+            });
+          });
+        }
+        card();
+      })
+      .catch((err) => console.error(err));
+  });
+}
+
+export function sideCartClose() {
+  const sideCartClose = document.querySelector(".side-close");
+  if (sideCartClose) {
+    sideCartClose.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      console.log("yes");
+      openSideCart();
+      modal();
+    });
+  }
+}
+
+sideCartClose();
