@@ -1,6 +1,5 @@
 import "./style.css";
 import { getSupabase } from "./supabaseClient";
-import { all } from "axios";
 import { navShop } from "./main";
 import { sideBar } from "./main";
 import { cartIcon } from "./prodUpload";
@@ -9,6 +8,8 @@ import { modal } from "./cart";
 import { addToSideCart } from "./cart";
 import { updateCart } from "./cart";
 import { cartCount } from "./cart";
+import { bottomModal } from "./prodUpload";
+import { openSideCart } from "./cart";
 
 const supabase = getSupabase();
 // const allbtn = document.getElementById("all");
@@ -165,7 +166,7 @@ async function allProduct(page) {
         .getPublicUrl(d.product_image);
       const prodImage = urlData.publicUrl;
       const productCard = document.createElement("div");
-      productCard.classList = "h-70  sm:h-80";
+      productCard.classList = "h-70  sm:h-80 prodcard";
       productCard.innerHTML = `<div
         class="rounded-xl  capitalize relative h-full grid grid-rows-2   "
       >
@@ -173,7 +174,7 @@ async function allProduct(page) {
 
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${d.product_name}</h2>
      
-   <button
+   <button class="cart-btn" data-id="${d.id}"
     > <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"> </button></div>
 
     <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${d.product_price}</p></div>
@@ -207,12 +208,153 @@ async function allProduct(page) {
           left: 0,
         });
         console.log(currentProductPage);
-        allProduct(currentProductPage);
+        allProduct(currentProductPage)
+          .then((ok) => {
+            async function card() {
+              const bottomCart = document.getElementById("bottom-cart");
+              const productCard = document.querySelectorAll(".prodcard");
+              productCard.forEach((prod) => {
+                prod.addEventListener("click", async (e) => {
+                  bottomCart.innerHTML = "";
+                  bottomCart.classList.toggle("translate-y-full");
+                  const modal = document.getElementById("bottom-modal");
+                  modal.classList.toggle("hidden");
+
+                  const btn = e.target.closest(".cart-btn");
+                  if (btn) {
+                    const { data: item, error } = await supabase
+                      .from("products")
+                      .select("*")
+                      .eq("id", btn.dataset.id);
+                    const { data: urlData } = supabase.storage
+                      .from("productImage")
+                      .getPublicUrl(item[0].product_image);
+                    const prodImage = urlData.publicUrl;
+                    const productImage = document.createElement("div");
+                    productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+                    const productDetails = document.createElement("div");
+                    productDetails.classList =
+                      "md:items-center md:h-full w-full md:flex";
+                    productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+  <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+
+<p class="text-green-600 mb-3 ">In Stock</p>
+  <div class="flex mb-4 gap-2 items-center">
+  <p class="text-sm font-semibold mb-3">size:</p>
+  <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+    <option value="S">S</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+    <option value="2XL ">2XL</option>
+  </select>
+</div>
+<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+                    bottomCart.append(productImage, productDetails);
+                    const addToCartBtn =
+                      productDetails.querySelector(".add-to-cart-btn");
+                    addToCartBtn.addEventListener("click", async (e) => {
+                      const size = document.getElementById("sizes");
+                      const products = {
+                        product_id: btn.dataset.id,
+                        product_name: item[0].product_name,
+                        product_price: item[0].product_price,
+                        image_url: prodImage,
+                        size: size.value,
+                      };
+                      const { data: cards } = await supabase
+                        .from("cart_items")
+                        .upsert(products, { onConflict: "product_id" })
+                        .select();
+                      addToSideCart();
+                      openSideCart();
+                      modal.classList.toggle("hidden");
+                      bottomCart.classList.toggle("translate-y-full");
+                    });
+                  }
+                });
+              });
+            }
+            card();
+          })
+          .catch((err) => console.error(err));
       };
       pageControls.appendChild(btn);
     }
   } catch {}
 }
+allProduct(currentProductPage)
+  .then((ok) => {
+    async function card() {
+      const bottomCart = document.getElementById("bottom-cart");
+      const productCard = document.querySelectorAll(".prodcard");
+      productCard.forEach((prod) => {
+        prod.addEventListener("click", async (e) => {
+          bottomCart.innerHTML = "";
+          bottomCart.classList.toggle("translate-y-full");
+          const modal = document.getElementById("bottom-modal");
+          modal.classList.toggle("hidden");
+
+          const btn = e.target.closest(".cart-btn");
+          if (btn) {
+            const { data: item, error } = await supabase
+              .from("products")
+              .select("*")
+              .eq("id", btn.dataset.id);
+            const { data: urlData } = supabase.storage
+              .from("productImage")
+              .getPublicUrl(item[0].product_image);
+            const prodImage = urlData.publicUrl;
+            const productImage = document.createElement("div");
+            productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+            const productDetails = document.createElement("div");
+            productDetails.classList =
+              "md:items-center md:h-full w-full md:flex";
+            productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+  <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+
+<p class="text-green-600 mb-3 ">In Stock</p>
+  <div class="flex mb-4 gap-2 items-center">
+  <p class="text-sm font-semibold mb-3">size:</p>
+  <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+    <option value="S">S</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+    <option value="2XL ">2XL</option>
+  </select>
+</div>
+<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+
+            bottomCart.append(productImage, productDetails);
+            const addToCartBtn =
+              productDetails.querySelector(".add-to-cart-btn");
+            addToCartBtn.addEventListener("click", async (e) => {
+              const size = document.getElementById("sizes");
+              const products = {
+                product_id: btn.dataset.id,
+                product_name: item[0].product_name,
+                product_price: item[0].product_price,
+                image_url: prodImage,
+                size: size.value,
+              };
+              const { data: cards } = await supabase
+                .from("cart_items")
+                .upsert(products, { onConflict: "product_id" })
+                .select();
+              addToSideCart();
+              openSideCart();
+              modal.classList.toggle("hidden");
+              bottomCart.classList.toggle("translate-y-full");
+            });
+          }
+        });
+      });
+    }
+    card();
+  })
+  .catch((err) => console.error(err));
 
 function allBtnInitialStyle() {
   allBtn[0].classList.add(...activeBtn.split(" "));
@@ -221,7 +363,6 @@ function allBtnInitialStyle() {
 
 document.addEventListener(
   "DOMContentLoaded",
-  allProduct(currentProductPage),
   allBtnInitialStyle(),
   cartCount(),
 );
@@ -319,3 +460,7 @@ document.getElementById("sortDropdown").addEventListener("change", (e) => {
   currentProductPage = 0;
   fetchProducts(column, order, currentProductPage);
 });
+
+// const modals = document.getElementById("bottom-modal");
+// const cart = document.getElementById("bottom-cart");
+// console.log(bottomModal);

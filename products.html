@@ -283,13 +283,22 @@
     ></div>
     <div
       id="cartcontainer"
-      class="h-full fixed w-[80%] top-0 right-0 z-50 translate-x-full transition-transform duration-500 ease-in-out overflow-scroll bg-white px-4 pt-5 text-center"
+      class="h-full fixed w-[90%] top-0 right-0 z-50 translate-x-full transition-transform duration-500 ease-in-out overflow-scroll bg-white px-4 pt-5 sm:w-[80%] md:w-[60%] lg:w-[40%]"
     >
       <p class="font-bold uppercase mb-15">shopping cart</p>
 
-      <div class="grid grid-cols-2 gap-4" id="sideCart"></div>
+      <div class="" id="sideCart"></div>
     </div>
     <!-- END OF SIDE CART -->
+    <!-- BOTTOM CART -->
+    <div
+      class="w-full h-screen z-40 bg-black/40 hidden fixed top-0 left-0"
+      id="bottom-modal"
+    ></div>
+    <div
+      class="h-[70%] w-full fixed bottom-0 left-0 bg-white grid grid-rows-2 overflow-scroll px-4 py-3 md:flex gap-x-4 translate-y-full transition-transform duration-400 z-50"
+      id="bottom-cart"
+    ></div>
 
     <!-- FOOTER -->
 

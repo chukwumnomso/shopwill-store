@@ -10,11 +10,14 @@ import { modal } from "./cart";
 import { addToSideCart } from "./cart";
 import { updateCart } from "./cart";
 import { cartCount } from "./cart";
-import { sizes } from "./cart";
+import { click } from "./cart";
+import { openSideCart } from "./cart";
+import { removeFromCart } from "./cart";
+// import { sizes } from "./cart";
 
 // END OF IMPORTS
 
-window.updateCartd = updateCart;
+window.updateCart = updateCart;
 
 export const base = import.meta.env.BASE_URL;
 export const cartIcon = `${base}assets/cartbag.jpg`;
@@ -168,9 +171,29 @@ export async function renderProduct(page) {
     <option value="2XL ">2XL</option>
   </select>
 </div>
-<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " > <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
 
                     bottomCart.append(productImage, productDetails);
+                    const addToCartBtn =
+                      productDetails.querySelector(".add-to-cart-btn");
+                    addToCartBtn.addEventListener("click", async (e) => {
+                      const size = document.getElementById("sizes");
+                      const products = {
+                        product_id: btn.dataset.id,
+                        product_name: item[0].product_name,
+                        product_price: item[0].product_price,
+                        image_url: prodImage,
+                        size: size.value,
+                      };
+                      console.log(btn.dataset.id);
+                      const { data: cards } = await supabase
+                        .from("cart_items")
+                        .upsert(products, { onConflict: "product_id" })
+                        .select();
+
+                      console.log(cards);
+                      addToSideCart();
+                    });
                   }
                 });
               });
@@ -197,18 +220,15 @@ renderProduct(currentPage)
           modal.classList.toggle("hidden");
 
           const btn = e.target.closest(".cart-btn");
-          console.log(btn);
           if (btn) {
             const { data: item, error } = await supabase
               .from("products")
               .select("*")
               .eq("id", btn.dataset.id);
-            console.log(item);
             const { data: urlData } = supabase.storage
               .from("productImage")
               .getPublicUrl(item[0].product_image);
             const prodImage = urlData.publicUrl;
-            console.log(prodImage);
             const productImage = document.createElement("div");
             productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
             const productDetails = document.createElement("div");
@@ -228,9 +248,29 @@ renderProduct(currentPage)
     <option value="2XL ">2XL</option>
   </select>
 </div>
-<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCartd();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
+<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
 
             bottomCart.append(productImage, productDetails);
+            const addToCartBtn =
+              productDetails.querySelector(".add-to-cart-btn");
+            addToCartBtn.addEventListener("click", async (e) => {
+              const size = document.getElementById("sizes");
+              const products = {
+                product_id: btn.dataset.id,
+                product_name: item[0].product_name,
+                product_price: item[0].product_price,
+                image_url: prodImage,
+                size: size.value,
+              };
+              const { data: cards } = await supabase
+                .from("cart_items")
+                .upsert(products, { onConflict: "product_id" })
+                .select();
+              addToSideCart();
+              openSideCart();
+              modal.classList.toggle("hidden");
+              bottomCart.classList.toggle("translate-y-full");
+            });
           }
         });
       });
@@ -239,9 +279,12 @@ renderProduct(currentPage)
   })
   .catch((err) => console.error(err));
 
-function bottomModal() {
+// ////////////////////////////////////////////////////////////////
+
+export function bottomModal() {
   const modal = document.getElementById("bottom-modal");
   const cart = document.getElementById("bottom-cart");
+
   if (modal) {
     modal.addEventListener("click", (e) => {
       e.stopImmediatePropagation;
@@ -251,35 +294,3 @@ function bottomModal() {
   }
 }
 bottomModal();
-
-// async function updateCartd() {
-//   const sized = await sizes;
-
-//   if (!productId) return;
-
-//   const { data: cartItem, error } = await supabase
-//     .from("products")
-//     .select("*")
-//     .eq("id", productId)
-//     .single();
-//   console.log(cartItem);
-//   const { data: urlData } = supabase.storage
-//     .from("productImage")
-//     .getPublicUrl(cartItem.product_image);
-//   const prodImage = urlData.publicUrl;
-
-//   const { data: carted } = await supabase.from("cart_items").upsert(
-//     {
-//       product_id: cartItem.id,
-//       product_name: cartItem.product_name,
-//       product_price: cartItem.product_price,
-//       image_url: prodImage,
-//       size: sized.value,
-//     },
-//     { onConflict: "product_id" },
-//   );
-//   console.log("yes");
-//   addToSideCart();
-// }
-
-cartCount();
