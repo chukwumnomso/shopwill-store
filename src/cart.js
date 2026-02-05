@@ -282,7 +282,7 @@ export async function subTotal() {
     subtotal.push(total.product_price);
     const totaled = subtotal.reduce((a, b) => a + b, 0);
     const subTotal = document.getElementById("sub-total");
-    subTotal.textContent = totaled;
+    subTotal.textContent = totaled.toLocaleString();
   });
 }
 subTotal();
