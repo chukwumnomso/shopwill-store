@@ -150,6 +150,11 @@
       </div>
     </nav>
     <!-- END OF MOBILE NAVS -->
+    <!-- NAV MODAL -->
+    <div
+      class="w-full h-screen z-30 bg-black/40 hidden fixed top-0 left-0"
+      id="nav-modal"
+    ></div>
 
     <!-- DISPLAY ITEM -->
     <h2 class="mb-4 ml-4 font-[outfit] mt-25 uppercase">
@@ -162,11 +167,40 @@
     ></div>
     <div
       id="cartcontainer"
-      class="h-full fixed w-[90%] top-0 right-0 z-50 translate-x-full transition-transform duration-500 ease-in-out overflow-scroll bg-white px-4 pt-5 sm:w-[80%] md:w-[60%] lg:w-[40%]"
+      class="h-full fixed w-[90%] top-0 right-0 z-50 translate-x-full transition-transform duration-500 ease-in-out overflow-y-auto overflow-x-hidden scrollbar-thin [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full bg-white px-4 pt-5 sm:w-[80%] md:w-[60%] lg:w-[40%]"
     >
       <p class="font-bold uppercase mb-15">shopping cart</p>
 
       <div class="" id="sideCart"></div>
+
+      <div class="sticky bottom-0 right-0 w-full bg-white border-t h-50 z-50">
+        <div class="w-full text-center my-4">
+          <i class="fa-brands fa-whatsapp text-4xl"></i>
+          <h2
+            class="text-sm uppercase underline hover:text-pink-600 transition-all duration-300"
+          >
+            <a href="https://wa.link/0mfvip">send note</a>
+          </h2>
+        </div>
+        <div
+          class="w-full flex justify-between font-bold font-[playfair] uppercase text-xl"
+        >
+          <p>subtotal</p>
+          <p class="font-[monteserrat]">₦<span id="sub-total">0</span></p>
+        </div>
+        <button
+          class="bg-black text-xl text-white uppercase font-bpld font-[playfair] flex items-center justify-center h-8 w-full mt-4 hover:text-pink-600 transition-all duration-300 cursor-pointer"
+        >
+          <a href="">check out</a>
+        </button>
+        <div class="w-full text-center">
+          <a
+            href=""
+            class="underline hover:text-pink-600 transition-all duration-300 cursor uppercase"
+            >view cart</a
+          >
+        </div>
+      </div>
     </div>
   </body>
 </html>

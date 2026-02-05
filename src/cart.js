@@ -35,9 +35,12 @@ async function loadProductDetails() {
 
   productImage.innerHTML = `<img src="${prodImage}" alt="" class="w-full" />`;
   productDetails.innerHTML = `<h1 class="text-3xl font-extrabold font-[outfit] uppercase mb-10">${item.product_name}</h1>
-  <p class="text-xl font-semibold mb-7 ">₦${item.product_price}</p>
+  <p class="text-xl font-semibold mb-7 ">₦${item.product_price.toLocaleString()}</p>
 
-<p class="text-green-600 mb-6 ">In Stock</p>
+  <div class="flex mb-3  items-center ">
+<button class="w-20 h-5  text-white text-xl font-bold flex items-center justify-center cursor-pointer bg-black hover:text-pink-600 duration-300 ">-</button><input type="text" value="1" id="quantity"  class="w-8 h-5 text-[1rem] text-center"/><button class="w-20 h-5 cursor-pointer text-white text-xl font-bold bg-black flex items-center justify-center hover:text-pink-600 duration-300 ">+</button>
+
+</div>
   <div class="flex mb-8 gap-2 items-center">
   <p class="text-lg font-semibold">size:</p>
   <select name="" id="sizes" class="font-[cursive] border h-6">
@@ -48,7 +51,7 @@ async function loadProductDetails() {
     <option value="2XL ">2XL</option>
   </select>
 </div>
-<button class="bg-black text-white font-bold w-full h-12 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
+<button class="bg-black text-white font-bold w-full h-12 px-2 flex gap-3 items-center justify-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
 
   showItem.append(productImage, productDetails);
 
@@ -89,6 +92,7 @@ export function modal() {
 modal();
 
 export async function addToSideCart() {
+  subTotal();
   const cartBag = document.getElementById("cart-bag");
   const sideCart = document.getElementById("sideCart");
   sideCart.innerHTML = "";
@@ -104,14 +108,17 @@ export async function addToSideCart() {
     productDetails.classList = "w-full h-full col-span-2";
     itemImage.innerHTML = `<img src="${item.image_url}" alt="" class="w-30 h-full " />`;
     productDetails.innerHTML = `<h1 class="text-sm font-extrabold font-[outfit] uppercase mb-4">${item.product_name}</h1>
-  <p class="text-[0.7rem] font-semibold mb-3 ">₦${item.product_price}</p>
+  <p class="text-[0.7rem] font-semibold mb-3 " data-price="${item.product_id}">₦${item.product_price.toLocaleString()}</p>
 
 <p class=" mb-2 text-[0.8rem]">SIZE: <span class="text-red-500 font-bold">${item.size}</span></p>
-  <div class="flex mb-3  items-center bg-gray-300">
-<button class="w-full h-5  text-white flex items-center justify-center cursor-pointer bg-black hover:text-pink-600 duration-300 ">-</button><input type="text" id="quantity"  class="w-8 h-5 text-[1rem] text-center"/><button class="w-full h-5 cursor-pointer text-white bg-black flex items-center justify-center hover:text-pink-600 duration-300 ">+</button>
-  <button class="w-full h-5 bg-white text-[0.7rem] cursor-pointer hover:text-pink-600 duration-300 remove-btn " data-id=${item.product_id} >Remove</button>
+  <div class="flex mb-3  items-center ">
+<button class="w-10 h-5  text-white flex items-center justify-center cursor-pointer bg-black hover:text-pink-600  duration-300 sub-btn" data-Q="${item.product_id}">-</button>
+<input type="text" value="${item.quantity}" id="quantity" data-Q="${item.product_id}" class="w-8 h-5 text-[1rem] text-center"/><button class="w-10 h-5 cursor-pointer text-white bg-black flex items-center justify-center hover:text-pink-600 duration-300 add-btn " data-Q="${item.product_id}" >+</button>
+  <button class="w-20 h-5 bg-white text-[0.7rem] cursor-pointer hover:text-pink-600 duration-300 remove-btn " data-id=${item.product_id} >Remove</button>
 </div>
-<button class="bg-black text-white text-[0.6rem] font-bold w-full h-6 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer " onclick="addToCart()"> <img src="${cartIcon}" alt="" class="rounded-full size-3 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
+<div class="w-full h-8"><button class=""></button></div>
+
+`;
     if (sideCart) {
       prodGrid.append(itemImage, productDetails);
       sideCart.append(prodGrid);
@@ -124,6 +131,67 @@ export async function addToSideCart() {
         const item = document.getElementById(`item-${productId}`);
         if (item) {
           item.remove();
+        }
+        subTotal();
+        cartCount();
+      }
+    });
+    document.addEventListener("click", async (e) => {
+      if (e.target.classList.contains("add-btn")) {
+        const productId = e.target.getAttribute("data-Q");
+        const quantityInput = document.querySelector(
+          `input[data-Q="${productId}"]`,
+        );
+        const prodPrice = document.querySelector(
+          `p[data-price="${productId}"]`,
+        );
+        if (quantityInput) {
+          const newQuantity = parseInt(quantityInput.value) + 1;
+          quantityInput.value = newQuantity;
+          const { data: priceData } = await supabase
+            .from("products")
+            .select("product_price")
+            .eq("id", productId)
+            .single();
+
+          if (priceData) {
+            const incrementAmount = priceData.product_price;
+            const updatedPrice = incrementAmount * newQuantity;
+            prodPrice.textContent = updatedPrice.toLocaleString();
+            addQuantity(newQuantity, productId, updatedPrice).then((ok) => {
+              subTotal();
+            });
+          }
+        }
+        cartCount();
+      }
+    });
+    document.addEventListener("click", async (e) => {
+      e.stopImmediatePropagation();
+      if (e.target.classList.contains("sub-btn")) {
+        const productId = e.target.getAttribute("data-Q");
+        const quantityInput = document.querySelector(
+          `input[data-Q="${productId}"]`,
+        );
+        const prodPrice = document.querySelector(
+          `p[data-price="${productId}"]`,
+        );
+        if (quantityInput.value > 1) {
+          const newQuantity = parseInt(quantityInput.value) - 1;
+          quantityInput.value = newQuantity;
+          const { data: priceData } = await supabase
+            .from("products")
+            .select("product_price")
+            .eq("id", productId)
+            .single();
+          if (priceData) {
+            const decrementAmount = priceData.product_price;
+            const updatedPrice = decrementAmount * newQuantity;
+            prodPrice.textContent = updatedPrice.toLocaleString();
+            addQuantity(newQuantity, productId, updatedPrice).then((ok) => {
+              subTotal();
+            });
+          }
         }
         cartCount();
       }
@@ -159,8 +227,11 @@ export async function updateCart() {
     .select();
 
   //   console.log(carted);
-  addToSideCart();
+  addToSideCart().then((ok) => {
+    subTotal();
+  });
   openSideCart();
+  subTotal();
 }
 
 export async function cartCount() {
@@ -187,3 +258,26 @@ export function openSideCart() {
   const cartContainer = document.getElementById("cartcontainer");
   cartContainer.classList.toggle("translate-x-full");
 }
+
+async function addQuantity(value, id, price) {
+  const { data: Q } = await supabase
+    .from("cart_items")
+    .update({ quantity: value, product_price: price })
+    .eq("product_id", id)
+    .select();
+}
+
+export async function subTotal() {
+  const { data: totals } = await supabase
+    .from("cart_items")
+    .select("product_price");
+  const subtotal = [];
+  totals.forEach((total) => {
+    subtotal.push(total.product_price);
+
+    const totaled = subtotal.reduce((a, b) => a + b, 0);
+    const subTotal = document.getElementById("sub-total");
+    subTotal.textContent = totaled;
+  });
+}
+subTotal();

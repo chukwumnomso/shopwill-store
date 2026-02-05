@@ -97,7 +97,7 @@ export async function renderProduct(page) {
 
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${card.product_name}</h2><button class="cart-btn" data-id="${card.id}" data-name="${card.product_name}" data-price="${card.product_price}" data-image=${prodImage}> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"></button></div>
         
-    <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${card.product_price}</p></div>    
+    <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${card.product_price.toLocaleString()}</p></div>    
          <p class="text-[0.7rem] text-pink-500  font-bold hidden">${card.id}</p>
         
       </div></div>
@@ -130,76 +130,7 @@ export async function renderProduct(page) {
         console.log(currentPage);
         renderProduct(currentPage)
           .then((ok) => {
-            async function card() {
-              const bottomCart = document.getElementById("bottom-cart");
-              const productCard = document.querySelectorAll(".prodcard");
-              productCard.forEach((prod) => {
-                prod.addEventListener("click", async (e) => {
-                  bottomCart.innerHTML = "";
-                  bottomCart.classList.toggle("translate-y-full");
-                  const modal = document.getElementById("bottom-modal");
-                  modal.classList.toggle("hidden");
-
-                  const btn = e.target.closest(".cart-btn");
-                  console.log(btn);
-                  if (btn) {
-                    const { data: item, error } = await supabase
-                      .from("products")
-                      .select("*")
-                      .eq("id", btn.dataset.id);
-                    console.log(item);
-                    const { data: urlData } = supabase.storage
-                      .from("productImage")
-                      .getPublicUrl(item[0].product_image);
-                    const prodImage = urlData.publicUrl;
-                    console.log(prodImage);
-                    const productImage = document.createElement("div");
-                    productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
-                    const productDetails = document.createElement("div");
-                    productDetails.classList =
-                      "md:items-center md:h-full w-full md:flex";
-                    productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
-  <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
-
-<p class="text-green-600 mb-3 ">In Stock</p>
-  <div class="flex mb-4 gap-2 items-center">
-  <p class="text-sm font-semibold mb-3">size:</p>
-  <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
-    <option value="S">S</option>
-    <option value="M">M</option>
-    <option value="L">L</option>
-    <option value="XL">XL</option>
-    <option value="2XL ">2XL</option>
-  </select>
-</div>
-<button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " > <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
-
-                    bottomCart.append(productImage, productDetails);
-                    const addToCartBtn =
-                      productDetails.querySelector(".add-to-cart-btn");
-                    addToCartBtn.addEventListener("click", async (e) => {
-                      const size = document.getElementById("sizes");
-                      const products = {
-                        product_id: btn.dataset.id,
-                        product_name: item[0].product_name,
-                        product_price: item[0].product_price,
-                        image_url: prodImage,
-                        size: size.value,
-                      };
-                      console.log(btn.dataset.id);
-                      const { data: cards } = await supabase
-                        .from("cart_items")
-                        .upsert(products, { onConflict: "product_id" })
-                        .select();
-
-                      console.log(cards);
-                      addToSideCart();
-                    });
-                  }
-                });
-              });
-            }
-            card();
+            prodCardAddToCart();
           })
           .catch((err) => console.error(err));
       };
@@ -207,41 +138,47 @@ export async function renderProduct(page) {
     }
   }
 }
-
 renderProduct(currentPage)
   .then((ok) => {
-    async function card() {
-      const bottomCart = document.getElementById("bottom-cart");
-      const productCard = document.querySelectorAll(".prodcard");
-      productCard.forEach((prod) => {
-        prod.addEventListener("click", async (e) => {
-          bottomCart.innerHTML = "";
-          bottomCart.classList.toggle("translate-y-full");
-          const modal = document.getElementById("bottom-modal");
-          modal.classList.toggle("hidden");
+    prodCardAddToCart();
+  })
+  .catch((err) => console.error(err));
 
-          const btn = e.target.closest(".cart-btn");
-          if (btn) {
-            const { data: item, error } = await supabase
-              .from("products")
-              .select("*")
-              .eq("id", btn.dataset.id);
-            const { data: urlData } = supabase.storage
-              .from("productImage")
-              .getPublicUrl(item[0].product_image);
-            const prodImage = urlData.publicUrl;
-            const productImage = document.createElement("div");
-            productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
-            const productDetails = document.createElement("div");
-            productDetails.classList =
-              "md:items-center md:h-full w-full md:flex";
-            productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
-  <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price}</p>
+export async function prodCardAddToCart() {
+  const bottomCart = document.getElementById("bottom-cart");
+  const bottomCartDiv = document.getElementById("bottom-cart-div");
+  const productCard = document.querySelectorAll(".prodcard");
+  productCard.forEach((prod) => {
+    prod.addEventListener("click", async (e) => {
+      e.stopImmediatePropagation();
+      bottomCart.innerHTML = "";
+      bottomCart.classList.toggle("translate-y-full");
+      bottomCartDiv.classList.toggle("translate-y-full");
+      const modal = document.getElementById("bottom-modal");
+      modal.classList.toggle("hidden");
+
+      const btn = e.target.closest(".cart-btn");
+      if (btn) {
+        const { data: item, error } = await supabase
+          .from("products")
+          .select("*")
+          .eq("id", btn.dataset.id);
+        const { data: urlData } = supabase.storage
+          .from("productImage")
+          .getPublicUrl(item[0].product_image);
+        const prodImage = urlData.publicUrl;
+        const productImage = document.createElement("div");
+        productImage.innerHTML += `<div class="w-full flex items-center justify-center md:h-full md:w-90"><img src="${prodImage}" alt="" class="size-50 md:size-80" /></div>`;
+        const productDetails = document.createElement("div");
+        productDetails.classList = "md:items-center md:h-full w-full md:flex";
+        productDetails.innerHTML = `<div class=" w-full h-[80%]"><h1 class="text-2xl font-bold font-[outfit] uppercase mb-4">${item[0].product_name}</h1>
+  <p class="text-lg font-semibold mb-4 ">₦${item[0].product_price.toLocaleString()}</p>
 
 <p class="text-green-600 mb-3 ">In Stock</p>
+
   <div class="flex mb-4 gap-2 items-center">
   <p class="text-sm font-semibold mb-3">size:</p>
-  <select name="" id="sizes" class="font-[cursive] border h-4 text-[0.7rem]">
+  <select name="" id="sizes" class="font-[playfair] border h-4 text-[0.7rem]">
     <option value="S">S</option>
     <option value="M">M</option>
     <option value="L">L</option>
@@ -251,46 +188,46 @@ renderProduct(currentPage)
 </div>
 <button class="bg-black text-white font-bold w-full h-10 px-2 flex gap-3 items-center hover:text-pink-600 duration-300 cursor-pointer add-to-cart-btn " >  <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button></div>`;
 
-            bottomCart.append(productImage, productDetails);
-            const addToCartBtn =
-              productDetails.querySelector(".add-to-cart-btn");
-            addToCartBtn.addEventListener("click", async (e) => {
-              const size = document.getElementById("sizes");
-              const products = {
-                product_id: btn.dataset.id,
-                product_name: item[0].product_name,
-                product_price: item[0].product_price,
-                image_url: prodImage,
-                size: size.value,
-              };
-              const { data: cards } = await supabase
-                .from("cart_items")
-                .upsert(products, { onConflict: "product_id" })
-                .select();
-              addToSideCart();
-              openSideCart();
-              modal.classList.toggle("hidden");
-              bottomCart.classList.toggle("translate-y-full");
-            });
-          }
+        bottomCart.append(productImage, productDetails);
+        const addToCartBtn = productDetails.querySelector(".add-to-cart-btn");
+        addToCartBtn.addEventListener("click", async (e) => {
+          e.stopImmediatePropagation();
+          const size = document.getElementById("sizes");
+          const products = {
+            product_id: btn.dataset.id,
+            product_name: item[0].product_name,
+            product_price: item[0].product_price,
+            image_url: prodImage,
+            size: size.value,
+          };
+          const { data: cards } = await supabase
+            .from("cart_items")
+            .upsert(products, { onConflict: "product_id" })
+            .select();
+          addToSideCart();
+          openSideCart();
+          modal.classList.toggle("hidden");
+          bottomCart.classList.toggle("translate-y-full");
+          bottomCartDiv.classList.toggle("translate-y-full");
         });
-      });
-    }
-    card();
-  })
-  .catch((err) => console.error(err));
+      }
+    });
+  });
+}
 
 // ////////////////////////////////////////////////////////////////
 
 export function bottomModal() {
   const modal = document.getElementById("bottom-modal");
   const cart = document.getElementById("bottom-cart");
+  const cartDiv = document.getElementById("bottom-cart-div");
 
   if (modal) {
     modal.addEventListener("click", (e) => {
       e.stopImmediatePropagation;
       modal.classList.toggle("hidden");
       cart.classList.toggle("translate-y-full");
+      cartDiv.classList.toggle("translate-y-full");
     });
   }
 }
