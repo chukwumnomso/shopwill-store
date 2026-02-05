@@ -13,6 +13,7 @@ import { openSideCart } from "./cart";
 import { prodCardAddToCart } from "./prodUpload";
 import { navModal } from "./main";
 import { subTotal } from "./cart";
+import { showSubTotal } from "./cart";
 
 const supabase = getSupabase();
 // const allbtn = document.getElementById("all");
@@ -378,9 +379,10 @@ export function sideCartClose() {
   if (sideCartClose) {
     sideCartClose.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
-      console.log("yes");
       openSideCart();
       modal();
+      subTotal();
+      showSubTotal();
     });
   }
 }

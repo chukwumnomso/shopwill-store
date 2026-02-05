@@ -5,7 +5,7 @@ import { getSupabase } from "./supabaseClient";
 import { cartbag } from "./cart";
 import { modal } from "./cart";
 import { addToSideCart } from "./cart";
-// import { updateCart } from "./cart";
+import { updateCart } from "./cart";
 import { cartCount } from "./cart";
 // ///////////////////////////////////////////////////////////
 

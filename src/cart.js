@@ -29,6 +29,7 @@ async function loadProductDetails() {
   showItem.innerHTML = "";
   const productImage = document.createElement("div");
   const productDetails = document.createElement("div");
+  const youMayAlsoLike = document.createElement("div");
   const prodName = document.getElementById("prodName");
   prodName.textContent = `${item.product_name}`;
   productImage.classList = "border-t mb-10";
@@ -37,10 +38,6 @@ async function loadProductDetails() {
   productDetails.innerHTML = `<h1 class="text-3xl font-extrabold font-[outfit] uppercase mb-10">${item.product_name}</h1>
   <p class="text-xl font-semibold mb-7 ">₦${item.product_price.toLocaleString()}</p>
 
-  <div class="flex mb-3  items-center ">
-<button class="w-20 h-5  text-white text-xl font-bold flex items-center justify-center cursor-pointer bg-black hover:text-pink-600 duration-300 ">-</button><input type="text" value="1" id="quantity"  class="w-8 h-5 text-[1rem] text-center"/><button class="w-20 h-5 cursor-pointer text-white text-xl font-bold bg-black flex items-center justify-center hover:text-pink-600 duration-300 ">+</button>
-
-</div>
   <div class="flex mb-8 gap-2 items-center">
   <p class="text-lg font-semibold">size:</p>
   <select name="" id="sizes" class="font-[cursive] border h-6">
@@ -51,9 +48,12 @@ async function loadProductDetails() {
     <option value="2XL ">2XL</option>
   </select>
 </div>
-<button class="bg-black text-white font-bold w-full h-12 px-2 flex gap-3 items-center justify-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>`;
+<button class="bg-black text-white font-bold w-full h-12 px-2 flex gap-3 items-center justify-center hover:text-pink-600 duration-300 cursor-pointer " onclick="updateCart();"> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer">ADD TO CART</button>
 
-  showItem.append(productImage, productDetails);
+<h1 class="text-3xl font-extrabold font-[outfit] uppercase mt-15 mb-5">description</h1>
+
+<p class="text-lg font-[outfit]"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur vitae deserunt velit provident veniam ut voluptatem, quasi hic? Amet officia, ullam nostrum repellat tempore unde, cumque corrupti itaque dolor excepturi, vel inventore labore suscipit consectetur at nobis ipsam similique? Illo ea aspernatur nemo libero accusantium repellendus necessitatibus minima expedita at.</p>`;
+  youMayAlsoLike.innerHTML = showItem.append(productImage, productDetails);
 
   const sizes = document.getElementById("sizes");
   return sizes;
@@ -68,6 +68,7 @@ export function cartbag() {
       e.stopImmediatePropagation();
       addToSideCart();
       openSideCart();
+      showSubTotal();
     });
   }
 }
@@ -92,7 +93,6 @@ export function modal() {
 modal();
 
 export async function addToSideCart() {
-  subTotal();
   const cartBag = document.getElementById("cart-bag");
   const sideCart = document.getElementById("sideCart");
   sideCart.innerHTML = "";
@@ -114,7 +114,7 @@ export async function addToSideCart() {
   <div class="flex mb-3  items-center ">
 <button class="w-10 h-5  text-white flex items-center justify-center cursor-pointer bg-black hover:text-pink-600  duration-300 sub-btn" data-Q="${item.product_id}">-</button>
 <input type="text" value="${item.quantity}" id="quantity" data-Q="${item.product_id}" class="w-8 h-5 text-[1rem] text-center"/><button class="w-10 h-5 cursor-pointer text-white bg-black flex items-center justify-center hover:text-pink-600 duration-300 add-btn " data-Q="${item.product_id}" >+</button>
-  <button class="w-20 h-5 bg-white text-[0.7rem] cursor-pointer hover:text-pink-600 duration-300 remove-btn " data-id=${item.product_id} >Remove</button>
+  <button class="w-20 h-5 bg-white text-[0.7rem] cursor-pointer hover:text-pink-600 duration-300 remove-btn underline " data-id=${item.product_id} >Remove</button>
 </div>
 <div class="w-full h-8"><button class=""></button></div>
 
@@ -127,12 +127,13 @@ export async function addToSideCart() {
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains("remove-btn")) {
         const productId = e.target.getAttribute("data-id");
-        removeFromCart(productId);
+        removeFromCart(productId)
+          .then((ok) => subTotal())
+          .then((ok) => showSubTotal());
         const item = document.getElementById(`item-${productId}`);
         if (item) {
           item.remove();
         }
-        subTotal();
         cartCount();
       }
     });
@@ -227,11 +228,9 @@ export async function updateCart() {
     .select();
 
   //   console.log(carted);
-  addToSideCart().then((ok) => {
-    subTotal();
-  });
-  openSideCart();
+  addToSideCart();
   subTotal();
+  openSideCart();
 }
 
 export async function cartCount() {
@@ -257,6 +256,8 @@ export function openSideCart() {
   modal.classList.toggle("hidden");
   const cartContainer = document.getElementById("cartcontainer");
   cartContainer.classList.toggle("translate-x-full");
+  subTotal();
+  showSubTotal();
 }
 
 async function addQuantity(value, id, price) {
@@ -272,12 +273,33 @@ export async function subTotal() {
     .from("cart_items")
     .select("product_price");
   const subtotal = [];
+  if (totals.length < 1) {
+    const subTotal = document.getElementById("sub-total");
+    subTotal.textContent = 0;
+    return;
+  }
   totals.forEach((total) => {
     subtotal.push(total.product_price);
-
     const totaled = subtotal.reduce((a, b) => a + b, 0);
     const subTotal = document.getElementById("sub-total");
     subTotal.textContent = totaled;
   });
 }
 subTotal();
+
+export function showSubTotal() {
+  setTimeout(() => {
+    const sideCart = document.getElementById("sideCart");
+    const checkOut = document.getElementById("checkoutDiv");
+    const cartMessage = document.querySelector(".cart-text");
+    if (sideCart.innerHTML !== "") {
+      checkOut.classList.remove("opacity-0");
+      cartMessage.classList.add("hidden");
+    } else {
+      checkOut.classList.add("opacity-0");
+      cartMessage.classList.remove("hidden");
+    }
+  }, 500);
+}
+
+showSubTotal();

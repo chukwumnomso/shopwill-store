@@ -8,7 +8,7 @@
   </head>
   <body>
     <!-- HEADER START -->
-    <header class="fixed top-0 left-0 w-full z-50">
+    <header class="fixed top-0 left-0 w-full z-20">
       <div
         class="h-16 flex justify-between items-center px-4 text-xl bg-white md:h-20"
       >
@@ -277,15 +277,26 @@
 
     <!-- SIDE CART -->
     <div
-      class="w-full h-screen z-50 bg-black/40 hidden fixed top-0 left-0"
+      class="w-full h-screen z-30 bg-black/40 hidden fixed top-0 left-0"
       id="modal"
     ></div>
     <div
       id="cartcontainer"
-      class="h-full fixed w-[90%] top-0 right-0 z-50 translate-x-full transition-transform duration-500 ease-in-out overflow-y-auto overflow-x-hidden scrollbar-thin [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full bg-white px-4 pt-5 sm:w-[80%] md:w-[60%] lg:w-[40%]"
+      class="h-full fixed w-[90%] top-0 right-0 z-40 translate-x-full transition-transform duration-500 ease-in-out overflow-y-auto overflow-x-hidden scrollbar-thin [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full bg-white px-4 pt-5 sm:w-[80%] md:w-[60%] lg:w-[40%]"
     >
+      <div class="w-full flex justify-between">
+        <p class="font-bold uppercase mb-15">shopping cart</p>
+        <i class="fa-solid fa-x side-close"></i>
+      </div>
+      <p class="font-[playfair] text-2xl uppercase opa cart-text hidden">
+        your cart is empty
+      </p>
+
       <div class="" id="sideCart"></div>
-      <div class="sticky bottom-0 right-0 w-full bg-white border-t h-50 z-50">
+      <div
+        class="sticky bottom-0 right-0 w-full bg-white border-t h-50 z-50 opacity-0"
+        id="checkoutDiv"
+      >
         <div class="w-full text-center my-4">
           <i class="fa-brands fa-whatsapp text-4xl"></i>
           <h2
@@ -298,7 +309,7 @@
           class="w-full flex justify-between font-bold font-[playfair] uppercase text-xl"
         >
           <p>subtotal</p>
-          <p class="font-[monteserrat]">₦<span id="sub-total">0</span></p>
+          <p class="font-[monteserrat]">₦<span id="sub-total"></span></p>
         </div>
         <button
           class="bg-black text-xl text-white uppercase font-bpld font-[playfair] flex items-center justify-center h-8 w-full mt-4 hover:text-pink-600 transition-all duration-300 cursor-pointer"
@@ -314,7 +325,6 @@
         </div>
       </div>
     </div>
-    <!-- END OF SIDE CART -->
     <!-- BOTTOM CART -->
     <div
       class="w-full h-screen z-40 bg-black/40 hidden fixed top-0 left-0"
