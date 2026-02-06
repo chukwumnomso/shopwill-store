@@ -8,7 +8,7 @@
   </head>
   <body>
     <!-- HEADER START -->
-    <header class="fixed top-0 left-0 w-full z-50">
+    <header class="fixed top-0 left-0 w-full z-20">
       <div
         class="h-16 flex justify-between items-center px-4 text-xl bg-white md:h-20"
       >
@@ -161,6 +161,71 @@
       home / <span id="prodName"></span>
     </h2>
     <div id="item-show" class="px-4 md:grid grid-cols-2 gap-8"></div>
+    <!-- REVIEWS -->
+    <div
+      class="uppercase font-[playfair] font-bold text-2xl text-center mt-20 md:text-3xl lg:text-4xl"
+    >
+      CUSTOMERS REVIEW
+    </div>
+
+    <div
+      class="w-full flex flex-col gap-4 items-center justify-center mt-10 bg-gray-200 md:flex-row"
+    >
+      <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+        <p class="text-amber-300">
+          ★★★★ <span class="text-neutral-200">★</span>
+        </p>
+        <p class="text-sm font-semibold">
+          "The clothing is edgy, fashionable, and well-priced, making me feel
+          beautiful."
+        </p>
+        <div class="flex gap-2 mt-4">
+          <div
+            class="size-15 bg-[url(/assets/rimg1.jpg)] bg-center bg-cover rounded-full"
+          ></div>
+          <div>
+            <p class="font-bold capitalize">amanda moore</p>
+            <p class="text-sm capitalize">creative director</p>
+          </div>
+        </div>
+        <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+      </div>
+      <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+        <p class="text-amber-300">★★★★★</p>
+        <p class="text-sm font-semibold">
+          "The team was very attentive, reactive, and truly caring throughout
+          the whole process."
+        </p>
+        <div class="flex gap-2 mt-4">
+          <div
+            class="size-15 bg-[url(/assets/rimg4.jpg)] bg-center bg-cover rounded-full"
+          ></div>
+          <div>
+            <p class="font-bold capitalize">rashid paul</p>
+            <p class="text-sm capitalize">fashion director</p>
+          </div>
+        </div>
+        <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+      </div>
+    </div>
+
+    <!-- END OF REVIEWS -->
+    <!-- YOU MAY ALSO LIKE -->
+    <div
+      class="uppercase font-[playfair] font-bold text-2xl text-center mt-20 md:text-3xl lg:text-4xl"
+    >
+      YOU MY ALSO LIKE
+    </div>
+    <div
+      class="grid grid-cols-2 mx-4 gap-4 md:grid-cols-3"
+      id="you-may-like"
+    ></div>
+
+    <!-- END OF YOU MAY ALSO LIKE -->
+    <div
+      class="w-full h-screen z-30 bg-black/40 hidden fixed top-0 left-0"
+      id="modal"
+    ></div>
     <div
       class="w-full h-screen z-30 bg-black/40 hidden fixed top-0 left-0"
       id="modal"
@@ -173,6 +238,7 @@
         <p class="font-bold uppercase mb-15">shopping cart</p>
         <i class="fa-solid fa-x side-close"></i>
       </div>
+
       <p class="font-[playfair] text-2xl uppercase opa cart-text hidden">
         your cart is empty
       </p>

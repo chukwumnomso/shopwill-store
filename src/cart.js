@@ -18,7 +18,7 @@ async function loadProductDetails() {
     .single(); // Return one object, not an array
 
   if (error || !item) {
-    document.body.innerHTML = "<h1>Product not found</h1>";
+    document.body.innerHTML = `<h1 class="mt-10 ml-4" >Product not found</h1>`;
     return;
   }
   const { data: urlData } = supabase.storage
@@ -29,7 +29,6 @@ async function loadProductDetails() {
   showItem.innerHTML = "";
   const productImage = document.createElement("div");
   const productDetails = document.createElement("div");
-  const youMayAlsoLike = document.createElement("div");
   const prodName = document.getElementById("prodName");
   prodName.textContent = `${item.product_name}`;
   productImage.classList = "border-t mb-10";
@@ -40,7 +39,7 @@ async function loadProductDetails() {
 
   <div class="flex mb-8 gap-2 items-center">
   <p class="text-lg font-semibold">size:</p>
-  <select name="" id="sizes" class="font-[cursive] border h-6">
+  <select name="" id="sizes" class="font-[montserrat] border h-6">
     <option value="S">S</option>
     <option value="M">M</option>
     <option value="L">L</option>
@@ -53,8 +52,9 @@ async function loadProductDetails() {
 <h1 class="text-3xl font-extrabold font-[outfit] uppercase mt-15 mb-5">description</h1>
 
 <p class="text-lg font-[outfit]"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur vitae deserunt velit provident veniam ut voluptatem, quasi hic? Amet officia, ullam nostrum repellat tempore unde, cumque corrupti itaque dolor excepturi, vel inventore labore suscipit consectetur at nobis ipsam similique? Illo ea aspernatur nemo libero accusantium repellendus necessitatibus minima expedita at.</p>`;
-  youMayAlsoLike.innerHTML = showItem.append(productImage, productDetails);
 
+  showItem.append(productImage, productDetails);
+  youMayLike(item.category, productId);
   const sizes = document.getElementById("sizes");
   return sizes;
 }
@@ -121,6 +121,7 @@ export async function addToSideCart() {
 `;
     if (sideCart) {
       prodGrid.append(itemImage, productDetails);
+
       sideCart.append(prodGrid);
     }
 
@@ -282,7 +283,9 @@ export async function subTotal() {
     subtotal.push(total.product_price);
     const totaled = subtotal.reduce((a, b) => a + b, 0);
     const subTotal = document.getElementById("sub-total");
-    subTotal.textContent = totaled.toLocaleString();
+    if (subTotal) {
+      subTotal.textContent = totaled.toLocaleString();
+    }
   });
 }
 subTotal();
@@ -303,3 +306,38 @@ export function showSubTotal() {
 }
 
 showSubTotal();
+
+async function youMayLike(cat) {
+  const { data: items } = await supabase
+    .from("products")
+    .select("*")
+    .eq("category", cat)
+    .order("random_id")
+    .limit(3);
+  const youLiked = document.getElementById("you-may-like");
+  youLiked.innerHTML = "";
+  items.forEach((item) => {
+    const { data: urlData } = supabase.storage
+      .from("productImage")
+      .getPublicUrl(item.product_image);
+    const prodImage = urlData.publicUrl;
+
+    const youMayAlsoLike = document.createElement("div");
+
+    const currentPagePath = window.location.pathname.split("?")[0];
+    const productLink = `${currentPagePath}?id=${item.id}`;
+    youMayAlsoLike.innerHTML += `<div
+        class="capitalize h-full grid grid-rows-2 mt-10"
+      >
+       <div class=" flex items-center justify-center  overflow-hidden row-span-3 cursor-pointer"><a href="${productLink}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
+
+        <div class="flex-col items-center justify-center"> <div class="text-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm md:text-lg lg:text-xl mb-2 mt-2 ">${item.product_name}</h2></div>
+        
+    <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold md:text-lg lg:text-xl">₦${item.product_price.toLocaleString()}</p></div>    
+         <p class="text-[0.7rem] text-pink-500  font-bold hidden">${item.id}</p>
+      
+        
+      </div></div>`;
+    youLiked.appendChild(youMayAlsoLike);
+  });
+}
