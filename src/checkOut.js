@@ -47,10 +47,17 @@ form.addEventListener("submit", (e) => {
   const emailInput = document.getElementById("email").value;
   const firstName = document.getElementById("first-name").value;
   const lastName = document.getElementById("last-name").value;
-  console.log(emailInput);
+  if (emailInput === "" || firstName === "" || lastName === "") {
+    alert("please fill the required fields");
+    return;
+  }
   const subTotal = document.getElementById("sub-total").textContent;
   const amount = subTotal.replace(/[^0-9.\-]/g, "");
   const total = parseInt(amount) * 100;
+  if (total === 0) {
+    alert("your cart is empty");
+    return;
+  }
   const data = {
     first: firstName,
     last: lastName,
@@ -59,7 +66,6 @@ form.addEventListener("submit", (e) => {
   localStorage.setItem("datas", JSON.stringify(data));
 
   payNow(emailInput, total);
-  confirm();
 });
 
 function payNow(emailInput, total) {
@@ -73,12 +79,12 @@ function payNow(emailInput, total) {
 
       onSuccess: (transaction) => {
         alert("Transaction Successful! Ref: " + transaction.reference);
+        confirm();
       },
       onCancel: () => {
         alert("You cancelled the payment.");
       },
     });
-    return transac;
   } catch (error) {
     console.error(error.message);
   }

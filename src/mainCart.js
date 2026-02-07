@@ -31,12 +31,12 @@ async function cartSummary() {
 
   <div class="flex    items-center  ">
 <button class="w-10 h-5  text-black flex items-center justify-center cursor-pointer bg-gray-200 hover:text-pink-600  duration-300 sub-btn" data-Q="${item.product_id}">-</button>
-<input type="text" value="${item.quantity}" id="quantity" data-Q="${item.product_id}" class="w-8 h-5 text-[1rem] text-center"/><button class="w-10 h-5 cursor-pointer text-white bg-black flex items-center justify-center hover:text-pink-600 duration-300 add-btn " data-Q="${item.product_id}" >+</button>
+<input type="text" value="${item.quantity}" id="quantity" data-Q="${item.product_id}" class="w-8 h-5 text-[1rem] text-center"/><button class="w-10 h-5 cursor-pointer text-black bg-gray-200 flex items-center justify-center hover:text-pink-600 duration-300 add-btn " data-Q="${item.product_id}" >+</button>
  
 </div>
  <div class="flex items-center gap-2">
   <p class="text-sm font-semibold font-[montserrat]">size:</p>
-  <select name="" class="sizes" class="font-[montserrat] text-sm border h-4" data-size="${item.product_id}">
+  <select name="" class="sizes border" class="font-[montserrat] text-sm border h-4" data-size="${item.product_id}">
     <option value="S">S</option>
     <option value="M">M</option>
     <option value="L">L</option>
@@ -55,7 +55,9 @@ async function cartSummary() {
       const productId = e.target.getAttribute("data-size");
       const size = document.querySelector(`select[data-size="${productId}"]`);
       addSize(productId, size.value);
-      orderSummary();
+      setTimeout(() => {
+        orderSummary();
+      }, 1000);
     }
   });
 
