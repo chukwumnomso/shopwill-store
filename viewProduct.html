@@ -164,50 +164,219 @@
     </h2>
     <div id="item-show" class="px-4 md:grid grid-cols-2 gap-8"></div>
     <!-- REVIEWS -->
-    <div
-      class="uppercase font-[playfair] font-bold text-2xl text-center mt-20 md:text-3xl lg:text-4xl"
-    >
-      CUSTOMERS REVIEW
-    </div>
+    <div class="h-120 overflow-hidden relative">
+      <img
+        src="/assets/freestocks-_3Q3tsJ01nc-unsplash.jpg"
+        alt=""
+        class="h-full w-full"
+      />
+      <div
+        class="absolute bg-black/70 top-0 left-0 h-full w-full text-white text-center backdrop-blur-md pt-20"
+      >
+        <h1 class="text-4xl uppercase mb-4">customer reviews</h1>
+        <p class="text-lg font-[quicksand] capitalize">
+          trusted by creative, collectors & fashion lovers
+        </p>
+        <!-- Main viewport container -->
+        <div
+          class="w-full inline-flex flex-nowrap overflow-hidden mask-[linear-gradient(to_right,transparent_0,black_128px,black_calc(100%-128px),transparent_100%)] mt-15"
+        >
+          <!-- First set of 5 divs -->
+          <ul
+            class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll"
+          >
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">
+                  ★★★★ <span class="text-neutral-200">★</span>
+                </p>
+                <p class="text-sm font-semibold">
+                  "The clothing is edgy, fashionable, and well-priced, making me
+                  feel beautiful."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">amanda moore</p>
+                    <p class="text-sm capitalize">creative director</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">★★★★★</p>
+                <p class="text-sm font-semibold">
+                  "The team was very attentive, reactive, and truly caring
+                  throughout the whole process."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">rashid paul</p>
+                    <p class="text-sm capitalize">fashion director</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">
+                  ★★★★ <span class="text-neutral-200">★</span>
+                </p>
+                <p class="text-sm font-semibold">
+                  "These items fit perfectly, are comfortable, and feel
+                  high-quality. I am very happy I could specify the exact
+                  length."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">mike johnson</p>
+                    <p class="text-sm capitalize">oufit director</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">★★★★★</p>
+                <p class="text-sm font-semibold">
+                  "Everything suprised me the fit, the fabric,everything was
+                  thought through."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">miracle nsotia</p>
+                    <p class="text-sm capitalize">fashionista</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">
+                  ★★★★ <span class="text-neutral-200">★</span>
+                </p>
+                <p class="text-sm font-semibold">
+                  "Shopwill isn't just a clothing, its confidence. every piece
+                  feels intentional and premium."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">chris stunt</p>
+                    <p class="text-sm capitalize">fashion director</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+          </ul>
 
-    <div
-      class="w-full flex flex-col gap-4 items-center justify-center mt-10 bg-gray-200 md:flex-row"
-    >
-      <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
-        <p class="text-amber-300">
-          ★★★★ <span class="text-neutral-200">★</span>
-        </p>
-        <p class="text-sm font-semibold">
-          "The clothing is edgy, fashionable, and well-priced, making me feel
-          beautiful."
-        </p>
-        <div class="flex gap-2 mt-4">
-          <div
-            class="size-15 bg-[url(/assets/rimg1.jpg)] bg-center bg-cover rounded-full"
-          ></div>
-          <div>
-            <p class="font-bold capitalize">amanda moore</p>
-            <p class="text-sm capitalize">creative director</p>
-          </div>
+          <!-- Second set (Duplicated for seamless loop) -->
+          <ul
+            class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll"
+          >
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">
+                  ★★★★ <span class="text-neutral-200">★</span>
+                </p>
+                <p class="text-sm font-semibold">
+                  "The clothing is edgy, fashionable, and well-priced, making me
+                  feel beautiful."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">amanda moore</p>
+                    <p class="text-sm capitalize">creative director</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">★★★★★</p>
+                <p class="text-sm font-semibold">
+                  "The team was very attentive, reactive, and truly caring
+                  throughout the whole process."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">rashid paul</p>
+                    <p class="text-sm capitalize">fashion director</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">
+                  ★★★★ <span class="text-neutral-200">★</span>
+                </p>
+                <p class="text-sm font-semibold">
+                  "These items fit perfectly, are comfortable, and feel
+                  high-quality. I am very happy I could specify the exact
+                  length."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">mike johnson</p>
+                    <p class="text-sm capitalize">oufit director</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">★★★★★</p>
+                <p class="text-sm font-semibold">
+                  "Everything suprised me the fit, the fabric,everything was
+                  thought through."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">miracle nsotia</p>
+                    <p class="text-sm capitalize">fashionista</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+            <li>
+              <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
+                <p class="text-amber-300">
+                  ★★★★ <span class="text-neutral-200">★</span>
+                </p>
+                <p class="text-sm font-semibold">
+                  "Shopwill isn't just a clothing, its confidence. every piece
+                  feels intentional and premium."
+                </p>
+                <div class="flex gap-2 mt-4">
+                  <div class="size-15 bg-center bg-cover rounded-full"></div>
+                  <div>
+                    <p class="font-bold capitalize">chris stunt</p>
+                    <p class="text-sm capitalize">fashion director</p>
+                  </div>
+                </div>
+                <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
+              </div>
+            </li>
+          </ul>
         </div>
-        <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
-      </div>
-      <div class="w-70 h-50 border-2 rounded-lg pt-2 px-2 relative">
-        <p class="text-amber-300">★★★★★</p>
-        <p class="text-sm font-semibold">
-          "The team was very attentive, reactive, and truly caring throughout
-          the whole process."
-        </p>
-        <div class="flex gap-2 mt-4">
-          <div
-            class="size-15 bg-[url(/assets/rimg4.jpg)] bg-center bg-cover rounded-full"
-          ></div>
-          <div>
-            <p class="font-bold capitalize">rashid paul</p>
-            <p class="text-sm capitalize">fashion director</p>
-          </div>
-        </div>
-        <i class="fa-solid fa-quote-right absolute top-3 right-2"></i>
       </div>
     </div>
 
