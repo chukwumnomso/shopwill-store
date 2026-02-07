@@ -5,7 +5,7 @@ const supabase = getSupabase();
 import { prodName } from "./main";
 import { price } from "./main";
 import { prodId } from "./main";
-import { cartbag, removeCartText } from "./viewProduct";
+import { cartbag } from "./viewProduct";
 import { modal } from "./viewProduct";
 import { addToSideCart } from "./viewProduct";
 import { updateCart } from "./viewProduct";

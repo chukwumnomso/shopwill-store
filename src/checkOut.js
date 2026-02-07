@@ -8,8 +8,11 @@ import { cartCount } from "./viewProduct";
 import { navModal } from "./main";
 import { navShop } from "./main";
 import { toFormData } from "axios";
+import { base } from "./renderProducts";
 
 const supabase = getSupabase();
+
+const verifyIcon = `${base}assets/green mark.png`;
 
 export async function checkoutSummary() {
   const orderSummary = document.getElementById("order-summary");
@@ -119,7 +122,7 @@ async function confirm() {
           </p>
           <div class="text-sm font-medium text-black mt-2">
             <div class="w-full flex items-center justify-center">
-              <img src="./public/assets/green mark.png" alt="" />
+              <img src="${verifyIcon}" alt="" />
             </div>
 
             <p class="text-lg">
