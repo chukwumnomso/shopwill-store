@@ -5,19 +5,19 @@ const supabase = getSupabase();
 import { prodName } from "./main";
 import { price } from "./main";
 import { prodId } from "./main";
-import { cartbag } from "./cart";
-import { modal } from "./cart";
-import { addToSideCart } from "./cart";
-import { updateCart } from "./cart";
-import { cartCount } from "./cart";
-import { click } from "./cart";
-import { openSideCart } from "./cart";
-import { removeFromCart } from "./cart";
-import { sideCartClose } from "./products";
+import { cartbag, removeCartText } from "./viewProduct";
+import { modal } from "./viewProduct";
+import { addToSideCart } from "./viewProduct";
+import { updateCart } from "./viewProduct";
+import { cartCount } from "./viewProduct";
+import { click } from "./viewProduct";
+import { openSideCart } from "./viewProduct";
+import { removeFromCart } from "./viewProduct";
+import { sideCartClose } from "./main";
 // import { sizes } from "./cart";
 
 // END OF IMPORTS
-
+window.removeCartText = removeFromCart;
 window.updateCart = updateCart;
 
 export const base = import.meta.env.BASE_URL;
@@ -93,13 +93,13 @@ export async function renderProduct(page) {
       prodcard.innerHTML = `<div
         class="rounded-xl  capitalize relative h-full grid grid-rows-2"
       >
-       <div class=" flex items-center justify-center overflow-hidden row-span-3 cursor-pointer"><a href="/shopwill-store/cart.html?id=${card.id}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
+       <div class=" flex items-center justify-center overflow-hidden row-span-3 cursor-pointer"><a href="/shopwill-store/viewProduct.html?id=${card.id}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
 
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${card.product_name}</h2><button class="cart-btn" data-id="${card.id}" data-name="${card.product_name}" data-price="${card.product_price}" data-image=${prodImage}> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"></button></div>
-        
-    <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${card.product_price.toLocaleString()}</p></div>    
+
+    <div class= "w-full text-center border-b "><p class="text-[0.8rem] text-black font-semibold">₦${card.product_price.toLocaleString()}</p></div>
          <p class="text-[0.7rem] text-pink-500  font-bold hidden">${card.id}</p>
-        
+
       </div></div>
         `;
       prodList.appendChild(prodcard);
@@ -193,6 +193,7 @@ export async function prodCardAddToCart() {
         addToCartBtn.addEventListener("click", async (e) => {
           e.stopImmediatePropagation();
           const size = document.getElementById("sizes");
+          removeCartText();
           const products = {
             product_id: btn.dataset.id,
             product_name: item[0].product_name,
@@ -216,19 +217,3 @@ export async function prodCardAddToCart() {
 }
 
 // ////////////////////////////////////////////////////////////////
-
-export function bottomModal() {
-  const modal = document.getElementById("bottom-modal");
-  const cart = document.getElementById("bottom-cart");
-  const cartDiv = document.getElementById("bottom-cart-div");
-
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      e.stopImmediatePropagation;
-      modal.classList.toggle("hidden");
-      cart.classList.toggle("translate-y-full");
-      cartDiv.classList.toggle("translate-y-full");
-    });
-  }
-}
-bottomModal();

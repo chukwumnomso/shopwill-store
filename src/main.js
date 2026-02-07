@@ -1,12 +1,17 @@
 import "./style.css";
 import axios from "axios";
-import "./prodUpload";
+import "./renderProducts";
 import { getSupabase } from "./supabaseClient";
-import { cartbag } from "./cart";
-import { modal } from "./cart";
-import { addToSideCart } from "./cart";
-import { updateCart } from "./cart";
-import { cartCount } from "./cart";
+import { cartbag } from "./viewProduct";
+import { modal } from "./viewProduct";
+import { addToSideCart } from "./viewProduct";
+import { updateCart } from "./viewProduct";
+import { cartCount } from "./viewProduct";
+import { removeCartText } from "./viewProduct";
+import { openSideCart } from "./viewProduct";
+import { subTotal } from "./viewProduct";
+import { showSubTotal } from "./viewProduct";
+
 // ///////////////////////////////////////////////////////////
 
 // /////////////////////////////////////////////////////
@@ -92,9 +97,11 @@ export function sideBar() {
   if (navBar) {
     navBar.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
-      modal.classList.toggle("hidden");
-      sideBar.classList.toggle("-translate-x-full");
-      sideBar.classList.add(...transition.split(" "));
+      if (navBar) {
+        modal.classList.toggle("hidden");
+        sideBar.classList.toggle("-translate-x-full");
+        sideBar.classList.add(...transition.split(" "));
+      }
     });
     closeNavBar.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
@@ -103,8 +110,8 @@ export function sideBar() {
     });
   }
 }
-
 sideBar();
+
 export function navShop() {
   const navCategory = document.getElementById("nav-category");
   const shop = document.getElementById("shop");
@@ -136,3 +143,37 @@ export function navModal() {
   }
 }
 navModal();
+
+// //////////////////////////////////////////////////////////////
+
+export function bottomModal() {
+  const modal = document.getElementById("bottom-modal");
+  const cart = document.getElementById("bottom-cart");
+  const cartDiv = document.getElementById("bottom-cart-div");
+
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      modal.classList.toggle("hidden");
+      cart.classList.toggle("translate-y-full");
+      cartDiv.classList.toggle("translate-y-full");
+    });
+  }
+}
+bottomModal();
+
+export function sideCartClose() {
+  const sideCartClose = document.querySelector(".side-close");
+  if (sideCartClose) {
+    sideCartClose.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      removeCartText();
+      openSideCart();
+      modal();
+      subTotal();
+      showSubTotal();
+    });
+  }
+}
+
+sideCartClose();

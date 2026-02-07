@@ -3,8 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>main cart</title>
-    <script type="module" src="./src/mainCart.js" defer></script>
+
+    <script src="https://js.paystack.co/v2/inline.js"></script>
+    <script type="module" src="./src/checkOut.js" defer></script>
+    <title>check out</title>
   </head>
   <body>
     <!-- HEADER START -->
@@ -70,7 +72,9 @@
           </button>
           <button>
             <div class="relative size-10 flex justify-center items-center">
-              <img src="/assets/cartbag.jpg" alt="" id="cart-bag" />
+              <a href="./maincart.html"
+                ><img src="/assets/cartbag.jpg" alt="" id="cart-bag"
+              /></a>
               <div
                 class="absolute top-0 text-white text-[0.5rem] font-bold right-0 bg-black size-4 flex items-center justify-center rounded-full"
                 id="cartCount"
@@ -102,7 +106,7 @@
           >
         </li>
         <li
-          class="text-lg font-[playfair] uppercase font-bold h-10 nav-hover flex items-center cursor-pointer"
+          class="text-lg font-[playfair] uppercase font-bold h-10 nav-hover flex items-center justify-between"
           id="shop"
         >
           <div class="flex justify-between items-center w-full">
@@ -162,34 +166,98 @@
       class="w-full h-screen z-30 bg-black/40 hidden fixed top-0 left-0"
       id="nav-modal"
     ></div>
-    <!-- END OF NAVIGATIONS -->
-    <!-- CHECKOUT -->
-    <section class="px-4">
-      <div class="text-center mb-20">
-        <h1 class="uppercase font-bold font-[playfair] mt-30 text-3xl">
-          shopping cart
-        </h1>
+    <!-- CHECK OUT FORM -->
+    <section class="px-10" id="paymentSection">
+      <div class="mt-30 font-[playfair] font-bold capitalize text-2xl">
+        billing & shipping
       </div>
-      <div class="lg:grid grid-cols-3 w-full gap-12">
-        <div id="cart-summary" class="col-span-2"></div>
+      <div class="lg:grid grid-cols-3 gap-12">
+        <form
+          action=""
+          class="mt-5 w-full col-span-2 md:sticky z-20 top-30 self-start"
+          id="form"
+        >
+          <input
+            type="email"
+            name=""
+            id="email"
+            placeholder="Email"
+            class="border border-gray-400 w-full h-10 px-4 mb-2"
+          />
+          <div class="flex items-center gap-4 mb-4 font-[playfair]">
+            <input type="checkbox" name="" id="" size="4" />
+            <p>Email me with news and offers</p>
+          </div>
+          <div class="md:flex items-center gap-4">
+            <input
+              type="text"
+              name=""
+              id="first-name"
+              placeholder="first name"
+              class="border border-gray-400 w-full h-10 px-4 mb-4 font-[playfair]"
+            />
+            <input
+              type="text"
+              id="last-name"
+              placeholder="Last name"
+              class="border border-gray-400 w-full h-10 px-4 mb-4 font-[playfair]"
+            />
+          </div>
+          <input
+            type="text"
+            id="country"
+            value="Nigerians only"
+            readonly
+            class="border border-gray-400 w-full h-10 px-4 mb-4 font-[playfair]"
+          />
+          <input
+            type="text"
+            id=""
+            placeholder="Company (optional)"
+            class="border border-gray-400 w-full h-10 px-4 mb-4 font-[playfair]"
+          /><input
+            type="text"
+            placeholder="Address"
+            class="border border-gray-400 w-full h-10 px-4 mb-4 font-[playfair]"
+          />
+          <div class="flex items-center gap-4">
+            <input
+              type="text"
+              placeholder="City"
+              class="border border-gray-400 w-full h-10 px-4 mb-4 font-[playfair]"
+            /><input
+              type="text"
+              placeholder="State"
+              class="border border-gray-400 w-full h-10 px-4 mb-4 font-[playfair]"
+            />
+            <input
+              type="text"
+              placeholder="Postal code"
+              class="border border-gray-400 w-full h-10 px-4 mb-4 font-[playfair]"
+            />
+          </div>
+          <input
+            type="text"
+            name=""
+            id=""
+            placeholder="Phone"
+            class="border border-gray-400 w-full h-15 px-4 mb-4 font-[playfair]"
+          />
+          <div class="flex gap-4 items-center font-[playfair]">
+            <input type="checkbox" name="" id="" class="size-4" />
+            <p>Save this information for next time</p>
+          </div>
+        </form>
 
         <div
-          class="mt-20 w-full px-4 py-4 rounded-xl shadow-xl shadow-gray-500 -translate-y-4 col-span-1 :mt-0"
+          class="mt-20 w-full px-4 py-4 rounded-xl shadow-xl shadow-gray-500 -translate-y-4 col-span-1 lg:mt-0"
         >
           <h1 class="text-2xl font-bold font-[playfair] uppercase">
-            order summary
+            checkout summary
           </h1>
           <div class="" id="order-summary"></div>
 
-          <div class="w-full bg-white border-t h-50 z-50" id="checkoutDiv">
-            <div class="w-full text-center my-4">
-              <i class="fa-brands fa-whatsapp text-4xl"></i>
-              <h2
-                class="text-sm uppercase underline hover:text-pink-600 transition-all duration-300"
-              >
-                <a href="https://wa.link/0mfvip">send note</a>
-              </h2>
-            </div>
+          <div class="w-full bg-white border-t z-50" id="checkoutDiv">
             <div
               class="w-full flex justify-between font-bold font-[playfair] uppercase text-xl"
             >
@@ -197,13 +265,20 @@
               <p class="font-[monteserrat]">₦<span id="sub-total"></span></p>
             </div>
             <button
-              class="bg-black text-xl text-white uppercase font-bpld font-[playfair] flex items-center justify-center h-8 w-full mt-4 hover:text-pink-600 transition-all duration-300 cursor-pointer"
+              type="submit"
+              form="form"
+              class="bg-green-600 text-xl text-white uppercase font-bpld font-[playfair] flex items-center justify-center h-8 w-full mt-4 hover:text-black transition-all duration-300 cursor-pointer"
+              id="checkedout"
             >
-              <a href="">check out</a>
+              Pay with Paystack (NGN Only)
             </button>
           </div>
         </div>
       </div>
     </section>
+    <div
+      class="w-full justify-center items-center fixed top-30 left-0 px-10 hidden"
+      id="confirm-page"
+    ></div>
   </body>
 </html>

@@ -2,18 +2,18 @@ import "./style.css";
 import { getSupabase } from "./supabaseClient";
 import { navShop } from "./main";
 import { sideBar } from "./main";
-import { cartIcon } from "./prodUpload";
-import { cartbag } from "./cart";
-import { modal } from "./cart";
-import { addToSideCart } from "./cart";
-import { updateCart } from "./cart";
-import { cartCount } from "./cart";
-import { bottomModal } from "./prodUpload";
-import { openSideCart } from "./cart";
-import { prodCardAddToCart } from "./prodUpload";
+import { cartIcon } from "./renderProducts";
+import { cartbag } from "./viewProduct";
+import { modal } from "./viewProduct";
+import { addToSideCart } from "./viewProduct";
+import { updateCart } from "./viewProduct";
+import { cartCount } from "./viewProduct";
+import { bottomModal } from "./main";
+import { openSideCart } from "./viewProduct";
+import { prodCardAddToCart } from "./renderProducts";
 import { navModal } from "./main";
-import { subTotal } from "./cart";
-import { showSubTotal } from "./cart";
+import { subTotal } from "./viewProduct";
+import { showSubTotal } from "./viewProduct";
 
 const supabase = getSupabase();
 // const allbtn = document.getElementById("all");
@@ -373,18 +373,3 @@ if (sortDropdown) {
       .catch((err) => console.error(err));
   });
 }
-
-export function sideCartClose() {
-  const sideCartClose = document.querySelector(".side-close");
-  if (sideCartClose) {
-    sideCartClose.addEventListener("click", (e) => {
-      e.stopImmediatePropagation();
-      openSideCart();
-      modal();
-      subTotal();
-      showSubTotal();
-    });
-  }
-}
-
-sideCartClose();

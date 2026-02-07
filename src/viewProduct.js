@@ -1,6 +1,6 @@
 import { getSupabase } from "./supabaseClient";
 const supabase = getSupabase();
-import { cartIcon } from "./prodUpload";
+import { cartIcon } from "./renderProducts";
 
 // 1. Get the ID from the URL (e.g., product.html?id=5)
 const params = new URLSearchParams(window.location.search);
@@ -26,15 +26,17 @@ async function loadProductDetails() {
     .getPublicUrl(item.product_image);
   const prodImage = urlData.publicUrl;
   const showItem = document.getElementById("item-show");
-  showItem.innerHTML = "";
-  const productImage = document.createElement("div");
-  const productDetails = document.createElement("div");
-  const prodName = document.getElementById("prodName");
-  prodName.textContent = `${item.product_name}`;
-  productImage.classList = "border-t mb-10";
+  if (showItem) {
+    showItem.innerHTML = "";
 
-  productImage.innerHTML = `<img src="${prodImage}" alt="" class="w-full" />`;
-  productDetails.innerHTML = `<h1 class="text-3xl font-extrabold font-[outfit] uppercase mb-10">${item.product_name}</h1>
+    const productImage = document.createElement("div");
+    const productDetails = document.createElement("div");
+    const prodName = document.getElementById("prodName");
+    prodName.textContent = `${item.product_name}`;
+    productImage.classList = "border-t mb-10";
+
+    productImage.innerHTML = `<img src="${prodImage}" alt="" class="w-full" />`;
+    productDetails.innerHTML = `<h1 class="text-3xl font-extrabold font-[outfit] uppercase mb-10">${item.product_name}</h1>
   <p class="text-xl font-semibold mb-7 ">₦${item.product_price.toLocaleString()}</p>
 
   <div class="flex mb-8 gap-2 items-center">
@@ -53,10 +55,11 @@ async function loadProductDetails() {
 
 <p class="text-lg font-[outfit]"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur vitae deserunt velit provident veniam ut voluptatem, quasi hic? Amet officia, ullam nostrum repellat tempore unde, cumque corrupti itaque dolor excepturi, vel inventore labore suscipit consectetur at nobis ipsam similique? Illo ea aspernatur nemo libero accusantium repellendus necessitatibus minima expedita at.</p>`;
 
-  showItem.append(productImage, productDetails);
-  youMayLike(item.category, productId);
-  const sizes = document.getElementById("sizes");
-  return sizes;
+    showItem.append(productImage, productDetails);
+    youMayLike(item.category, productId);
+    const sizes = document.getElementById("sizes");
+    return sizes;
+  }
 }
 export const sizes = loadProductDetails();
 
@@ -66,6 +69,7 @@ export function cartbag() {
   if (cartBag) {
     cartBag.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
+      removeCartText();
       addToSideCart();
       openSideCart();
       showSubTotal();
@@ -95,7 +99,7 @@ modal();
 export async function addToSideCart() {
   const cartBag = document.getElementById("cart-bag");
   const sideCart = document.getElementById("sideCart");
-  sideCart.innerHTML = "";
+  if (sideCart) sideCart.innerHTML = "";
 
   const { data: items } = await supabase.from("cart_items").select("*");
   cartBag.textContent = items.length;
@@ -229,16 +233,23 @@ export async function updateCart() {
     .select();
 
   //   console.log(carted);
+  removeCartText();
   addToSideCart();
   subTotal();
   openSideCart();
 }
 
 export async function cartCount() {
-  const cartCount = document.getElementById("cartCount");
   const { data: items } = await supabase.from("cart_items").select("*");
-
-  cartCount.textContent = items.length;
+  const cartCount = document.getElementById("cartCount");
+  console.log(items.length);
+  if (cartCount && items.length > 0) {
+    cartCount.textContent = items.length;
+  } else if (cartCount && items.length === 0) {
+    console.log("here");
+    cartCount.textContent = items.length;
+    console.log(items.length);
+  }
 }
 
 cartCount();
@@ -254,17 +265,28 @@ export async function removeFromCart(id) {
 
 export function openSideCart() {
   const modal = document.getElementById("modal");
-  modal.classList.toggle("hidden");
+  if (modal) {
+    modal.classList.toggle("hidden");
+  }
+
   const cartContainer = document.getElementById("cartcontainer");
   cartContainer.classList.toggle("translate-x-full");
   subTotal();
   showSubTotal();
 }
 
-async function addQuantity(value, id, price) {
+export async function addQuantity(value, id, price) {
   const { data: Q } = await supabase
     .from("cart_items")
     .update({ quantity: value, product_price: price })
+    .eq("product_id", id)
+    .select();
+}
+
+export async function addSize(id, size) {
+  const { data: Q } = await supabase
+    .from("cart_items")
+    .update({ size: size })
     .eq("product_id", id)
     .select();
 }
@@ -276,7 +298,7 @@ export async function subTotal() {
   const subtotal = [];
   if (totals.length < 1) {
     const subTotal = document.getElementById("sub-total");
-    subTotal.textContent = 0;
+    if (subTotal) subTotal.textContent = 0;
     return;
   }
   totals.forEach((total) => {
@@ -295,14 +317,14 @@ export function showSubTotal() {
     const sideCart = document.getElementById("sideCart");
     const checkOut = document.getElementById("checkoutDiv");
     const cartMessage = document.querySelector(".cart-text");
-    if (sideCart.innerHTML !== "") {
+    if (sideCart && sideCart.innerHTML !== "") {
       checkOut.classList.remove("opacity-0");
       cartMessage.classList.add("hidden");
-    } else {
+    } else if (sideCart && sideCart.innerHTML === "") {
       checkOut.classList.add("opacity-0");
       cartMessage.classList.remove("hidden");
     }
-  }, 500);
+  }, 1000);
 }
 
 showSubTotal();
@@ -340,4 +362,11 @@ async function youMayLike(cat) {
       </div></div>`;
     youLiked.appendChild(youMayAlsoLike);
   });
+}
+
+export function removeCartText() {
+  const cartMessage = document.querySelector(".cart-text");
+  if (cartMessage) {
+    cartMessage.classList.add("hidden");
+  }
 }
