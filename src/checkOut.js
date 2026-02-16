@@ -108,7 +108,7 @@ async function confirm() {
   console.log(data);
   const total = parseInt(data.total) / 100;
   const confirmDiv = document.createElement("div");
-  confirmDiv.classList = "w-full";
+  confirmDiv.classList = "w-full flex items-center justify-center";
   confirmDiv.innerHTML = `  
       <div class="w-full bg-white shadow-lg shadow-black py-5 md:w-[70%]">
         <div
