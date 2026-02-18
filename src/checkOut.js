@@ -110,7 +110,7 @@ async function confirm() {
   const confirmDiv = document.createElement("div");
   confirmDiv.classList = "w-full flex items-center justify-center";
   confirmDiv.innerHTML = `  
-      <div class="w-full bg-white shadow-lg shadow-black py-5 md:w-[70%]">
+      <div class="w-full bg-white shadow-md shadow-black py-5 md:w-[70%]">
         <div
           class="text-center capitalize text-3xl text-green-600 font-[playfair] font-extrabold"
         >
