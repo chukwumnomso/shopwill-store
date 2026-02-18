@@ -93,7 +93,7 @@ export async function renderProduct(page) {
       prodcard.innerHTML = `<div
         class="rounded-xl  capitalize relative h-full grid grid-rows-2"
       >
-       <div class=" flex items-center justify-center overflow-hidden row-span-3 cursor-pointer"><a href="/shopwill-store/viewProduct.html?id=${card.id}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
+       <div class=" flex items-center justify-center overflow-hidden row-span-3 cursor-pointer"><a href="./viewProduct.html?id=${card.id}"> <img src="${prodImage}" class=" hover:scale-103 transition-all h-full w-full duration-300 overflow-hidden" /></a></div>
 
         <div class="flex-col items-center justify-center"> <div class="flex justify-between items-center px-10 lg:px-15"><h2 class="font-normal font-[playfair] text-sm mb-2 mt-2 lg:text-lg">${card.product_name}</h2><button class="cart-btn" data-id="${card.id}" data-name="${card.product_name}" data-price="${card.product_price}" data-image=${prodImage}> <img src="${cartIcon}" alt="" class="rounded-full size-8 hover:scale-104 transition-all duration-200 cursor-pointer"></button></div>
 
