@@ -144,7 +144,8 @@ async function orderSummary() {
   const { data: orders } = await supabase.from("cart_items").select("*");
   orders.forEach((order) => {
     const orderCard = document.createElement("div");
-    orderCard.classList = " mt-4";
+    orderCard.innerHTML = "";
+    orderCard.classList = "mt-4";
     orderCard.innerHTML += `<div class="bg-gray-50 grid grid-cols-3 items-center px-4 py-4 gap-4"><div class="col-span-2 grid grid-rows-3 gap-4"><h1 class="font-bold text-lg font[playfar] capitalize">${order.product_name}</h1> <p class="text-gray-600 font-[montserrat] text-sm">Size: ${order.size}</p><p class="text-gray-600 font-[montserrat] text-sm">Quantity: ${order.quantity}</p></div><div class="font-[montserrat] font-bold text-sm text-end">₦${order.product_price.toLocaleString()}</div></div>`;
     orderCard.innerHTML += `<div class="bg-gray-50 grid grid-cols-3 items-center px-4 py-4 gap-4"><div class="col-span-2 grid grid-rows-3 gap-4"><h1 class="font-bold text-lg font[playfar] capitalize">${order.product_name}</h1> <p class="text-gray-600 font-[montserrat] text-sm">Size: ${order.size}</p><p class="text-gray-600 font-[montserrat] text-sm">Quantity: ${order.quantity}</p></div><div class="font-[montserrat] font-bold text-sm text-end">₦${order.product_price}</div></div>`;
 
