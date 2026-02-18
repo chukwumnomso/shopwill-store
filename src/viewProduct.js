@@ -242,13 +242,10 @@ export async function updateCart() {
 export async function cartCount() {
   const { data: items } = await supabase.from("cart_items").select("*");
   const cartCount = document.getElementById("cartCount");
-  console.log(items.length);
   if (cartCount && items.length > 0) {
     cartCount.textContent = items.length;
   } else if (cartCount && items.length === 0) {
-    console.log("here");
     cartCount.textContent = items.length;
-    console.log(items.length);
   }
 }
 
