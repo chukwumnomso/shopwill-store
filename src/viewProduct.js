@@ -101,23 +101,6 @@ export async function addToSideCart() {
   const sideCart = document.getElementById("sideCart");
   if (sideCart) sideCart.innerHTML = "";
 
-<<<<<<< HEAD
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (user) {
-    const { data: items } = await supabase.from("cart_items").select("*");
-    cartBag.textContent = items.length;
-    items.forEach((item) => {
-      const prodGrid = document.createElement("div");
-      prodGrid.id = `item-${item.product_id}`;
-      prodGrid.classList = "grid grid-cols-3 mb-6 pb-4 border-b";
-      const itemImage = document.createElement("div");
-      const productDetails = document.createElement("div");
-      productDetails.classList = "w-full h-full col-span-2";
-      itemImage.innerHTML = `<img src="${item.image_url}" alt="" class="w-30 h-full " />`;
-      productDetails.innerHTML = `<h1 class="text-sm font-extrabold font-[outfit] uppercase mb-4">${item.product_name}</h1>
-=======
   const { data: items } = await supabase.from("cart_items").select("*");
   cartBag.textContent = items.length;
   items.forEach((item) => {
