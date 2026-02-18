@@ -101,6 +101,7 @@ export async function addToSideCart() {
   const sideCart = document.getElementById("sideCart");
   if (sideCart) sideCart.innerHTML = "";
 
+<<<<<<< HEAD
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -116,6 +117,19 @@ export async function addToSideCart() {
       productDetails.classList = "w-full h-full col-span-2";
       itemImage.innerHTML = `<img src="${item.image_url}" alt="" class="w-30 h-full " />`;
       productDetails.innerHTML = `<h1 class="text-sm font-extrabold font-[outfit] uppercase mb-4">${item.product_name}</h1>
+=======
+  const { data: items } = await supabase.from("cart_items").select("*");
+  cartBag.textContent = items.length;
+  items.forEach((item) => {
+    const prodGrid = document.createElement("div");
+    prodGrid.id = `item-${item.product_id}`;
+    prodGrid.classList = "grid grid-cols-3 mb-6 pb-4 border-b";
+    const itemImage = document.createElement("div");
+    const productDetails = document.createElement("div");
+    productDetails.classList = "w-full h-full col-span-2";
+    itemImage.innerHTML = `<img src="${item.image_url}" alt="" class="w-30 h-full " />`;
+    productDetails.innerHTML = `<h1 class="text-sm font-extrabold font-[outfit] uppercase mb-4">${item.product_name}</h1>
+>>>>>>> 8116c5f (first)
   <p class="text-[0.7rem] font-semibold mb-3 " data-price="${item.product_id}">₦${item.product_price.toLocaleString()}</p>
 
 <p class=" mb-2 text-[0.8rem]">SIZE: <span class="text-red-500 font-bold">${item.size}</span></p>
@@ -127,6 +141,7 @@ export async function addToSideCart() {
 <div class="w-full h-8"><button class=""></button></div>
 
 `;
+<<<<<<< HEAD
       if (sideCart) {
         prodGrid.append(itemImage, productDetails);
 
@@ -208,6 +223,88 @@ export async function addToSideCart() {
       });
     });
   }
+=======
+    if (sideCart) {
+      prodGrid.append(itemImage, productDetails);
+
+      sideCart.append(prodGrid);
+    }
+
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("remove-btn")) {
+        const productId = e.target.getAttribute("data-id");
+        removeFromCart(productId)
+          .then((ok) => subTotal())
+          .then((ok) => showSubTotal());
+        const item = document.getElementById(`item-${productId}`);
+        if (item) {
+          item.remove();
+        }
+        cartCount();
+      }
+    });
+    document.addEventListener("click", async (e) => {
+      if (e.target.classList.contains("add-btn")) {
+        const productId = e.target.getAttribute("data-Q");
+        const quantityInput = document.querySelector(
+          `input[data-Q="${productId}"]`,
+        );
+        const prodPrice = document.querySelector(
+          `p[data-price="${productId}"]`,
+        );
+        if (quantityInput) {
+          const newQuantity = parseInt(quantityInput.value) + 1;
+          quantityInput.value = newQuantity;
+          const { data: priceData } = await supabase
+            .from("products")
+            .select("product_price")
+            .eq("id", productId)
+            .single();
+
+          if (priceData) {
+            const incrementAmount = priceData.product_price;
+            const updatedPrice = incrementAmount * newQuantity;
+            prodPrice.textContent = updatedPrice.toLocaleString();
+            addQuantity(newQuantity, productId, updatedPrice).then((ok) => {
+              subTotal();
+            });
+          }
+        }
+        cartCount();
+      }
+    });
+    document.addEventListener("click", async (e) => {
+      e.stopImmediatePropagation();
+      if (e.target.classList.contains("sub-btn")) {
+        const productId = e.target.getAttribute("data-Q");
+        const quantityInput = document.querySelector(
+          `input[data-Q="${productId}"]`,
+        );
+        const prodPrice = document.querySelector(
+          `p[data-price="${productId}"]`,
+        );
+        if (quantityInput.value > 1) {
+          const newQuantity = parseInt(quantityInput.value) - 1;
+          quantityInput.value = newQuantity;
+          const { data: priceData } = await supabase
+            .from("products")
+            .select("product_price")
+            .eq("id", productId)
+            .single();
+          if (priceData) {
+            const decrementAmount = priceData.product_price;
+            const updatedPrice = decrementAmount * newQuantity;
+            prodPrice.textContent = updatedPrice.toLocaleString();
+            addQuantity(newQuantity, productId, updatedPrice).then((ok) => {
+              subTotal();
+            });
+          }
+        }
+        cartCount();
+      }
+    });
+  });
+>>>>>>> 8116c5f (first)
 }
 
 export async function updateCart() {
@@ -224,17 +321,23 @@ export async function updateCart() {
     .from("productImage")
     .getPublicUrl(cartItem.product_image);
   const prodImage = urlData.publicUrl;
+<<<<<<< HEAD
   const {
     data: { user },
   } = await supabase.auth.getUser();
   console.log(user);
+=======
+>>>>>>> 8116c5f (first)
   const products = {
     product_id: cartItem.id,
     product_name: cartItem.product_name,
     product_price: cartItem.product_price,
     image_url: prodImage,
     size: sized.value,
+<<<<<<< HEAD
     user_id: user.id,
+=======
+>>>>>>> 8116c5f (first)
   };
 
   const { data: carted } = await supabase
@@ -250,6 +353,7 @@ export async function updateCart() {
 }
 
 export async function cartCount() {
+<<<<<<< HEAD
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -261,12 +365,24 @@ export async function cartCount() {
     } else if (cartCount && items.length === 0) {
       cartCount.textContent = items.length;
     }
+=======
+  const { data: items } = await supabase.from("cart_items").select("*");
+  const cartCount = document.getElementById("cartCount");
+  console.log(items.length);
+  if (cartCount && items.length > 0) {
+    cartCount.textContent = items.length;
+  } else if (cartCount && items.length === 0) {
+    console.log("here");
+    cartCount.textContent = items.length;
+    console.log(items.length);
+>>>>>>> 8116c5f (first)
   }
 }
 
 cartCount();
 
 export async function removeFromCart(id) {
+<<<<<<< HEAD
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -278,6 +394,13 @@ export async function removeFromCart(id) {
       .select();
   }
 
+=======
+  const { data } = await supabase
+    .from("cart_items")
+    .delete()
+    .eq("product_id", id)
+    .select();
+>>>>>>> 8116c5f (first)
   //   addToSideCart();
 }
 
@@ -294,6 +417,7 @@ export function openSideCart() {
 }
 
 export async function addQuantity(value, id, price) {
+<<<<<<< HEAD
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -342,6 +466,41 @@ export async function subTotal() {
       }
     });
   }
+=======
+  const { data: Q } = await supabase
+    .from("cart_items")
+    .update({ quantity: value, product_price: price })
+    .eq("product_id", id)
+    .select();
+}
+
+export async function addSize(id, size) {
+  const { data: Q } = await supabase
+    .from("cart_items")
+    .update({ size: size })
+    .eq("product_id", id)
+    .select();
+}
+
+export async function subTotal() {
+  const { data: totals } = await supabase
+    .from("cart_items")
+    .select("product_price");
+  const subtotal = [];
+  if (totals.length < 1) {
+    const subTotal = document.getElementById("sub-total");
+    if (subTotal) subTotal.textContent = 0;
+    return;
+  }
+  totals.forEach((total) => {
+    subtotal.push(total.product_price);
+    const totaled = subtotal.reduce((a, b) => a + b, 0);
+    const subTotal = document.getElementById("sub-total");
+    if (subTotal) {
+      subTotal.textContent = totaled.toLocaleString();
+    }
+  });
+>>>>>>> 8116c5f (first)
 }
 subTotal();
 
@@ -403,6 +562,7 @@ export function removeCartText() {
     cartMessage.classList.add("hidden");
   }
 }
+<<<<<<< HEAD
 
 // async function hhh() {
 //   const {
@@ -412,3 +572,5 @@ export function removeCartText() {
 // }
 
 // hhh();
+=======
+>>>>>>> 8116c5f (first)
