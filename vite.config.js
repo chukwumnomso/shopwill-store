@@ -4,9 +4,8 @@ import { resolve } from "path";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: "/shopwill-store/",
-
   base: "/",
+
   plugins: [tailwindcss()],
   build: {
     rollupOptions: {
